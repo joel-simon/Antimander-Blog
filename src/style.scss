@@ -1,0 +1,134 @@
+html, body {
+    font-family: redaction;
+    -webkit-font-smoothing: antialiased;
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background: linear-gradient(to right, red, purple, blue);
+}
+
+#inner_body {
+    // background-color: rgb(250, 250, 250);
+    background-color: white;
+    margin: 10px;
+    min-height: calc(100vh - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+p {
+    font-size: 1.3em;
+}
+
+.shadow {
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+h1.main-heading {
+    font-size: 6em;
+    color: black;
+}
+h1,h2,h3,h4 {
+    text-align: center;
+}
+
+.header-container {
+    h1 {
+        margin: 0px;
+    }
+    .main-heading {
+        img {
+            max-width: 900px;
+        }
+    }
+}
+.tag {
+    float: left;
+    margin: 0px;
+    margin-right: 1em;
+    margin-left: 1em;
+    // display: inline-block;
+}
+.center {
+    text-align: center;
+}
+
+.col3 {
+    width: 33%;
+    float: left;
+}
+
+.outer-text-container {
+    width: 100%;
+    text-align: center;
+    .inner-text-container {
+        max-width: 900px;
+        display: inline-block;
+
+        p {
+            text-align: justify;
+        }
+        img {
+            text-align: center;
+            width: 100%;
+            max-width: 700px;
+        }
+    }
+}
+
+.viewer_row {
+    width: 100%;
+    min-height: 100vh;
+    display: inline-block;
+    .district-viewer, .district-text {
+        display:  inline-block;
+        margin-left: 20px;
+        margin-right: 20px;
+        // width: calc(50% - 40px);
+    }
+    .district-viewer {
+        text-align: center;
+        position: relative;
+        width: calc(60% - 40px);
+        background-color: white;
+        .parcoords {
+            text-align: initial;
+            width:100%;
+            height:200px;
+        }
+        canvas {
+            width: 100%;
+            cursor: pointer;
+        }
+        img.legend {
+
+            width: 100%;
+            max-width: 500px;
+        }
+    }
+    .district-text {
+        width: calc(40% - 40px);
+        vertical-align: top;
+
+        float: right;
+        .block {
+            margin-top: 20vh;
+            text-align: center;
+            p {
+                text-align: justify;
+            }
+            // border-bottom: 1px solid;
+        }
+        .block img {
+            // display: inline-block;
+        }
+        h1,h2,h3,h4 {
+            // text-align: center;
+        }
+        p {
+           // margin-top: 20vh;
+        }
+    }
+}
