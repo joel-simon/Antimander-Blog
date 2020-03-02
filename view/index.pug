@@ -7,29 +7,49 @@ html(lang='en')
         +redaction_font()
         +d3_scripts()
     body
+        //- #inner_body
+        #header-container.container.center
+            h1.main-heading
+                i Antimander
+
+            p(style='margin-top: 0px;') Open-source research and software to fight gerrymandering
+
+            p.small By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and Nio Ono
+            //- br
         #inner_body
-            div.container.header-container.center
-                h1.main-heading
-                    //- // img(src='imgs/antimander-logotype.svg')
-                    i Antimander
-
-                p Open-source research and software to fight gerrymandering
-
-
+            br
             div.outer-text-container
                 div.inner-text-container.tags
-                    for name in ['Intro', 'Viewer', 'Methods', 'Next-Steps']
-                        h4.tag: a(href='#'+name.toLowerCase())!=name
+                    for name, idx in ['intro', 'background', 'viewer', 'methods', 'next-steps']
+                        h4.tag: a(href='#'+name)!=idx+': '+name.toUpperCase()
                 //- p March 2020
+
+
             div.outer-text-container#intro
                 div.inner-text-container
+                    p Gerrymandering is difficult for the courts to fight becuase there is no agreed upon definition. Properties like compactness and fairness are desired but subjective tradeoffs between them often exist. As a result, it is difficult to deffinitively show that a districting could be more fair. Evaluating a districting by comparing it to a set of possiblities has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives.
+
+                    p Algorithms cannot create 'ideal' districts becuase they do not exist. How one balances compactness vs fairness is subjective. Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
+
+                    p Antimander proposes connecting algorithmic districting to the research field of multi-objective evolutionary algorithms (MOEAs) and novelty search and presents an open source optimization engine and viewer that does so. It is just a beginning and much more work and help is needed.
+
+                    //- p By Joel S. with contributions from Joel L. and Nio O.
+
+                    h3(style='margin-top:0px;') Wisconsin: Real vs Antimander-Optimized
+                    img(src='imgs/results.png')
+
+
+
+            div.outer-text-container#background
+                div.inner-text-container
+                    h2 Background
                     p Every decade the US redraws congressional districts, which are divisions of a state each allotted one elected congressional representative. The distribution of elected representatives has significant political impact, motivating political parties to exploit such districting to their advantage, known as gerrymandering. For example, districtings can pack a small number of districts full of the opposing party’s voters to waste many votes, enabling other districts to crack i.e. to be won by a small (but comfortable) amount, thereby securing an outsize proportion of a state’s representatives for the gerrymandering party.
-                    p The Supreme Court has ruled that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. While many properties of districts (e.g. compactness and fairness) are desired, subjective tradeoffs between them often exist. As a result, it is difficult to deffinitively show that a districting could be more fair.
+                    p The Supreme Court has ruled that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. While many properties of districts (e.g. compactness and fairness) are desired, subjective tradeoffs between them often exist. As a result, it is difficult to deffinitively show that a districting could be more fair.Evaluating a districting by comparing it to a set of possiblities has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives. Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings. Antimander is a open source, multi-objective evolutionary that creates optimzied dsitricts for comparison.
 
                     //- h4 The #[a(href='https://www.smithsonianmag.com/history/where-did-term-gerrymander-come-180964118/') original "Gerrymander"] in Massachusetts
                     //- img(src='imgs/the_gerrymander.jpg', style='width:256px;')
-                    H2 The role of Software
-                    P Evaluating a districting by comparing it to a set of possiblities has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives. Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings. Antimander is a open source, multi-objective evolutionary that creates optimzied dsitricts for comparison.
+                    //- H2 The role of Software
+                    //- P
                     //- p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may o er relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts.
 
                     //- p However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
@@ -38,30 +58,36 @@ html(lang='en')
 
                     //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
 
-                    h3(style='margin-top:0px;') Wisconsin: Real vs Optimized
-                    img(src='imgs/results.png')
 
                     //-
 
-            .padding(style='height:50px;')
+            //- .padding(style='height:50px;')
 
             .viewer_row#viewer
-                h2 Interactive Viewer
                 .district-viewer
+                    h2.header Interactive Viewer
                     .parcoords
                     .padding(style='height:20px;')
                     canvas.main_canvas(width=1024, height=1024)
-                    img.legend(src='imgs/figure_legend.png')
+
 
                 .district-text
-                    .block
-                        p
-                            | On the left we see a grid of random samples.
-                            | Each line on the plot above corresponts to one solution
+                    .district-text-inner
+                        .block
+                            p
+                                | On the left we see a grid of random samples.
+                                | Each line on the plot above corresponts to one solution
+                        .block
+                            p Each state is divided into eight districts. The color represents what party that district is leaning towards.
+                            img.legend(src='imgs/figure_legend.png')
 
-                    .block
-                        p You can drag a axis of the top chart to filter.
-                        img.shadow(src='imgs/filter.png')
+                        .block
+                            p You can drag a axis of the top chart to filter.
+                            img.shadow(src='imgs/filter.png')
+
+                        for _ in [1,2,3]
+                            .block
+                                p Test
 
                     //- p That stuff has signficance
 
@@ -97,3 +123,12 @@ html(lang='en')
             //- div.outer-text-container
             //-     div.inner-text-container
             +mailchimp()
+
+            div.outer-text-container#next-steps
+                div.inner-text-container
+                    h3 References
+                    ol
+                        li A
+                        li B
+
+

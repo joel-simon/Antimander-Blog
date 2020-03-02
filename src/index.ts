@@ -87,6 +87,12 @@ async function main(err: any) {
     const nx = 5
     const ny = 5
     const map_data = await image_data('imgs/test.png')
+
+    const viewer:HTMLElement = document.querySelector('.district-viewer')
+    const viewer_row:HTMLElement = document.querySelector('.viewer_row')
+    let last_scroll = window.scrollY
+    const viewer_height = viewer_row.clientHeight
+
     console.time('load_data')
     const [ rundata, statedata ]:[ RunData, StateData ] = await Promise.all([
         fetch_json('/data/rundata_4.json'),
@@ -102,6 +108,8 @@ async function main(err: any) {
     // Create a single draw call with data enclosed.
     const draw = draw_districts( regl, map_data, statedata )
     let current = sample(range(solutions.length), nx*ny)
+    let needs_draw = true
+
     const parcoords = bind_parcoords(
         document.querySelector('.parcoords'),
         value_objs,
@@ -110,7 +118,7 @@ async function main(err: any) {
                 parcoords.unhighlight()
             }
             current = sample(indexes, nx*ny)
-            draw(nx, ny, current.map(i => solutions[i]))
+            needs_draw = true
         }
     )
     canvas.onclick = ({ offsetX: x, offsetY: y }) => {
@@ -126,36 +134,49 @@ async function main(err: any) {
             draw(1, 1, current.map(i => solutions[i]))
         }
     }
-    const viewer:HTMLElement = document.querySelector('.district-viewer')
-    const viewer_row:HTMLElement = document.querySelector('.viewer_row')
+    // console.log(viewer.getBoundingClientRect());
+    // console.log(viewer.clientHeight, viewer.getBoundingClientRect().height, );
 
-    let last_scroll = window.scrollY
-    const viewer_height = viewer_row.clientHeight
     function step() {
         window.requestAnimationFrame(step)
-        if (last_scroll != window.scrollY) {
-            const top = viewer_row.getBoundingClientRect().top
-            if (top < 0) {
-                const offset = Math.min(-top, viewer_height - window.innerHeight)
-                console.log(offset, -top, viewer_height - window.innerHeight);
 
-                viewer.style.transform = `translate(0px, ${offset}px)`
+        if (last_scroll != window.scrollY) {
+            const { top, bottom, height } = viewer_row.getBoundingClientRect()
+
+            const stick_top_point = 0//(window.innerHeight - viewer.clientHeight) /2
+            // console.log(stick_top_point);
+
+            viewer.style.position = 'fixed'
+            if (bottom < window.innerHeight) {
+                viewer.style.top = (bottom - window.innerHeight) + 'px'
+            } else if (top < stick_top_point) {
+                // Stuck to view.
+                viewer.style.top = stick_top_point+'px'
+            } else {
+                // Scroll normally when below.
+                viewer.style.top = top + 'px'
             }
+            last_scroll = window.scrollY
         }
+        if (needs_draw) {
+            console.log(current.length, nx,ny);
+            if (current.length == 1) {
+                draw(1, 1, current.map(i => solutions[i]))
+            } else if (current.length < 4) {
+                draw(2, 2, current.map(i => solutions[i]))
+            } else if (current.length < 9) {
+                draw(3, 3, current.map(i => solutions[i]))
+            } else {
+                draw(nx, ny, current.map(i => solutions[i]))
+            }
+            needs_draw = false
+        }
+
     }
     window.onresize = () =>  {
         parcoords.width(viewer.clientWidth)
         parcoords.resize()
         parcoords.render()
     }
-    // window.requestAnimationFrame(step)
-    // document.onscroll = () => {
-        // const top = viewer_row.getBoundingClientRect().top
-
-        // console.log(viewer.style.transform);
-        // console.log(window.scrollY);
-        // document.querySelector('.district-viewer')
-    // }
-    draw(nx, ny, current.map(i => solutions[i]))
-
+    window.requestAnimationFrame(step)
 }
