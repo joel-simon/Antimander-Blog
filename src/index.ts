@@ -95,8 +95,8 @@ async function main(err: any) {
 
     console.time('load_data')
     const [ rundata, statedata ]:[ RunData, StateData ] = await Promise.all([
-        fetch_json('/data/rundata_4.json'),
-        fetch_json('/data/statedata.json')
+        fetch_json('./data/rundata_4.json'),
+        fetch_json('./data/statedata.json')
     ])
     const { config, values, solutions, metrics_data } = rundata
     let value_objs = values.map((v, i) => {
