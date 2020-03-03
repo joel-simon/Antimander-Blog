@@ -44,3 +44,12 @@ export function clamp(v:number, min:number, max:number):number {
 export function range(n: number):number[] {
     return new Array(n).fill(0).map((_, i) => i)
 }
+
+export function inView(el: HTMLElement): boolean {
+    const { top, left, bottom, right } = el.getBoundingClientRect()
+    // console.log({ top, left, bottom, right });
+    return (
+        (top < 0 && bottom > 0) ||
+        (top < window.innerHeight && bottom > window.innerHeight)
+    )
+}

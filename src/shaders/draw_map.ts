@@ -9,6 +9,7 @@ export default function(regl: any): any {
         uniform float nx;
         uniform float ny;
         uniform float color_texture_size;
+        uniform float n_tiles;
 
         const float s16 = 65653.0;
         const float s8  = 256.0;
@@ -28,7 +29,7 @@ export default function(regl: any): any {
         // }
 
         vec2 tileIdx2colorPos(int tile_index, vec2 cell) {
-            float global_index = float(tile_index) + ((cell.y * nx)+cell.x) * 6516.0;
+            float global_index = float(tile_index) + ((cell.y * nx)+cell.x) * n_tiles;
             return vec2(
                 (mod( global_index, color_texture_size )) / color_texture_size,
                 floor( global_index / color_texture_size ) / color_texture_size
@@ -70,6 +71,7 @@ export default function(regl: any): any {
             ny: regl.prop('ny'),
             map: regl.prop('map'),
             colors: regl.prop('colors'),
+            n_tiles: regl.prop('n_tiles'),
             color_texture_size: regl.prop('color_texture_size')
         },
         count: 3

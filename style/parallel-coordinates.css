@@ -42,11 +42,11 @@ pre {
   word-wrap: auto;
 }
 h1 small {
-  font-weight: normal;
-  font-size: 0.5em;
+  /font-weight: normal;
+  /*font-size: 0.5em;*/
 }
 h3 {
-  margin-top: 40px;
+  /*margin-top: 40px;*/
 }
 .float {
   float: left;
