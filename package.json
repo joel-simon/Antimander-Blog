@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "license": "MIT",
   "scripts": {
-    "build": "./node_modules/webpack/bin/webpack.js",
+    "build": "./node_modules/webpack/bin/webpack.js --mode production",
     "develop": "./node_modules/.bin/webpack-dev-server"
   },
   "devDependencies": {
