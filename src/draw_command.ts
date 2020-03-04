@@ -1,7 +1,9 @@
 import draw_map_shader from './shaders/draw_map'
 import { clamp } from './utils'
+import { RunData, StateData } from './datatypes'
 declare let d3: any;
 declare let window: any;
+
 function district_color_values(
     district: number[],
     n_districts:number,

@@ -5,6 +5,8 @@ import Regl from 'regl'
 import bind_parcoords from './parallel_coords'
 import { fetch_json, sum, sample, range, clamp, inView } from './utils'
 import { draw_districts } from './draw_command'
+import { RunData, StateData } from './datatypes'
+
 declare let window: any;
 const canvas = document.querySelector('canvas')
 const regl = Regl({
