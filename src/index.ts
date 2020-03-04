@@ -5,7 +5,7 @@ import Regl from 'regl'
 import bind_parcoords from './parallel_coords'
 import { fetch_json, sum, sample, range, clamp, inView } from './utils'
 import { draw_districts } from './draw_command'
-
+declare let window: any;
 const canvas = document.querySelector('canvas')
 const regl = Regl({
     canvas,
@@ -22,11 +22,13 @@ function update_scroll_blocks(scroll_blocks) {
     }
 }
 
+// const dist_width = 200
+
 async function bind_viewer(datapath: string, viewer_row: HTMLElement) {
     console.log('Loading', datapath)
     const r = 2048
-    const nx = 5
-    const ny = 5
+    let nx = 4
+    let ny = 4
 
     const viewer:HTMLElement = viewer_row.querySelector('.district-viewer')
     const scroll_blocks = viewer_row.querySelectorAll('.scroll_block')
@@ -45,10 +47,7 @@ async function bind_viewer(datapath: string, viewer_row: HTMLElement) {
         return obj
     })
 
-    // console.log(statedata);
-
-    const viewer_height = viewer_row.clientHeight
-    const draw = draw_districts( regl, map_data, statedata )
+    let draw = draw_districts( regl, map_data, statedata )
     let current = sample(range(solutions.length), nx*ny)
     let needs_draw = true
 
@@ -94,39 +93,56 @@ async function bind_viewer(datapath: string, viewer_row: HTMLElement) {
         update_scroll_blocks(scroll_blocks)
     }
 
-    const onResize = () => {
+    const onResize = (_nx, _ny) => {
         parcoords.width(viewer.clientWidth)
         parcoords.resize()
         parcoords.render()
-        // canvas.width = viewer.clientWidth
-        // canvas.height = window.innerHeight - canvas.getBoundingClientRect().top - 20
+        nx = _nx
+        ny = _ny
+        // nx = Math.floor(canvas.clientWidth / dist_width)
+        // ny = Math.floor(canvas.clientHeight / dist_width)
+        // console.log('setting', {nx, ny})
+        // draw = draw_districts( regl, map_data, statedata )
+        // window.map_texture.resize(width, height)
+        current = sample(range(solutions.length), nx*ny)
+        // console.log({nx, ny, width, height}, current.length);
+        needs_draw = true
+        // console.log(width, height);
     }
 
-    const onStep = (force=false) => {
-        if (needs_draw || force) {
-            if (current.length == 1) {
-                draw(1, 1, current.map(i => solutions[i]))
-            } else if (current.length < 4) {
-                draw(2, 2, current.map(i => solutions[i]))
-            } else if (current.length < 9) {
-                draw(3, 3, current.map(i => solutions[i]))
-            } else {
-                draw(nx, ny, current.map(i => solutions[i]))
-            }
+    const onStep = () => {
+        if (needs_draw) {
+            // if (current.length == 1) {
+            //     draw(1, 1, current.map(i => solutions[i]))
+            // } else if (current.length < 4) {
+            //     draw(2, 2, current.map(i => solutions[i]))
+            // } else if (current.length < 9) {
+            //     draw(3, 3, current.map(i => solutions[i]))
+            // } else if (current.length < 9) {
+            //     draw(3, 3, current.map(i => solutions[i]))
+            // } else {
+            console.log(current);
+            draw(nx, ny, current.map(i => solutions[i]))
+            // }
             needs_draw = false
         }
     }
 
-    return { onScroll, onResize, onStep, onClick, viewer, row: viewer_row }
+    const needsDraw = () => {
+        needs_draw = true
+    }
+
+    return { onScroll, onResize, onStep, onClick, viewer, row: viewer_row, needsDraw }
 }
 
 async function main(err: any) {
     if (err) { console.log(err) }
-    const viewers = []
-    const rows = [... <any>document.querySelectorAll('.viewer_row')]
-    rows.forEach(async (row: HTMLElement, idx) => {
-        viewers.push(await bind_viewer(row.dataset.datapath, row))
-    })
+    let viewers = []
+    const rows = [... <any>document.querySelectorAll('.viewer_row')] as HTMLElement[]
+    for (const row of rows) {
+            viewers.push(await bind_viewer(row.dataset.datapath, row))
+    }
+
 
     let last_scroll = window.scrollY
     let active_view = null
@@ -139,7 +155,9 @@ async function main(err: any) {
         if (!active_view) {
             active_view = viewers.find(v => inView(v.row))
             if (active_view) {
+                // console.log('switch to', active_view.row);
                 active_view.viewer.append(canvas)
+                active_view.needsDraw()
             }
         }
         if (active_view) {
@@ -149,9 +167,29 @@ async function main(err: any) {
             }
         }
     }
-    window.onresize = () =>  {
-        viewers.forEach(v => v.onResize())
+
+    const resize = async () =>  {
+        let new_w = viewers[0].viewer.clientWidth//
+        let new_h = window.innerHeight - 320
+
+        const base_dim = Math.min(window.innerWidth / 6, 200)
+        const dim = new_h / Math.floor(new_h / base_dim)
+        // console.log(dim);
+        // const dim_x = 200 + new_w%200
+        // const dim_y = 200 + new_h%200
+        // console.log(dim_x, dim_y);
+        // const num_x = Math.floor(new_w / dim_x), Math.floor(new_h / dim_x)
+        // // console.log();
+        // cosnt num_y = Math.floor(new_w / dim_y), Math.floor(new_h / dim_y));
+        new_w -= new_w % dim
+
+        canvas.style.width = new_w + 'px'
+        canvas.style.height = new_h + 'px'
+        // console.log(new_w / dim, new_h / dim)
+        viewers.forEach(v => v.onResize(new_w / dim, new_h / dim))
     }
+    window.onresize = resize
+    resize()
 
     canvas.onclick = ({ offsetX: x, offsetY: y }) => {
         active_view.onClick(x, y)

@@ -139,9 +139,10 @@ h1,h2,h3,h4 {
         // position: fixed;
         top: 0px;
         // left: min();
-        left: calc(max(5%, (45% - min(45%, 60vh))));
+        // left: calc(max(5%, (45% - min(45%, 60vh))));
+        left: 5%;
         width: 45%;//calc(60% - 40px);
-        max-width: 60vh;
+        // max-width: 60vh;
 
         // background-color: white;
         .parcoords {
@@ -168,7 +169,8 @@ h1,h2,h3,h4 {
         vertical-align: top;
         float: right;
         padding-top: 50vh;
-        // padding-bottom: 30vh;
+        padding-bottom: 30vh;
+
         .district-text-inner  {
             max-width: 400px;
             float: left;

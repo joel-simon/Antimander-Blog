@@ -54,6 +54,7 @@ export default function(regl: any): any {
             // float color_value = texture2D(colors, colorPos).r;
             // gl_FragColor = RdBu(color_value);
             gl_FragColor = vec4(texture2D(colors, colorPos).rgb, 1.0);
+            // gl_FragColor = vec4(texture2D(map, uv).rgb, 1.0);
         }`,
         vert: `
         precision highp float;
@@ -67,8 +68,8 @@ export default function(regl: any): any {
             position: [-2, 0, 0, -2, 2, 2]
         },
         uniforms: {
-            nx: regl.prop('nx'),
-            ny: regl.prop('ny'),
+            nx: regl.prop('ny'),
+            ny: regl.prop('nx'),
             map: regl.prop('map'),
             colors: regl.prop('colors'),
             n_tiles: regl.prop('n_tiles'),

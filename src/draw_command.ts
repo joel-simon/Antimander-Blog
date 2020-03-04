@@ -1,7 +1,7 @@
 import draw_map_shader from './shaders/draw_map'
 import { clamp } from './utils'
-declare var d3: any;
-
+declare let d3: any;
+declare let window: any;
 function district_color_values(
     district: number[],
     n_districts:number,
@@ -26,7 +26,6 @@ export function draw_districts(
     map_data: any,
     statedata: StateData
 ) {
-    console.log(statedata);
     const color_size = 1024
     const data = new Uint8Array(color_size*color_size*3).fill(0)
     const draw_map = draw_map_shader(regl)
