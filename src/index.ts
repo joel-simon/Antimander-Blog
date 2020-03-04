@@ -98,6 +98,8 @@ async function bind_viewer(datapath: string, viewer_row: HTMLElement) {
         parcoords.width(viewer.clientWidth)
         parcoords.resize()
         parcoords.render()
+        // canvas.width = viewer.clientWidth
+        // canvas.height = window.innerHeight - canvas.getBoundingClientRect().top - 20
     }
 
     const onStep = (force=false) => {
