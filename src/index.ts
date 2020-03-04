@@ -15,11 +15,20 @@ const regl = Regl({
 })
 
 function update_scroll_blocks(scroll_blocks) {
+    let most_middle = null
+
     for (const block of scroll_blocks) {
         const { top, height } = block.getBoundingClientRect()
         const y_perc = (top+height/2) / window.innerHeight
-        block.style.opacity = 1.0 - clamp(Math.abs(y_perc - 0.5)*2, 0, 1)
+        const from_mid = Math.abs(y_perc - 0.5)*2
+        block.style.opacity = 1.0 - clamp(from_mid, 0, 1)
+        block.classList.remove('block_focus')
+        if (most_middle == null || from_mid < most_middle[0]) {
+            most_middle = [from_mid, block]
+        }
     }
+
+    most_middle[1].classList.add('block_focus')
 }
 
 // const dist_width = 200

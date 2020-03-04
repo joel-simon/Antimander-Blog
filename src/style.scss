@@ -176,14 +176,20 @@ h1,h2,h3,h4 {
             float: left;
         }
         .scroll_block {
-            margin-top: 200px;
-            margin-bottom: 200px;
+            margin-top: 150px;
+            margin-bottom: 150px;
+            padding: 25px;
+            // padding-bottom: 25px;
             text-align: center;
             p {
                 text-align: left;
             }
-            // border: 1px solid white;
+            border-left: 1px solid rgba(0, 0, 0, 0.0);
             // border-bottom: 1px solid;
+        }
+        .scroll_block.block_focus {
+            border-left: 1px solid;
+            // box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
         }
         .scroll_block img {
             max-width: 100%;
