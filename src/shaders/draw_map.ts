@@ -71,17 +71,15 @@ export default function(regl: any): any {
             vec3 color = get_color(tile_index, cell);
             int ti_left = get_tile_index(vec2(uv+vec2(0.0, -1.0)*u_size), cell);
             int ti_top = get_tile_index(vec2(uv+vec2(-1.0, 0.0)*u_size), cell);
-            int ti_top_left = get_tile_index(vec2(uv+vec2(-1.0, -1.0)*u_size), cell);
+            //int ti_top_left = get_tile_index(vec2(uv+vec2(-1.0, -1.0)*u_size), cell);
 
-            // int ti_right = get_tile_index(vec2(uv+vec2(0.0, 1.0)*u_size), cell);
-            // int ti_bottom = get_tile_index(vec2(uv+vec2(1.0, -0.0)*u_size), cell);
+            int ti_right = get_tile_index(vec2(uv+vec2(0.0, 1.0)*u_size), cell);
+            int ti_bottom = get_tile_index(vec2(uv+vec2(1.0, -0.0)*u_size), cell);
 
             bool eq = all(equal(color, get_color(ti_top, cell))) && \
                       all(equal(color, get_color(ti_left, cell))) && \
-                      all(equal(color, get_color(ti_top_left, cell)));
-
-                      // all(equal(color, get_color(ti_right, cell))) && \
-                      // all(equal(color, get_color(ti_bottom, cell)));
+                      all(equal(color, get_color(ti_right, cell))) && \
+                      all(equal(color, get_color(ti_bottom, cell)));
 
             if (!eq) {
                 gl_FragColor = vec4(WHITE, 1.0);

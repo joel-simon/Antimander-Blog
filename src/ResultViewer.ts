@@ -17,7 +17,7 @@ export default class {
     draw: (x:number, y:number, solutions: number[][]) => void
     rundata: RunData
     scroll_blocks: NodeListOf<HTMLElement>
-
+    brushed_indexes: number[]
     constructor(draw_command, container, rundata: RunData) {
         this.draw = draw_command
         this.nx_max = 4
@@ -25,7 +25,8 @@ export default class {
         this.nx = this.nx_max
         this.ny = this.ny_max
         this.needs_draw = true
-        this.current = sample(range(rundata.solutions.length), this.nx*this.ny)
+        this.brushed_indexes = range(rundata.solutions.length)
+        this.current = sample(this.brushed_indexes, this.nx*this.ny)
         this.rundata = rundata
         this.values = rundata.values.map((v, i) => {
             const obj:object = { index: i }
@@ -33,19 +34,20 @@ export default class {
             return obj
         })
         this.parcoords = bind_parcoords(
-            container.querySelector('.parcoords'), this.values, (idx) => this._parCoordsUpdate(idx)
+            container.querySelector('.parcoords'), this.values, (idx) => this._onParCoordsUpdate(idx)
         )
         this.container = container
         this.viewer_div = this.container.querySelector('.district-viewer')
         this.scroll_blocks = this.container.querySelectorAll('.scroll_block')
     }
 
-    _parCoordsUpdate(indexes: number[]) {
+    _onParCoordsUpdate(brushed_indexes: number[]) {
         const { current, parcoords, nx_max, ny_max } = this
+        this.brushed_indexes = brushed_indexes
         if (current.length == 1) {
             parcoords.unhighlight()
         }
-        this.current = sample(indexes, Math.min(indexes.length, nx_max*ny_max))
+        this.current = sample(brushed_indexes, Math.min(brushed_indexes.length, nx_max*ny_max))
         this.needs_draw = true
     }
 
@@ -131,33 +133,13 @@ export default class {
     }
 
     onStep() {
-        const { needs_draw, draw, current, rundata } = this
+        const { needs_draw, draw, current, rundata, viewer_div, brushed_indexes } = this
 
         if (needs_draw) {
             this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
-            this.ny = this.nx//Math.ceil(current.length / draw_nx)
-            console.log(this.nx, current.length, Math.ceil(Math.sqrt(current.length)));
-            // if (current.length == nx*ny) {
-            //     draw(nx, ny, current.map(i => rundata.solutions[i]))
-            // } else {
-            //     const draw_nx = Math.ceil(Math.sqrt(current.length))
-            //     const draw_ny = draw_nx//Math.ceil(current.length / draw_nx)
-            //     // console.log({ length: current.length, draw_nx, draw_ny })
+            this.ny = this.nx
             draw(this.nx, this.ny, current.map(i => rundata.solutions[i]))
-            // }
-
-            // if (current.length == 1) {
-            //     draw(1, 1, current.map(i => solutions[i]))
-            // } else if (current.length < 4) {
-            //     draw(2, 2, current.map(i => solutions[i]))
-            // } else if (current.length < 9) {
-            //     draw(3, 3, current.map(i => solutions[i]))
-            // } else if (current.length < 9) {
-            //     draw(3, 3, current.map(i => solutions[i]))
-            // } else {
-            // console.log(current);
-
-            // }
+            viewer_div.querySelector('.view_count').innerHTML = `Viewing ${current.length} / ${brushed_indexes.length}`
             this.needs_draw = false
         }
     }

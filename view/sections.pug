@@ -1,0 +1,143 @@
+
+mixin intro()
+    div.outer-text-container#intro
+        div.inner-text-container
+            p Gerrymandering is difficult for courts to fight becuase there is no agreed upon definition. Properties like compactness and fairness are desired but there are subjective tradeoffs between them and no 'ideal' districting exists. As a result, it is difficult to deffinitively show that a districting could be more fair. Evaluating a districting by comparing it to a set of reasonable alternatives has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives.
+
+            // p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than 5% from the state’s total population divided by the number of districts), and each district must be contiguous.
+
+            //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
+            p Antimander is a generative design tool and research project to generate and browse optimized congressional dsitrictings. While districting commitess using it directly is unikely, it could be used as evidence of gerrymandering and also to help inform to public about the tradeoffs and how these trade-offs were made for their districts.
+
+            p Antimander proposes connecting algorithmic districting to the research field of multi-objective evolutionary algorithms (MOEAs) and novelty search and presents an open source optimization engine and viewer that does so. It is just a first-step and more work and help is needed.
+
+            h3(style='margin-top:0px;') Wisconsin: Real vs Antimander-Optimized
+            img(src='imgs/results.png')
+
+mixin background()
+    div.outer-text-container#background
+        div.inner-text-container
+            h1 Background
+            p Every decade the US redraws congressional districts, which are divisions of a state each allotted one elected congressional representative. The distribution of elected representatives has significant political impact, motivating political parties to exploit such districting to their advantage, known as gerrymandering. For example, districtings can pack a small number of districts full of the opposing party’s voters to waste many votes, enabling other districts to crack i.e. to be won by a small (but comfortable) amount, thereby securing an outsize proportion of a state’s representatives for the gerrymandering party.
+
+            p TODO - add more
+            p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings. Antimander is a open source, multi-objective evolutionary that creates optimzied dsitricts for comparison.
+
+            //- h4 The #[a(href='https://www.smithsonianmag.com/history/where-did-term-gerrymander-come-180964118/') original "Gerrymander"] in Massachusetts
+            //- img(src='imgs/the_gerrymander.jpg', style='width:256px;')
+            //- H2 The role of Software
+            //- P
+            //- p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may o er relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts.
+
+            //- p However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
+
+
+
+            //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
+
+
+            //-
+
+mixin viewer()
+    .viewer_row#viewer(data-datapath='general')
+        +district_viewer("Interactive Viewer")
+        .district-text
+            .district-text-inner
+                .scroll_block
+                    p
+                        | On the top left is something called a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot]
+                        | which has one line for every generated solution. Each vertical axis is another dimension we are trying to optimize for.
+                .scroll_block
+                    p You can drag (brush) on axis to filter only those. This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one objective and also how those solutions rank in other objectives.
+                    img.shadow(src='imgs/filter.png')
+
+                .scroll_block
+                    p You may also click on any district to enlarge it.
+
+                .scroll_block
+                    p Each state is divided into eight districts. The color represents what party that district is leaning towards.
+                    img.legend(src='imgs/figure_legend.png')
+
+                //- for _ in [1,2,3]
+                //-     .scroll_block
+                //-         p Test
+                //- p Test2
+                //- .padding(style='height:30vh;')
+
+mixin methods()
+    #methods.outer-text-container
+        .inner-text-container
+            H1 Methods
+            p Multi-objective evolutionary algorithms are able to optimize across multiple objectives. The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [cite] is used here which is a common method that find solutions that are 'non-dominated' (there is no other solution better in all objectives). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed due to the challenges of combining diverse partitions to generate viable and meaningful new solutions.
+
+            h2 Representation & Seeding
+            p Districts are represented as integer arrays, where each node is assigned to a district. Initial individuals are created by taking random seed nodes and iteratively adding adjacent random unassigned nodes until there are no unassigned nodes left. A hill-climbing repair operator mutates the random districts until they meet the equality threshold constraint.
+
+            h2 Mutation Operator
+            p The mutation operator simply takes a node bordering another district and swaps the district it belongs to. To make exploring the search space practical, the mutation operator only allows mutations that preserve the contiguity of the district. Calculating graph connectedness after every mutation would be computationally prohibitive. Instead, local adjacency graph for every node is pre-computed. This graph on node N is the subgraph where every node is a neighbor of N. To determine if a node N may be removed from a partition without breaking contiguity, a simple search is done on the graph to see if all members that belong to that district remain connected. A full graph traversal is not needed because of assumptions about the structure of districts (such that one district will never fully enclosed another district) that are preserved by the objectives.
+
+            h2 Novelty Search
+            p Novelty search explicitly promotes phenotypic diversity, thereby assisting exploration [ #[a.cite(href='') cite] ]. Novelty Search requires a behavior characterization that captures important traits in few dimensions. To apply novelty search here, we take inspiration from shape features used to characterize 3D meshes [cite osada2002shape] (cite used in corals.). Here, our BC is the histogram of the distances between the centers of all districts.
+
+            h2 Feasible-Infeasible Search
+            .col(style='width:65%;')
+                p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majory of the possibilities are inviable. Often, finding a good solution requires explores some bad ones first. Some genetic-algorithms simply throw out invlaid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satify all constraints) and one for infeasible (FIF). The feasible optimize for all the objectives while the infeasible optimize to satisfy the objectives. Liapis et all (cite Enhancements to Constrained Novelty Search) propose combining novlety search with FIF.
+            .col(style='width:35%;')
+                img(src='imgs/FIF.png', style='max-width:256px;')
+                p Derp derp
+
+            h2 Multi-Phase
+            p Because optimizing a large number of nodes directly is challenging, districts are optimized through a multi-phase evolutionary algorithm, where each successive phase divides districts more granularly (similarly to Swarmy et al. cite{swamymulti}). To create a series of coarsening graphs, the graph is iteratively contracted using star contraction \cite[ch. 13]{ab-algorithms} until the state has reached 500 nodes (a resolution amenable to direct optimization). An additional bias is added to preserve compact shapes across graph resolutions. The results of optimizing at a more coarse representation serve as a starting point for optimizing the successive (less-coarse) phase.
+            img(src='imgs/contract.png', style='max-width:100%;')
+            p TODO repalce with a state contracted
+
+
+            //- The multi-objective evolutionary algorithm NSGA-II \cite{deb2002fast} is used to optimize the populations at each phase. The implementation used of NGSA-II [pymoo] handles constraints by placing infeasible solutions into their own front. A spatially aware mutation operator (described below) is implemented to encourage feasible mutations.
+
+            h2 Data
+            p Wisconsin is chosen as a test as in [cite{liu2016pear,swamymulti}]. Census and geographic data was downloaded from the Metric Geometry and Gerrymandering Group's mggg-states Github repository. Voters for each party were the average voters in the 2012 and 2016 presidential election. Wisconsin has eight congressional districts composed from 6634 census wards.
+
+mixin metrics()
+    #metrics.outer-text-container
+        div.inner-text-container
+            H1 Metrics: What makes a good district?
+            p The results above were optimized for "fairness", "compactness" and "competitiveness." But what are those and what do they mean?
+
+        div.inner-text-container
+            .col2
+                h2 Fairness
+                p Generally we want the percent of representatives to correspont to the percent of voters for that party. The efficiency gap [5] is a metric that views fairness through the lens of the lost votes of each party. Votes cast for the losing party, or those cast for the winning party beyond the winning threshold are considered lost.
+            .col2
+                h2 Competitiveness
+                p
+                p Close races helps prevent incumbents from being too entrenched (incumbant gerrymandering). Also, less polarized represetnatives are beneficial for a healthy democracy. Competitiveness is measured by the largest ratio by which one party wins over another.
+
+        div.inner-text-container
+            H2 Compactness
+            p The original gerrymander was named for its peculiar shape it is intuitivly desirable to expect to live near people within a same district. A lot of attention is therefore paid to the shad of districts, especially since - unlike other metrics - it is easy to evaluate visually. But what does it mean to be 'compact'? It turns out there are many metrics that can be used. Images below are from #[a(href="https://fisherzachary.github.io/public/r-output.html") this article] which also has additional metrics.
+            //- A lot of attention is paid to the shape of dsit
+
+            //- p  Measuring Compactness Article] which
+            //- and we have come to conflate bizzare shapes with gerrymandering.
+            //- and intuitivelty more compact shapes feel better.
+
+        div.inner-text-container
+            .compactness_tile
+                h3 Polspy-Popper
+                p Ratio of area to perimeter (used above).
+                img(src='imgs/compactness/polsby_popper.png', style='max-width:256px;')
+
+            .compactness_tile
+                h3 Convex-Hull
+                p Ratio of area to its convex hull.
+                img(src='imgs/compactness/convex_hull.png', style='max-width:256px;')
+
+            .compactness_tile
+                h3 Bounding-Circle (Reock)
+                p Ratio of area to its minimum bounding circle. Also knows as "Reock."
+                img(src='imgs/compactness/reock.png', style='max-width:256px;')
+
+            .compactness_tile
+                h3 Center-Distance
+                p The average distance to the centroid of a district.
+                img(src='imgs/compactness/center_distance.png', style='max-width:256px;')

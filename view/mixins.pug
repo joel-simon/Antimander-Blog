@@ -4,7 +4,13 @@ mixin text-container(text)
         div.inner-text-container
             p!=text
 
-// mixin district_viewer()
+mixin district_viewer(name)
+    .district-viewer
+        h1.header!=name
+        .parcoords
+        .padding
+        .canvas_container
+        p.view_count Viewing N / K
 
 mixin mailchimp()
     .mailchimp

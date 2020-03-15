@@ -35,7 +35,7 @@ async function main() {
     })
 
     const viewers = await load_viewers(regl)
-    let last_scroll = window.scrollY
+    let last_scroll = null
     let active_viewer:ResultViewer = null
 
     function step() {
@@ -48,7 +48,7 @@ async function main() {
             active_viewer = viewers.find(v => inView(v.container))
             if (active_viewer) {
                 // console.log('switch to', active_viewer.container);
-                active_viewer.viewer_div.append(canvas)
+                active_viewer.viewer_div.querySelector('.canvas_container').append(canvas)
                 active_viewer.needsDraw()
             }
         }
@@ -59,7 +59,6 @@ async function main() {
             }
         }
     }
-
     const resize = async () =>  {
         // const mobile = window.innerWidth < 800
         // let new_w = viewers[0].viewer.clientWidth
@@ -77,10 +76,6 @@ async function main() {
         // // console.log(new_w / dim, new_h / dim)
         viewers.forEach(v => v.onResize())
     }
-
-    window.onresize = resize
-    resize()
-
     canvas.onclick = ({ offsetX: x, offsetY: y }) => {
         const { clientWidth: width, clientHeight: height } = canvas
         active_viewer.onClick(x / width, y / height)
@@ -92,8 +87,9 @@ async function main() {
     canvas.onmouseleave = () => {
         active_viewer.onMouseLeave()
     }
-
     window.requestAnimationFrame(step)
+    window.onresize = resize
+    resize()
 }
 
 main()
