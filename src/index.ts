@@ -82,7 +82,15 @@ async function main() {
     resize()
 
     canvas.onclick = ({ offsetX: x, offsetY: y }) => {
-        active_viewer.onClick(x, y)
+        const { clientWidth: width, clientHeight: height } = canvas
+        active_viewer.onClick(x / width, y / height)
+    }
+    canvas.onmousemove = ({ offsetX: x, offsetY: y }) => {
+        const { clientWidth: width, clientHeight: height } = canvas
+        active_viewer.onMouseMove(x / width, y / height)
+    }
+    canvas.onmouseleave = () => {
+        active_viewer.onMouseLeave()
     }
 
     window.requestAnimationFrame(step)

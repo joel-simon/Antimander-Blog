@@ -11,6 +11,8 @@ export default class {
     current: number[]
     nx: number
     ny: number
+    nx_max: number
+    ny_max: number
     values: any[]
     draw: (x:number, y:number, solutions: number[][]) => void
     rundata: RunData
@@ -18,9 +20,11 @@ export default class {
 
     constructor(draw_command, container, rundata: RunData) {
         this.draw = draw_command
-        this.nx = 4
-        this.ny = 4
-        this.needs_draw = false
+        this.nx_max = 4
+        this.ny_max = 4
+        this.nx = this.nx_max
+        this.ny = this.ny_max
+        this.needs_draw = true
         this.current = sample(range(rundata.solutions.length), this.nx*this.ny)
         this.rundata = rundata
         this.values = rundata.values.map((v, i) => {
@@ -37,28 +41,42 @@ export default class {
     }
 
     _parCoordsUpdate(indexes: number[]) {
-        const { current, parcoords, nx, ny } = this
+        const { current, parcoords, nx_max, ny_max } = this
         if (current.length == 1) {
             parcoords.unhighlight()
         }
-        this.current = sample(indexes, nx*ny)
+        this.current = sample(indexes, Math.min(indexes.length, nx_max*ny_max))
         this.needs_draw = true
     }
 
     onClick(x: number, y:number) {
-        const { draw, current, parcoords, nx, ny, rundata, values, viewer_div } = this
-        if (current.length == 1) { // Reset.
-            this.current = sample(range(rundata.solutions.length), nx*ny)
+        /* x and y are both percents. */
+        const {  parcoords, nx, ny, nx_max, ny_max} = this
+        if (this.current.length == 1) { // Reset.
+            this.current = sample(range(this.rundata.solutions.length), nx_max*ny_max)
             this.needs_draw = true
             parcoords.unhighlight()
-            // draw(nx, ny, current.map(i => rundata.solutions[i]))
         } else { // Draw just one.
-            const c_i = Math.floor((x / viewer_div.clientWidth) * nx)
-            const c_j = Math.floor((y / viewer_div.clientHeight) * ny)
-            this.current = [ current[ (c_i*nx) + c_j ] ]
+            const c_i = Math.floor(x * nx)
+            const c_j = Math.floor(y * ny)
+            this.current = [ this.current[ (c_i*nx) + c_j ] ]
             this.needs_draw = true
-            parcoords.highlight([values[this.current[0]]])
-            // draw(1, 1, this.current.map(i => rundata.solutions[i]))
+            parcoords.highlight([this.values[this.current[0]]])
+        }
+    }
+
+    onMouseMove(x: number, y:number) {
+        /* x and y are both percents. */
+        const { nx, ny, rundata, values, parcoords, current } = this
+        const c_i = Math.floor(x * nx)
+        const c_j = Math.floor(y * ny)
+        const index = current[(c_i*nx) + c_j]
+        parcoords.highlight([values[index]])
+    }
+
+    onMouseLeave() {
+        if (this.current.length > 1) { // If only one is selected, keep it highlighted.
+            this.parcoords.unhighlight()
         }
     }
 
@@ -113,16 +131,20 @@ export default class {
     }
 
     onStep() {
-        const { nx, ny, needs_draw, draw, current, rundata } = this
+        const { needs_draw, draw, current, rundata } = this
+
         if (needs_draw) {
-            if (current.length == nx*ny) {
-                draw(nx, ny, current.map(i => rundata.solutions[i]))
-            } else {
-                const draw_nx = Math.ceil(Math.sqrt(current.length))
-                const draw_ny = draw_nx//Math.ceil(current.length / draw_nx)
-                console.log({ length: current.length, draw_nx, draw_ny })
-                draw(draw_nx, draw_ny, current.map(i => rundata.solutions[i]))
-            }
+            this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
+            this.ny = this.nx//Math.ceil(current.length / draw_nx)
+            console.log(this.nx, current.length, Math.ceil(Math.sqrt(current.length)));
+            // if (current.length == nx*ny) {
+            //     draw(nx, ny, current.map(i => rundata.solutions[i]))
+            // } else {
+            //     const draw_nx = Math.ceil(Math.sqrt(current.length))
+            //     const draw_ny = draw_nx//Math.ceil(current.length / draw_nx)
+            //     // console.log({ length: current.length, draw_nx, draw_ny })
+            draw(this.nx, this.ny, current.map(i => rundata.solutions[i]))
+            // }
 
             // if (current.length == 1) {
             //     draw(1, 1, current.map(i => solutions[i]))
