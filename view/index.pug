@@ -5,7 +5,7 @@ mixin district_viewer(name)
     .district-viewer
         h1.header!=name
         .parcoords
-        .padding(style='height:20px;')
+        .padding
         // canvas.main_canvas(width=1024, height=1024)
 
 mixin intro()
@@ -106,11 +106,10 @@ mixin methods()
             h2 Data
             p Wisconsin is chosen as a test as in [cite{liu2016pear,swamymulti}]. Census and geographic data was downloaded from the Metric Geometry and Gerrymandering Group's mggg-states Github repository. Voters for each party were the average voters in the 2012 and 2016 presidential election. Wisconsin has eight congressional districts composed from 6634 census wards.
 
-
-
 html(lang='en')
     head
         title Antimander
+        meta(content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport")
         +redaction_font()
         +d3_scripts()
     body

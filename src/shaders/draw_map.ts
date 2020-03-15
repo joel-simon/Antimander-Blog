@@ -4,6 +4,7 @@ export default function(regl: any): any {
         precision highp float;
         uniform sampler2D map;
         uniform sampler2D colors;
+        uniform sampler2D all_colors;
         uniform vec2 u_size;
         varying vec2 uv;
 
@@ -48,8 +49,13 @@ export default function(regl: any): any {
 
         vec3 get_color(int tile_index, vec2 cell) {
             vec2 colorPos = tileIdx2colorPos(tile_index - 1, cell);
-            vec3 color = texture2D(colors, colorPos).rgb;
+            float color_value = texture2D(colors, colorPos).x;
+
+            vec3 color = texture2D(all_colors, vec2(color_value, 0.0)).rgb;
             return color;
+            // return vec3(color_value, 0.0, 0.0);
+            // vec3 color = texture2D(colors, colorPos).rgb;
+            // return color;
         }
 
         void main () {
@@ -64,12 +70,16 @@ export default function(regl: any): any {
 
             vec3 color = get_color(tile_index, cell);
             int ti_left = get_tile_index(vec2(uv+vec2(0.0, -1.0)*u_size), cell);
-            int ti_right = get_tile_index(vec2(uv+vec2(0.0, 1.0)*u_size), cell);
             int ti_top = get_tile_index(vec2(uv+vec2(-1.0, 0.0)*u_size), cell);
-            int ti_bottom = get_tile_index(vec2(uv+vec2(1.0, -0.0)*u_size), cell);
+            int ti_top_left = get_tile_index(vec2(uv+vec2(-1.0, -1.0)*u_size), cell);
+
+            // int ti_right = get_tile_index(vec2(uv+vec2(0.0, 1.0)*u_size), cell);
+            // int ti_bottom = get_tile_index(vec2(uv+vec2(1.0, -0.0)*u_size), cell);
 
             bool eq = all(equal(color, get_color(ti_top, cell))) && \
-                      all(equal(color, get_color(ti_left, cell)));// && \
+                      all(equal(color, get_color(ti_left, cell))) && \
+                      all(equal(color, get_color(ti_top_left, cell)));
+
                       // all(equal(color, get_color(ti_right, cell))) && \
                       // all(equal(color, get_color(ti_bottom, cell)));
 
@@ -95,6 +105,7 @@ export default function(regl: any): any {
             ny: regl.prop('nx'),
             map: regl.prop('map'),
             colors: regl.prop('colors'),
+            all_colors: regl.prop('all_colors'),
             n_tiles: regl.prop('n_tiles'),
             color_texture_size: regl.prop('color_texture_size'),
             u_size: ctx => [1 / ctx.framebufferWidth, 1 / ctx.framebufferHeight],
