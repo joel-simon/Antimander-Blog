@@ -12,12 +12,15 @@ export default function(regl: any): any {
         uniform float ny;
         uniform float color_texture_size;
         uniform float n_tiles;
+        uniform float selected_id;
 
         const float s16 = 65653.0;
         const float s8  = 256.0;
         const vec3 RED   = vec3(1.0, 0.0, 0.0);
         const vec3 BLUE  = vec3(0.0, 0.0, 1.0);
         const vec3 WHITE = vec3(1.0, 1.0, 1.0);
+        const vec3 YELLOW = vec3(252.0/255.0, 198.0/255.0, 3.0/255.0);
+
 
         // vec4 RdBu(float value) {
             // return rdbu_colors[int(value * 512)]
@@ -82,7 +85,8 @@ export default function(regl: any): any {
                       all(equal(color, get_color(ti_bottom, cell)));
 
             if (!eq) {
-                gl_FragColor = vec4(WHITE, 1.0);
+                bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
+                gl_FragColor = is_selected ? vec4(YELLOW, 0.3) : vec4(WHITE, 1.0);
             } else {
                 gl_FragColor = vec4(color, 1.0);
             }
@@ -101,6 +105,7 @@ export default function(regl: any): any {
         uniforms: {
             nx: regl.prop('ny'),
             ny: regl.prop('nx'),
+            selected_id: regl.prop('selected_id'),
             map: regl.prop('map'),
             colors: regl.prop('colors'),
             all_colors: regl.prop('all_colors'),

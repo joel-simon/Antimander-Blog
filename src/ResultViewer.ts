@@ -14,10 +14,11 @@ export default class {
     nx_max: number
     ny_max: number
     values: any[]
-    draw: (x:number, y:number, solutions: number[][]) => void
+    draw: (x:number, y:number, id: number, solutions: number[][]) => void
     rundata: RunData
     scroll_blocks: NodeListOf<HTMLElement>
     brushed_indexes: number[]
+    hover_idx: number
     constructor(draw_command, container, rundata: RunData) {
         this.draw = draw_command
         this.nx_max = 4
@@ -28,6 +29,7 @@ export default class {
         this.brushed_indexes = range(rundata.solutions.length)
         this.current = sample(this.brushed_indexes, this.nx*this.ny)
         this.rundata = rundata
+        this.hover_idx = -1
         this.values = rundata.values.map((v, i) => {
             const obj:object = { index: i }
             v.forEach((_v:number, _i:number) => obj[rundata.config.metrics[_i]] = _v)
@@ -69,17 +71,27 @@ export default class {
 
     onMouseMove(x: number, y:number) {
         /* x and y are both percents. */
-        const { nx, ny, rundata, values, parcoords, current } = this
+        if (this.current.length == 1) {
+            return
+        }
+        const { nx, ny, values, parcoords, current } = this
         const c_i = Math.floor(x * nx)
         const c_j = Math.floor(y * ny)
-        const index = current[(c_i*nx) + c_j]
-        parcoords.highlight([values[index]])
+        const hover_idx = (c_i*nx) + c_j
+        if (hover_idx != this.hover_idx) {
+            this.hover_idx = hover_idx
+            parcoords.highlight([values[current[hover_idx]]])
+            this.needs_draw = true
+        }
+
     }
 
     onMouseLeave() {
         if (this.current.length > 1) { // If only one is selected, keep it highlighted.
             this.parcoords.unhighlight()
         }
+        this.hover_idx = -1
+        this.needs_draw = true
     }
 
     onScroll() {
@@ -134,11 +146,10 @@ export default class {
 
     onStep() {
         const { needs_draw, draw, current, rundata, viewer_div, brushed_indexes } = this
-
         if (needs_draw) {
             this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
             this.ny = this.nx
-            draw(this.nx, this.ny, current.map(i => rundata.solutions[i]))
+            draw(this.nx, this.ny, this.hover_idx, current.map(i => rundata.solutions[i]))
             viewer_div.querySelector('.view_count').innerHTML = `Viewing ${current.length} / ${brushed_indexes.length}`
             this.needs_draw = false
         }

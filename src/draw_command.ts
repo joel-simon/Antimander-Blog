@@ -70,7 +70,7 @@ export function draw_districts(
         shape: [1024, 1, 3]
     })
 
-    return (nx: number, ny: number, solutions: number[][]) => {
+    return (nx: number, ny: number, selected_id:number, solutions: number[][]) => {
         let idx = 0
         console.time('draw')
         for (let i = 0; i < solutions.length; i++) {
@@ -91,9 +91,7 @@ export function draw_districts(
             shape: [ color_size, color_size, 1 ]
         })
         draw_map({
-            colors,
-            nx, ny,
-            all_colors,
+            colors, nx, ny, all_colors, selected_id,
             map: map_texture,
             n_tiles: statedata.voters.length,
             color_texture_size: color_size
