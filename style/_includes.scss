@@ -1,0 +1,35 @@
+:root {
+    --color-red: rgba(255,35,30,100);
+    --color-blue: #007aff;
+}
+.redaction { font-family: redaction; }
+.redaction-10 { font-family: redaction-10; }
+.redaction-20 { font-family: redaction-20; }
+.redaction-35 { font-family: redaction-35; }
+.redaction-50 { font-family: redaction-50; }
+.redaction-70 { font-family: redaction-70; }
+.redaction-100 { font-family: redaction-100; }
+
+.col {
+    display: inline-block;
+    vertical-align: middle;
+}
+.col2 {
+    width: 50%;
+    @extend .col;
+}
+.col3 {
+    width: 33%;
+    @extend .col;
+}
+.col4 {
+    width: 25%;
+    @extend .col;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.center {
+    text-align: center;
+}

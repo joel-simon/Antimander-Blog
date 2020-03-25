@@ -1,4 +1,3 @@
-import '../src/style.scss'
 import { fetch_json, image_data, sum, sample, range, clamp, inView } from './utils'
 import bind_parcoords from './parallel_coords'
 import { RunData, StateData } from './datatypes'
@@ -116,8 +115,15 @@ export default class {
         this.scroll_blocks.forEach(block => {
             const { top, height } = block.getBoundingClientRect()
             const y_perc = (top+height/2) / window.innerHeight
-            const from_mid = Math.abs(y_perc - (mobile ? 0.75 : 0.5))*2
-            block.style.opacity = (1.0 - clamp(from_mid, 0, 1)).toString()
+            const from_mid =  clamp(Math.abs(y_perc - (mobile ? 0.75 : 0.5))*2, 0, 1)
+
+            // const font_classes = ['redaction', 'redaction-10', 'redaction-20', 'redaction-35', 'redaction-50', 'redaction-70',  'redaction-100']
+            // const new_font_class = font_classes[Math.floor(from_mid * font_classes.length)]
+            // block.classList.remove(block.dataset.font_class)
+            // block.classList.add(new_font_class)
+            // block.dataset.font_class = new_font_class
+
+            block.style.opacity = (1.0 - from_mid).toString()
             block.classList.remove('block_focus')
             if (most_middle == null || from_mid < most_middle[0]) {
                 most_middle = [from_mid, block]

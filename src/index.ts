@@ -1,4 +1,4 @@
-import '../src/style.scss'
+import '../style/index.scss'
 import { image_data } from './utils'
 import ndarray from 'ndarray'
 import Regl from 'regl'

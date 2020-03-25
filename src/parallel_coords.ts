@@ -10,13 +10,15 @@ export default function(
     // dimensionTitles: [...names, 'index'],
     // hideAxis: ['index']
     const parcoords = d3.parcoords()(div)
-        .alpha(0.15)
+        .alpha(0.05)
         .data(data)
         // .data(data.map((v, i) => {
         //     const obj:object = { index: i }
         //     v.forEach((_v:number, _i:number) => obj[names[_i]] = _v)
         //     return obj
         // }))
+        .color("#000")
+        .composite("darker")
         .hideAxis(['index'])
         // .composite('darker')
         .render()

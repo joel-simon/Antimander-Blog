@@ -1,4 +1,11 @@
 
+mixin section_nav(active)
+    //- h2!=active.toUpperCase()
+    .section_nav
+        for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'results', 'next-steps']
+            h2.navlink(class = name == active ? 'active' : '')
+                a(href='#'+name)!=idx+': '+name.toUpperCase()
+
 mixin text-container(text)
     div.outer-text-container
         div.inner-text-container
@@ -6,7 +13,7 @@ mixin text-container(text)
 
 mixin district_viewer(name)
     .district-viewer
-        h1.header!=name
+        //- h1.header!=name
         .parcoords
         .padding
         .canvas_container
@@ -18,7 +25,7 @@ mixin mailchimp()
         h2 Stay up to date with Antimander
         link(href='//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css', rel='stylesheet', type='text/css')
         style(type='text/css').
-            #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+            #mc_embed_signup{clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
             /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
         #mc_embed_signup
@@ -31,6 +38,7 @@ mixin mailchimp()
                         input(type='text', name='b_a8bf2c0baf9814ce560cee82d_9ea5be3557', tabindex='-1', value='')
                     .clear
                         input#mc-embedded-subscribe.button(type='submit', value='Subscribe', name='subscribe')
+
 mixin redaction_font()
     style.
         @font-face {
@@ -46,6 +54,51 @@ mixin redaction_font()
             font-family: "redaction";
             src: url("./fonts/Redaction-Italic.woff") format('woff');
             font-style: italic;
+        }
+
+        @font-face {
+            font-family: "redaction-10";
+            src: url("./fonts/Redaction10-Regular.woff") format('woff');
+        }
+        @font-face {
+            font-family: "redaction-10";
+            src: url("./fonts/Redaction10-Bold.woff") format('woff');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: "redaction-20";
+            src: url("./fonts/Redaction20-Regular.woff") format('woff');
+        }
+        @font-face {
+            font-family: "redaction-20";
+            src: url("./fonts/Redaction20-Bold.woff") format('woff');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: "redaction-35";
+            src: url("./fonts/Redaction35-Regular.woff") format('woff');
+        }
+        @font-face {
+            font-family: "redaction-35";
+            src: url("./fonts/Redaction35-Bold.woff") format('woff');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: "redaction-50";
+            src: url("./fonts/Redaction50-Regular.woff") format('woff');
+        }
+        @font-face {
+            font-family: "redaction-50";
+            src: url("./fonts/Redaction50-Bold.woff") format('woff');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: "redaction-70";
+            src: url("./fonts/Redaction70-Regular.woff") format('woff');
+        }
+        @font-face {
+            font-family: "redaction-100";
+            src: url("./fonts/Redaction100-Regular.woff") format('woff');
         }
 
 mixin d3_scripts()

@@ -1,0 +1,90 @@
+.viewer_row {
+    width: 100%;
+    // min-height: 100vh;
+    display: inline-block;
+    // background-color: green;
+    .district-viewer, .district-text {
+        display:  inline-block;
+        // padding-left: 20px;
+        // padding-right: 20px;
+        // width: calc(50% - 40px);
+    }
+    .district-viewer {
+        text-align: center;
+        // background-color: red;
+        // position: fixed;
+        // position: fixed;
+        top: 0px;
+        // left: min();
+        // left: calc(max(5%, (45% - min(45%, 60vh))));
+        left: 2vw;
+        width: calc(50% - 4vw);
+        // max-width: 60vh;
+
+        // background-color: white;
+        .parcoords {
+            text-align: initial;
+            width:100%;
+            height:200px;
+            // background-color: transparent;
+        }
+        .header {
+            // text-align: right;
+            // transform:
+        }
+        canvas {
+            width: 100%;
+            cursor: pointer;
+        }
+        .padding {
+            height: 20px;
+        }
+        .view_count {
+            font-size: 1.3em;
+            opacity: 0.8;
+        }
+        img.legend {
+
+            width: 100%;
+            max-width: 500px;
+        }
+    }
+    .district-text {
+        width: calc(50% - 40px);
+        vertical-align: top;
+        float: right;
+        padding-top: 50vh;
+        padding-bottom: 30vh;
+
+        .district-text-inner  {
+            max-width: 400px;
+            float: left;
+        }
+        .scroll_block {
+            margin-top: 150px;
+            margin-bottom: 150px;
+            padding: 25px;
+            // padding-bottom: 25px;
+            text-align: center;
+            p {
+                text-align: left;
+            }
+            border-left: 1px solid rgba(0, 0, 0, 0.0);
+            // border-bottom: 1px solid;
+        }
+        .scroll_block.block_focus {
+            border-left: 1px solid;
+            // box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
+        }
+        .scroll_block img {
+            max-width: 100%;
+            // display: inline-block;
+        }
+        h1,h2,h3,h4 {
+            // text-align: center;
+        }
+        p {
+           // margin-top: 20vh;
+        }
+    }
+}

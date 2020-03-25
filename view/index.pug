@@ -9,61 +9,38 @@ html(lang='en')
         +redaction_font()
         +d3_scripts()
     body
-        #header-container.container.center
-            h1.main-heading
-                i Antimander
-            p(style='margin-top: 0px;') Open-source research and software to fight gerrymandering
-            p.small By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and Nio Ono
-        .inner_body
-            br
-            div.outer-text-container
-                div.inner-text-container.tags
-                    for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'next-steps']
-                        h4.tag: a(href='#'+name)!=idx+': '+name.toUpperCase()
-                //- p March 2020
-            +intro()
-            +background()
-            +viewer()
-            canvas.main_canvas(width=1024, height=1024)
-            +metrics()
-            .viewer_row#viewer(data-datapath='all_compactness')
-                +district_viewer("Multiple compactness")
-                .district-text
-                    .district-text-inner
+        //- #header-container.container.center
+        //-     h1.main-heading
+        //-         i Antimander
+        //-     p(style='margin-top: 0px;') Open-source research and software to fight gerrymandering
+        //-     p.small By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and Nio Ono
+        #derp
+            .col2(style="border-right: 1px solid;")
+        +header()
+        //- br
+        //- div.outer-text-container
+            div.inner-text-container.tags
+                for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'next-steps']
+                    h4.tag: a(href='#'+name)!=idx+': '+name.toUpperCase()
+            //- p March 2020
+        +intro()
+        +background()
+        +viewer()
+        +metrics()
+        .section.viewer_row#viewer(data-datapath='all_compactness')
+            +district_viewer("Multiple compactness")
+            .district-text
+                .district-text-inner
+                    .scroll_block
+                        p As you can see compactness is complicated. On the left are districts optimized for all of thecompactness metrics above. They still had to be contiguos and equal (same number of people).
+                    .scroll_block
+                        p We can see which metrics corelate and which dont, or what it means to be compact for one but not the other.
+                    .scroll_block
+                        p The dark colors mean these districts are not competitive, which is not suprising since that was not included.
+                    for i in [1,2,3,4]
                         .scroll_block
-                            p As you can see compactness is complicated. On the left are districts optimized for all of thecompactness metrics above. They still had to be contiguos and equal (same number of people).
-                        .scroll_block
-                            p We can see which metrics corelate and which dont, or what it means to be compact for one but not the other.
-                        .scroll_block
-                            p The dark colors mean these districts are not competitive, which is not suprising since that was not included.
-                        for i in [1,2,3,4]
-                            .scroll_block
-                                p Test
-            +methods()
-            #results.outer-text-container
-                div.inner-text-container
-                    h2 Experiments
-                    .col2
-                        p Three methods were compared: NSGA-II, feasible-infeasible search (FIF), and FIF with novelty as an additional objective in the infeasible population only (FIF-NOV). Each run had a total population of 800, and consisted of 1000 generations per each of its five phases. Each run was replicated five times.
-
-                        p FIF with novelty outperformed vanilla NSGA-2 and FIF without novelty. Somewhat suprisingly, FIF did worse than NSGA if no novelty was employed.
-
-                    .col2(style='vertical-align:middle;')
-                        img(src='imgs/results.svg', style='max-width:300px;')
-                    img(src='imgs/results.png')
-                    p Comparing actual and optimized Wisconsin districts. Shown optimized solutions are hand-chosen from those that dominate the actual districting (i.e. strictly lower score on all measures) (a) Wisconsin's 2011 districts have scores: fairness=0.788, competitiveness=%53.16, equality=%8.46. (b) An optimized compact district from a FIF-NOV run: fairness=0.647, competitiveness=%17.98, equality=%0.76. The solution is quantatively and qualitatively more compact than the actual districting. (c) An optimized district with maximum fairness and competitiveness from a FIF-NOV run: fairness=0.762, competitiveness=%13.12, equality=%0.0 Remarkably this districting had exactly 726419 lost votes for each party.
-                div.inner-text-container
-                    h2 Conclusion & Next-Steps
-
-                    p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may offer relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts. However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
-            +mailchimp()
-            div.outer-text-container#next-steps
-                div.inner-text-container
-                    h1 References
-                    p TODO
-                    //- ol
-                    //-     li A
-                    //-     li B
-                    //- h2 TODO
-            .padding(style='height:20px;')
-
+                            p Test
+        +methods()
+        +results()
+        +next-steps()
+        canvas.main_canvas(width=1024, height=1024)
