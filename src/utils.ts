@@ -53,3 +53,14 @@ export function inView(el: HTMLElement): boolean {
         (top < window.innerHeight && bottom > window.innerHeight)
     )
 }
+
+// function norm(array) {
+//     let [min, max] = [Infinity, -Infinity]
+//     for (const v of array) {
+//         min = v < min ? v : min
+//         max = v > max ? v : min
+//     }
+//     // const min = Math.min(...array.filter(x => !isNaN(x)))
+//     // const max = Math.max(...array.filter(x => !isNaN(x)))
+//     return array.map(x => (x-min) / (max-min))
+// }

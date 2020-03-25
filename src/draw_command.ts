@@ -1,20 +1,8 @@
 import draw_map_shader from './shaders/draw_map'
-import { clamp } from './utils'
+import { clamp, image_data } from './utils'
 import { RunData, StateData } from './datatypes'
-declare let d3: any;
+// declare let d3: any;
 declare let window: any;
-
-// function norm(array) {
-//     let [min, max] = [Infinity, -Infinity]
-//     for (const v of array) {
-//         min = v < min ? v : min
-//         max = v > max ? v : min
-//     }
-//     // const min = Math.min(...array.filter(x => !isNaN(x)))
-//     // const max = Math.max(...array.filter(x => !isNaN(x)))
-//     return array.map(x => (x-min) / (max-min))
-// }
-
 
 function district_color_values(
     district: number[],
@@ -54,6 +42,7 @@ export function draw_districts(
     regl: any,
     map_data: any,
     statedata: StateData,
+    color_scale: any,
     method: "districts" | "tiles"
 ) {
     const color_size = 1024
@@ -63,10 +52,11 @@ export function draw_districts(
     // colorType: regl.hasExtension('oes_texture_half_float') ? 'half float' : 'float',
 
     const all_colors = regl.texture({
-        data: new Array(1024).fill(0).map((_, i) => {
-            const { r, g, b } = d3.color(d3.interpolateRdBu(i / 1024))
-            return [ r, g, b ]
-        }),
+        data: color_scale,
+        // new Array(1024).fill(0).map((_, i) => {
+        //     const { r, g, b } = d3.color(d3.interpolateRdBu(i / 1024))
+        //     return [ r, g, b ]
+        // }),
         shape: [1024, 1, 3]
     })
 

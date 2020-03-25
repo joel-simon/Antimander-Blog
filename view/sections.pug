@@ -4,7 +4,7 @@ mixin header()
     #header.section
         .line_entry
             .content
-                img(src='/imgs/district.png')
+                img(src='imgs/district.png')
                 .slider_container
                     input.slider(type='range')
             .text(style='vertical-align: top;')
@@ -19,7 +19,7 @@ mixin header()
                 .attribution
                     p.small By #[a(href='http://www.joelsimon.net') Joel Simon]
                     p.small with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and Nio Ono.
-                    //- img(src='/imgs/header_pattern.png')
+                    //- img(src='imgs/header_pattern.png')
 
 mixin intro()
     //- div.outer-text-container#intro
@@ -31,7 +31,7 @@ mixin intro()
                 +section_nav('intro')
         .line_entry
             .content
-                img.medium-img(src='/imgs/the_gerrymander.png')
+                img.medium-img(src='imgs/the_gerrymander.png')
                 h2 The original gerrymander
             .text
                 p Gerrymandering is difficult for courts to fight becuase there is no agreed upon definition. Properties like compactness and fairness are desired but there are subjective tradeoffs between them and no 'ideal' districting exists. As a result, it is difficult to deffinitively show that a districting could be more fair. Evaluating a districting by comparing it to a set of reasonable alternatives has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives.
@@ -196,7 +196,7 @@ mixin methods()
                 
         .line_entry
             .content
-                img.background(src='/imgs/nsgaii.png')
+                img.background(src='imgs/nsgaii.png')
             .text
                 p Multi-objective evolutionary algorithms are able to optimize across multiple objectives. The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [cite] is used here which is a common method that find solutions that are 'non-dominated' (there is no other solution better in all objectives). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed due to the challenges of combining diverse partitions to generate viable and meaningful new solutions.
                 
