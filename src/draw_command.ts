@@ -43,6 +43,7 @@ export function draw_districts(
     map_data: any,
     statedata: StateData,
     color_scale: any,
+    background: any,
     method: "districts" | "tiles"
 ) {
     const color_size = 1024
@@ -51,14 +52,14 @@ export function draw_districts(
     let color_values = new Float32Array(color_size*color_size).fill(0)
     // colorType: regl.hasExtension('oes_texture_half_float') ? 'half float' : 'float',
 
-    const all_colors = regl.texture({
-        data: color_scale,
-        // new Array(1024).fill(0).map((_, i) => {
+    const all_colors = regl.texture(color_scale)
+    background = regl.texture(background)
+    // new Array(1024).fill(0).map((_, i) => {
         //     const { r, g, b } = d3.color(d3.interpolateRdBu(i / 1024))
         //     return [ r, g, b ]
         // }),
-        shape: [1024, 1, 3]
-    })
+    //     shape: [1024, 1, 3]
+    // })
 
     return (nx: number, ny: number, selected_id:number, solutions: number[][]) => {
         let idx = 0
@@ -81,7 +82,7 @@ export function draw_districts(
             shape: [ color_size, color_size, 1 ]
         })
         draw_map({
-            colors, nx, ny, all_colors, selected_id,
+            colors, nx, ny, all_colors, selected_id, background,
             map: map_texture,
             n_tiles: statedata.voters.length,
             color_texture_size: color_size

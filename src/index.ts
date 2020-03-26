@@ -16,7 +16,8 @@ async function load_viewers(regl): Promise<ResultViewer[]> {
         fetch_json(`./data/statedata.json`)
     ])
     const color_scale = await image_data('imgs/scale_rdbu_1px.png')
-    const draw_cmd = draw_districts(regl, mapdata, statedata, color_scale, 'districts') // Compile webgl shader and enclose data.
+    const background = await image_data('imgs/district.png')
+    const draw_cmd = draw_districts(regl, mapdata, statedata, color_scale, background, 'districts') // Compile webgl shader and enclose data.
     document.querySelectorAll('.viewer_row').forEach(async (row: HTMLElement) => {
         const datapath = row.dataset.datapath
         const rundata:RunData = await fetch_json(`./data/${datapath}/rundata.json`)

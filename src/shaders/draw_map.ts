@@ -4,6 +4,7 @@ export default function(regl: any): any {
         precision highp float;
         uniform sampler2D map;
         uniform sampler2D colors;
+        uniform sampler2D background;
         uniform sampler2D all_colors;
         uniform vec2 u_size;
         varying vec2 uv;
@@ -19,19 +20,8 @@ export default function(regl: any): any {
         const vec3 RED   = vec3(1.0, 0.0, 0.0);
         const vec3 BLUE  = vec3(0.0, 0.0, 1.0);
         const vec3 WHITE = vec3(1.0, 1.0, 1.0);
+        const vec3 BLACK = vec3(0.0, 0.0, 0.0);
         const vec3 YELLOW = vec3(252.0/255.0, 198.0/255.0, 3.0/255.0);
-
-
-        // vec4 RdBu(float value) {
-            // return rdbu_colors[int(value * 512)]
-            // if (value < 0.5) {
-            //     float p = value / 0.5;
-            //     return vec4(mix(BLUE, WHITE, p), 1.0);
-            // } else {
-            //     float p = (value - 0.5) / 0.5;
-            //     return vec4(mix(WHITE, RED, p), 1.0);
-            // }
-        // }
 
         vec2 tileIdx2colorPos(int tile_index, vec2 cell) {
             float global_index = float(tile_index) + ((cell.y * nx)+cell.x) * n_tiles;
@@ -53,12 +43,8 @@ export default function(regl: any): any {
         vec3 get_color(int tile_index, vec2 cell) {
             vec2 colorPos = tileIdx2colorPos(tile_index - 1, cell);
             float color_value = texture2D(colors, colorPos).x;
-
             vec3 color = texture2D(all_colors, vec2(color_value, 0.0)).rgb;
             return color;
-            // return vec3(color_value, 0.0, 0.0);
-            // vec3 color = texture2D(colors, colorPos).rgb;
-            // return color;
         }
 
         void main () {
@@ -84,11 +70,18 @@ export default function(regl: any): any {
                       all(equal(color, get_color(ti_right, cell))) && \
                       all(equal(color, get_color(ti_bottom, cell)));
 
+
+            vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
+            vec2 cell_uv = vec2((uv.x - cell.x*cell_shape.x)/cell_shape.x,
+                                (uv.y - cell.y*cell_shape.y)/cell_shape.y);
+            vec3 background_color = texture2D(background, cell_uv).rgb;
+            // vec3 color = (get_color(tile_index, cell) + background_color) * 0.5;
+
             if (!eq) {
                 bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
-                gl_FragColor = is_selected ? vec4(YELLOW, 0.3) : vec4(WHITE, 1.0);
+                gl_FragColor = is_selected ? vec4(YELLOW, 0.3) : vec4(BLACK, 1.0);
             } else {
-                gl_FragColor = vec4(color, 1.0);
+                gl_FragColor = vec4((color+background_color)*0.5, 1.0);
             }
         }`,
         vert: `
@@ -108,6 +101,7 @@ export default function(regl: any): any {
             selected_id: regl.prop('selected_id'),
             map: regl.prop('map'),
             colors: regl.prop('colors'),
+            background: regl.prop('background'),
             all_colors: regl.prop('all_colors'),
             n_tiles: regl.prop('n_tiles'),
             color_texture_size: regl.prop('color_texture_size'),

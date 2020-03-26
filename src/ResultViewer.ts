@@ -20,8 +20,8 @@ export default class {
     hover_idx: number
     constructor(draw_command, container, rundata: RunData) {
         this.draw = draw_command
-        this.nx_max = 4
-        this.ny_max = 4
+        this.nx_max = 3
+        this.ny_max = 3
         this.nx = this.nx_max
         this.ny = this.ny_max
         this.needs_draw = true
