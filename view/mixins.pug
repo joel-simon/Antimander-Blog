@@ -2,7 +2,7 @@
 mixin section_nav(active)
     //- h2!=active.toUpperCase()
     .section_nav
-        for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'results', 'next-steps']
+        for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
             h2.navlink(class = name == active ? 'active' : '')
                 a(href='#'+name)!=idx+': '+name.toUpperCase()
 

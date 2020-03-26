@@ -2,24 +2,28 @@ import { fetch_json, image_data, sum, sample, range, clamp, inView } from './uti
 import bind_parcoords from './parallel_coords'
 import { RunData, StateData } from './datatypes'
 
-export default class {
+export interface Viewer {
+    
+}
+
+export default class implements Viewer {
     container: HTMLElement
     viewer_div: HTMLElement
     needs_draw: boolean
+    values: any[]
+    draw_cmd: (x:number, y:number, id: number, solutions: number[][]) => void
     parcoords: any
     current: number[]
     nx: number
     ny: number
     nx_max: number
     ny_max: number
-    values: any[]
-    draw: (x:number, y:number, id: number, solutions: number[][]) => void
     rundata: RunData
     scroll_blocks: NodeListOf<HTMLElement>
     brushed_indexes: number[]
     hover_idx: number
-    constructor(draw_command, container, rundata: RunData) {
-        this.draw = draw_command
+    constructor(draw_cmd, container, rundata: RunData) {
+        this.draw_cmd = draw_cmd
         this.nx_max = 3
         this.ny_max = 3
         this.nx = this.nx_max
@@ -82,7 +86,6 @@ export default class {
             parcoords.highlight([values[current[hover_idx]]])
             this.needs_draw = true
         }
-
     }
 
     onMouseLeave() {
@@ -129,7 +132,9 @@ export default class {
                 most_middle = [from_mid, block]
             }
         })
-        most_middle[1].classList.add('block_focus')
+        if (most_middle) {
+            most_middle[1].classList.add('block_focus')
+        }
     }
 
     onResize() {
@@ -151,11 +156,11 @@ export default class {
     }
 
     onStep() {
-        const { needs_draw, draw, current, rundata, viewer_div, brushed_indexes } = this
+        const { needs_draw, draw_cmd, current, rundata, viewer_div, brushed_indexes } = this
         if (needs_draw) {
             this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
             this.ny = this.nx
-            draw(this.nx, this.ny, this.hover_idx, current.map(i => rundata.solutions[i]))
+            draw_cmd(this.nx, this.ny, this.hover_idx, current.map(i => rundata.solutions[i]))
             viewer_div.querySelector('.view_count').innerHTML = `Viewing ${current.length} / ${brushed_indexes.length}`
             this.needs_draw = false
         }

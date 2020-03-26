@@ -9,38 +9,16 @@ html(lang='en')
         +redaction_font()
         +d3_scripts()
     body
-        //- #header-container.container.center
-        //-     h1.main-heading
-        //-         i Antimander
-        //-     p(style='margin-top: 0px;') Open-source research and software to fight gerrymandering
-        //-     p.small By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and Nio Ono
         #derp
             .col2(style="border-right: 1px solid;")
         +header()
-        //- br
-        //- div.outer-text-container
-            div.inner-text-container.tags
-                for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'next-steps']
-                    h4.tag: a(href='#'+name)!=idx+': '+name.toUpperCase()
-            //- p March 2020
         +intro()
         +background()
         +viewer()
         +metrics()
-        .section.viewer_row#viewer(data-datapath='all_compactness')
-            +district_viewer("Multiple compactness")
-            .district-text
-                .district-text-inner
-                    .scroll_block
-                        p As you can see compactness is complicated. On the left are districts optimized for all of thecompactness metrics above. They still had to be contiguos and equal (same number of people).
-                    .scroll_block
-                        p We can see which metrics corelate and which dont, or what it means to be compact for one but not the other.
-                    .scroll_block
-                        p The dark colors mean these districts are not competitive, which is not suprising since that was not included.
-                    for i in [1,2,3,4]
-                        .scroll_block
-                            p Test
         +methods()
         +results()
         +next-steps()
-        canvas.main_canvas(width=1024, height=1024)
+        +appendix()
+        +references()
+        

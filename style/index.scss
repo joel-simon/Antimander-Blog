@@ -23,7 +23,9 @@ a {
     text-decoration: none;
     border-bottom: 1px solid;
     &:hover {
+        color: white;
         font-family: redaction-100; 
+        background-color: black;
     }
 }
 
@@ -41,6 +43,7 @@ a {
         margin-right: .5em;
         margin-bottom: .25em;
         display: inline-block;
+        font-size: 1.2em;
     }
     .navlink a {
         padding: 2px;
@@ -164,7 +167,7 @@ h1,h2,h3,h4 {
         padding-left: 4vw;
         padding-right: 4vw;
         text-align: center;
-        img {
+        img,canvas {
             max-width: calc(100%);
             max-height: calc(100%);
         }
@@ -183,6 +186,7 @@ h1,h2,h3,h4 {
     .text {
         @extend .col2;
         // @extend .flex-col;
+        
         padding-left: 3vw;
         padding-right: 3vw;
         text-align: justify;

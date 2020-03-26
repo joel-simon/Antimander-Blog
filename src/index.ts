@@ -7,50 +7,62 @@ import { fetch_json, sum, sample, range, clamp, inView } from './utils'
 import { draw_districts } from './draw_command'
 import { RunData, StateData } from './datatypes'
 import ResultViewer from './ResultViewer'
+import SingleResultViewer from './SingleResultViewer'
 declare let window: any;
 
 async function load_viewers(regl): Promise<ResultViewer[]> {
     const viewers = []
-    const [ mapdata, statedata ]:[ any, StateData ] = await Promise.all([
+
+    // Load the WI state data.
+    const [ mapdata, statedata, color_scale, background ]: any[] = await Promise.all([
         image_data(`./data/wards.png`),
-        fetch_json(`./data/statedata.json`)
+        fetch_json(`./data/statedata.json`),
+        image_data('imgs/scale_rdbu_1px.png'),
+        image_data('imgs/district.png')
     ])
-    const color_scale = await image_data('imgs/scale_rdbu_1px.png')
-    const background = await image_data('imgs/district.png')
-    const draw_cmd = draw_districts(regl, mapdata, statedata, color_scale, background, 'districts') // Compile webgl shader and enclose data.
+
+    // Compile webgl shader and enclose data.
+    const draw_cmd = draw_districts(regl, mapdata, statedata, color_scale, background, 'districts')
+    
+    // Load the simgle-viewer for the header.
+    const rundata = await fetch_json(`./data/${'all_compactness'}/rundata.json`)
+    viewers.push(
+        new SingleResultViewer(
+            draw_cmd, document.querySelector('#header'), rundata
+        )
+    )
+
     document.querySelectorAll('.viewer_row').forEach(async (row: HTMLElement) => {
         const datapath = row.dataset.datapath
         const rundata:RunData = await fetch_json(`./data/${datapath}/rundata.json`)
         viewers.push(new ResultViewer(draw_cmd, row, rundata))
     })
+    console.log(viewers)
     return viewers
 }
 
 async function main() {
-
-    const canvas = document.querySelector('canvas')
+    const canvas = document.querySelector('canvas.main_canvas') as HTMLCanvasElement
     const regl = Regl({
         canvas,
         extensions: [ 'oes_texture_float' ],
         optionalExtensions: [ 'oes_texture_half_float'],
         attributes: { antialias: true }
     })
-
     const viewers = await load_viewers(regl)
     let last_scroll = null
     let active_viewer:ResultViewer = null
-
     function step() {
         window.requestAnimationFrame(step)
         if (last_scroll != window.scrollY) {
-            viewers.forEach(v => v.onScroll())
+            viewers.forEach(v => v?.onScroll())
             last_scroll = window.scrollY
         }
         if (!active_viewer) {
             active_viewer = viewers.find(v => inView(v.container))
             if (active_viewer) {
                 // console.log('switch to', active_viewer.container);
-                active_viewer.viewer_div.querySelector('.canvas_container').append(canvas)
+                active_viewer.container.querySelector('.canvas_container').append(canvas)
                 active_viewer.needsDraw()
             }
         }
@@ -80,14 +92,14 @@ async function main() {
     }
     canvas.onclick = ({ offsetX: x, offsetY: y }) => {
         const { clientWidth: width, clientHeight: height } = canvas
-        active_viewer.onClick(x / width, y / height)
+        active_viewer?.onClick(x / width, y / height)
     }
     canvas.onmousemove = ({ offsetX: x, offsetY: y }) => {
         const { clientWidth: width, clientHeight: height } = canvas
-        active_viewer.onMouseMove(x / width, y / height)
+        active_viewer?.onMouseMove(x / width, y / height)
     }
     canvas.onmouseleave = () => {
-        active_viewer.onMouseLeave()
+        active_viewer?.onMouseLeave()
     }
     window.requestAnimationFrame(step)
     window.onresize = resize
