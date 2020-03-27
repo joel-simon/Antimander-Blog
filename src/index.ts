@@ -25,7 +25,8 @@ async function load_viewers(regl): Promise<ResultViewer[]> {
     const draw_cmd = draw_districts(regl, mapdata, statedata, color_scale, background, 'districts')
     
     // Load the simgle-viewer for the header.
-    const rundata = await fetch_json(`./data/${'all_compactness'}/rundata.json`)
+    const rundata = await fetch_json(`./data/rundata/bias.json`)
+    console.log(rundata)
     viewers.push(
         new SingleResultViewer(
             draw_cmd, document.querySelector('#header'), rundata
@@ -34,7 +35,7 @@ async function load_viewers(regl): Promise<ResultViewer[]> {
 
     document.querySelectorAll('.viewer_row').forEach(async (row: HTMLElement) => {
         const datapath = row.dataset.datapath
-        const rundata:RunData = await fetch_json(`./data/${datapath}/rundata.json`)
+        const rundata:RunData = await fetch_json(`./data/rundata/${datapath}.json`)
         viewers.push(new ResultViewer(draw_cmd, row, rundata))
     })
     console.log(viewers)

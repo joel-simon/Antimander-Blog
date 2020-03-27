@@ -5,6 +5,7 @@ import ResultViewer from './ResultViewer'
 export default class {
     container: HTMLElement
     viewer_div: HTMLElement
+    p_counts: HTMLInputElement
     slider: HTMLInputElement
     needs_draw: boolean
     draw_idx: number
@@ -22,10 +23,11 @@ export default class {
             v.forEach((_v:number, _i:number) => obj[rundata.config.metrics[_i]] = _v)
             return obj
         })
-        const sort_key = 'compactness_convex_hull'
+        const sort_key = 'dem_advantage'
         this.sorted_idxs = range(this.values.length).sort((i, j) => {
             return this.values[i][sort_key] - this.values[j][sort_key]
         })
+        this.p_counts = container.querySelector('p.counts')
         this.slider = container.querySelector('.slider')
         this.container = container
         this.viewer_div = this.container.querySelector('.district-viewer')
@@ -38,14 +40,18 @@ export default class {
     }
     setActive(v: number) {
         this.draw_idx = this.sorted_idxs[Math.floor(v * this.values.length)]
-        // console.log(v, this.values.length, this.draw_idx)
         this.needs_draw = true
     }
     onStep() {
         const { needs_draw, draw, draw_idx, rundata, viewer_div, } = this
         if (needs_draw) {
-            console.log(draw_idx, [rundata.solutions[draw_idx]])
             draw(1, 1, -1, [rundata.solutions[draw_idx]])
+
+            const lost_votes = this.rundata.metrics_data.lost_votes[this.draw_idx]
+            const dem_districts = lost_votes.filter(([a, b]) => b > a).length
+            const rep_districts = lost_votes.length - dem_districts
+            console.log({dem_districts, rep_districts})
+            this.p_counts.innerHTML = `${dem_districts} Democratic and ${rep_districts} Republican districts.`
             this.needs_draw = false
         }
     }

@@ -6,7 +6,7 @@ mixin header()
             .content
                 .main_viewer
                     .canvas_container
-                        canvas.main_canvas(width=1024, height=1024)
+                        canvas.main_canvas(width=600, height=600)
                 //- .viewer_row(data-datapath='general', data-nx=1, data-ny=1)
                 //-     +district_viewer("Interactive Viewer")
                 //-     .district-text
@@ -14,6 +14,7 @@ mixin header()
                 //- img(src='imgs/district.png')
                 .slider_container
                     input.slider(type='range', min='0', max='.99', value='.5', step='any')
+                    p.counts
             .text(style='vertical-align: top;')
                 
                 h1.main-heading
@@ -260,6 +261,8 @@ mixin methods()
 //- THe value of making complex decison decisionas accessible for everyone
 //- The value of design research and application.
 
+//- FIF is the liek saying "this doesnt work but has promise so lets see where it goes"
+
 mixin results()
     #results.section
         .line_entry
@@ -300,6 +303,12 @@ mixin references()
             .content
             .text
                 +section_nav('references')
+
+        .line_entry.align_top
+            .content.align_top
+                h1 Code
+            .text.align_top
+                h1 Papers
                 for i in [1,2,3,4,5,6,7,8]
                     ul
                         li:  a(href='/'): h2 temp
