@@ -16,7 +16,6 @@ export default class {
     constructor(draw_command, container, rundata: RunData) {
         this.draw = draw_command
         this.needs_draw = true
-        this.draw_idx = 0
         this.rundata = rundata
         this.values = rundata.values.map((v, i) => {
             const obj:object = { index: i }
@@ -27,12 +26,13 @@ export default class {
         this.sorted_idxs = range(this.values.length).sort((i, j) => {
             return this.values[i][sort_key] - this.values[j][sort_key]
         })
+        this.draw_idx = this.sorted_idxs[Math.floor(rundata.values.length / 2)]
         this.p_counts = container.querySelector('p.counts')
         this.slider = container.querySelector('.slider')
         this.container = container
         this.viewer_div = this.container.querySelector('.district-viewer')
         
-        this.draw(1, 1, -1, [rundata.solutions[0]])
+        // this.draw(1, 1, -1, [rundata.solutions[0]])
 
         this.slider.oninput = () => {
             this.setActive(parseFloat(this.slider.value))
@@ -46,11 +46,9 @@ export default class {
         const { needs_draw, draw, draw_idx, rundata, viewer_div, } = this
         if (needs_draw) {
             draw(1, 1, -1, [rundata.solutions[draw_idx]])
-
             const lost_votes = this.rundata.metrics_data.lost_votes[this.draw_idx]
             const dem_districts = lost_votes.filter(([a, b]) => b > a).length
             const rep_districts = lost_votes.length - dem_districts
-            console.log({dem_districts, rep_districts})
             this.p_counts.innerHTML = `${dem_districts} Democratic and ${rep_districts} Republican districts.`
             this.needs_draw = false
         }
