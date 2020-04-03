@@ -46,11 +46,11 @@ export function range(n: number):number[] {
 }
 
 export function inView(el: HTMLElement): boolean {
-    const { top, left, bottom, right } = el.getBoundingClientRect()
-    // console.log({ top, left, bottom, right });
+    const { top, bottom } = el.getBoundingClientRect()
+    // console.log({ top, bottom });
     return (
-        (top < 0 && bottom > 0) ||
-        (top < window.innerHeight && bottom > window.innerHeight)
+        (top <= 0 && bottom >= 0) ||
+        (top <= window.innerHeight && bottom >= window.innerHeight)
     )
 }
 

@@ -81,7 +81,7 @@ export default function(regl: any): any {
                 bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
                 gl_FragColor = is_selected ? vec4(YELLOW, 0.3) : vec4(BLACK, 1.0);
             } else {
-                gl_FragColor = vec4((color+background_color)*0.5, 1.0);
+                gl_FragColor = vec4((.7*color+.3*background_color), 1.0);
             }
         }`,
         vert: `

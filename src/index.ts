@@ -25,20 +25,18 @@ async function load_viewers(regl): Promise<ResultViewer[]> {
     const draw_cmd = draw_districts(regl, mapdata, statedata, color_scale, background, 'districts')
     
     // Load the simgle-viewer for the header.
-    const rundata = await fetch_json(`./data/rundata/bias.json`)
+    const rundata = await fetch_json(`./data/rundata/bias_big.json`)
     console.log(rundata)
     viewers.push(
         new SingleResultViewer(
             draw_cmd, document.querySelector('#header'), rundata
         )
     )
-
     document.querySelectorAll('.viewer_row').forEach(async (row: HTMLElement) => {
         const datapath = row.dataset.datapath
         const rundata:RunData = await fetch_json(`./data/rundata/${datapath}.json`)
         viewers.push(new ResultViewer(draw_cmd, row, rundata))
     })
-    console.log(viewers)
     return viewers
 }
 
@@ -52,7 +50,8 @@ async function main() {
     })
     const viewers = await load_viewers(regl)
     let last_scroll = null
-    let active_viewer:ResultViewer = null
+    let active_viewer:ResultViewer = viewers[0]
+    console.log('Initital active viewer:', active_viewer)
     function step() {
         window.requestAnimationFrame(step)
         if (last_scroll != window.scrollY) {
@@ -62,7 +61,7 @@ async function main() {
         if (!active_viewer) {
             active_viewer = viewers.find(v => inView(v.container))
             if (active_viewer) {
-                // console.log('switch to', active_viewer.container);
+                console.log('Setting active viewer:', active_viewer)
                 active_viewer.container.querySelector('.canvas_container').append(canvas)
                 active_viewer.needsDraw()
             }
@@ -70,6 +69,8 @@ async function main() {
         if (active_viewer) {
             active_viewer.onStep()
             if (!inView(active_viewer.container)) {
+                console.log('Making inactive', active_viewer);
+                
                 active_viewer = null
             }
         }
