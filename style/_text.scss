@@ -1,0 +1,56 @@
+@import 'cursors';
+h1,h2,h3,h4,p {
+    font-weight: 400;
+    @extend .cursor-text;
+}
+
+a {
+    font-weight: 400;
+    @extend .cursor-pointer;
+    cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto;
+}
+
+h1,h2,h3,h4,h5 {
+    font-style: italic;
+}
+
+
+h1 {
+    font-size: 72px;
+    line-height: 72px;
+}
+h2 {
+    font-size: 48px;
+    line-height: 48px;
+}
+h3 {
+    font-size: 36px;
+    line-height: 40px;
+}
+h4 {
+    font-size: 24px;
+    line-height: 32px;
+}
+h5 {
+    font-size: 22px;
+    line-height: 24px;
+}
+p {
+    font-size: 22px;
+    line-height: 24px;
+}
+p.small {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    border-bottom: 1px solid;
+    &:hover {
+        color: white;
+        font-family: redaction-100; 
+        background-color: black;
+    }
+}

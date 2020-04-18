@@ -1,12 +1,16 @@
 @import 'slider';
 @import 'viewer_row';
 @import 'includes';
+@import 'section_nav';
+@import 'text';
+@import 'cursors';
 
 * {
     box-sizing: border-box;
 }
 
 html, body {
+    @extend .cursor-arrow;
     font-family: redaction;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
@@ -14,57 +18,70 @@ html, body {
     margin: 0px;
 }
 
-h1,h2,h3,h4,a,p {
-    font-weight: 400;
-}
-
-a {
-    color: black;
-    text-decoration: none;
-    border-bottom: 1px solid;
-    &:hover {
-        color: white;
-        font-family: redaction-100; 
-        background-color: black;
-    }
-}
-
 .index_nav .navlink {
     margin: .5em;
     margin-left: 0em;
 }
 
-.navlink a {
-    border-bottom: none;
-}
-.section_nav {
-    .navlink {
-        margin: 0px;
-        margin-right: .5em;
-        margin-bottom: .25em;
-        display: inline-block;
-        font-size: 1.2em;
-    }
-    .navlink a {
-        padding: 2px;
-        padding-left: 4px;
-        padding-right: 4px;
-        color: #838383;
-    }
-    .navlink.active a {
-        font-size: 1.4em;
-        color: white;
-        background-color: black;
-    }
-}
+// .navlink:hover a {
+//     color: white;
+// }
 
 
 h1:hover, a:hover {
     // font-family: redaction-50;
 }
 
-.parcoords > svg, .parcoords > canvas {
-    font-family: redaction;
+.blue2white {
+    // background: linear-gradient(to bottom, #1F47CD, #1069EC, #007BFF,
+    //                             #008FFF, #019EFF, #1EADFF, #57BDFF,
+    //                             #8DD0FF, #BBE2FD, #E3F4FF)
+    background: linear-gradient(to bottom, #fcfbf7, #007bff 1%, #fcfbf7);
+}
+
+.red2white {
+    // background: linear-gradient(to bottom, #C30011, #d10420, #DE1427,
+    //                             #F0232D, #FF312D, #F9474A, #EE6D6F,
+    //                             #F69798, #FFCBD1, #FFEAEE)
+    background: linear-gradient(to bottom, #fcfbf7, #ff312d 1%, #fcfbf7);
+}
+
+.section {
+    position: relative;
+    z-index: 1;
+    min-height: 30vh;
+    .section_header {
+        text-transform: capitalize;
+    }
+    .left_col, .right_col {
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        width: 50vw;
+        height: 100%;
+    }
+    .left_col {
+        left: 0px;
+    }
+    .right_col {
+        right: 0px;
+        border-bottom: 8px solid black;
+    }
+}
+
+.section#header {
+    .right_col {
+        right: 0px;
+        border-top: 8px solid black;
+    }
+}
+
+.section:nth-child(even) .left_col {
+    background: linear-gradient(to bottom, #fcfbf7, #007bff 1%, #fcfbf7);
+}
+.section:nth-child(odd) .left_col {
+    // background: linear-gradient(to bottom, #fcfbf7, #007bff 1%, #fcfbf7);
+    background: linear-gradient(to bottom, #fcfbf7, #ff312d 1%, #fcfbf7);
 }
 
 #derp {
@@ -73,8 +90,8 @@ h1:hover, a:hover {
     top: 0px;
     width: 100vw;
     .col2 {
-        background: linear-gradient(to bottom, var(--color-red), var(--color-blue));
-        height: 100vh;
+        // background: linear-gradient(to bottom, var(--color-red), var(--color-blue));
+        // height: 100vh;
     }
 }
 
@@ -84,47 +101,20 @@ h1:hover, a:hover {
         font-family: redaction-10;
         margin-top: 0em;
         margin-bottom: 0em;
-        font-size: 6.0vw;
-        letter-spacing: .3vw;
         text-align: left;
     }
     .slider {
         margin-top: 20px;
         width: 25vw;
     }
-    // h1:hover {
-    //     font-family: redaction-35; 
-    //     letter-spacing: .28vw;
-    // }
-
     h2 {
         font-family: redaction-20;
         text-align: left;
-        font-size: 2.5vw;
-        letter-spacing: .04vw;
     }
-    // h2:hover {
-    //     font-family: redaction-35; 
-    //     letter-spacing: 0vw;
-    // }
-
     .attribution {
         position: absolute;
         bottom: 0px;
     }
-}
-
-p {
-    font-size: 1.4em;
-}
-
-p.small {
-    font-size: 1.4em;
-}
-
-
-h1,h2,h3,h4 {
-    text-align: center;
 }
 
 #header-container {
@@ -144,13 +134,6 @@ h1,h2,h3,h4 {
     }
 }
 
-.section {
-    position: relative;
-    z-index: 1;
-    border-bottom: 1px solid;
-    padding-top: 2vw;
-}
-
 .flex-col {
     flex: 1;
     padding: 16px;
@@ -158,14 +141,18 @@ h1,h2,h3,h4 {
 
 .line_entry {
     width: 100%;
-    // display: flex;
+    display: flex;
+    justify-content: center;
+    .content,.text {
+        max-width: 900px;
+    }
     .content {
         @extend .col2;
         // vertical-align: middle;
         // @extend .flex-col;
-        margin-top: 1.8em;
-        padding-left: 4vw;
-        padding-right: 4vw;
+        // margin-top: 1.8em;
+        padding-left: 32px;
+        padding-right: 32px;
         text-align: center;
         img,canvas {
             max-width: calc(100%);
@@ -178,7 +165,7 @@ h1,h2,h3,h4 {
             text-align: center;
         }
         .background {
-            background-color:#ffffffa1;
+            background-color:#ffffffb5;
             border-radius:5px;
             padding: 5px;
         }
@@ -187,8 +174,8 @@ h1,h2,h3,h4 {
         @extend .col2;
         // @extend .flex-col;
         
-        padding-left: 3vw;
-        padding-right: 3vw;
+        padding-left: 32px;
+        padding-right: 32px;
         text-align: justify;
         h2,h3,h4 {
             text-align: left;
@@ -207,6 +194,9 @@ h1,h2,h3,h4 {
 
     p {
         text-align: center !important;
+    }
+    h4 {
+        margin-top: 0px;
     }
     // &:nth-child(1) {
     //     border-bottom: 1px dashed;
@@ -282,31 +272,22 @@ h1,h2,h3,h4 {
         width: 150px;
         font-size: 1.0em;
     }
-    .viewer_row {
-        .district-viewer {
-            left: 10px;
-            width: calc(100% - 20px);
-            z-index: 2;
-            background-color: white;
-            .header {
-                margin: 0.2em;
-                font-size: 1.6em;
-            }
-            .parcoords {
-                height:150px;
-            }
-            .padding {
-                height: 0px;
-            }
-        }
-        .district-text {
+
+    .line_entry {
+        width: 100%;
+        flex-direction: column-reverse;
+        // display: flex;
+        .content {
             width: 100%;
-            padding-bottom: 0vh;
-            .district-text-inner  {
-                max-width: 100%;
-                padding: 10%;
-                // float: left;
-            }
+        
+        }
+        .text {
+            width: 100%;
+            background-color: white;
         }
     }
+    
+    
+
+
 }

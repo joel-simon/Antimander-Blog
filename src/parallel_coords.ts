@@ -1,35 +1,32 @@
 declare var d3: any;
-
-export default function(
-    div:HTMLElement,
-    // data:number[][],
-    data:any[],
-    // names:string[],
-    on_change:Function
-) {
-    // dimensionTitles: [...names, 'index'],
-    // hideAxis: ['index']
+declare var window: any;
+export default function(div:HTMLElement, data:any[], on_change:Function ) {
+    const dimensions = {}
+    // Object.keys(data[0]).forEach(name => {
+    //     dimensions[name] = { orient:'right' }
+    // })    
     const parcoords = d3.parcoords()(div)
-        .alpha(0.05)
         .data(data)
-        // .data(data.map((v, i) => {
-        //     const obj:object = { index: i }
-        //     v.forEach((_v:number, _i:number) => obj[names[_i]] = _v)
-        //     return obj
-        // }))
-        .color("#000")
-        .composite("darker")
-        .hideAxis(['index'])
-        // .composite('darker')
+        .alpha(.1)
+        .dimensions(dimensions)
+        .color("black")
+        // .brushedColor('black')
+        // .shadows()
+        // .alphaOnBrushed(.5)
+        // .composite("darker")
+        .hideAxis([ 'index' ])
         .render()
-        .shadows()
-        // .autoscale()
         .reorderable()
         .brushMode('1D-axes')  // enable brushing
 
     parcoords.on('brush', (values: any[]) => {
-        if (values.length == 0) return
+        if (values.length == 0) {
+            // div.classList.remove('brushed')
+            return
+        }
+        // div.classList.add('brushed')
         on_change(values.map(o => o.index), values)
     })
+    window.pc = parcoords
     return parcoords
 }

@@ -9,7 +9,7 @@ d3.parcoords = function(config) {
     alphaOnBrushed: 0.0,
     mode: "default",
     rate: 20,
-    width: 600,
+    width: 800,
     height: 300,
     margin: { top: 24, right: 0, bottom: 12, left: 0 },
     nullValueSeparator: "undefined", // set to "top" or "bottom"
@@ -721,14 +721,14 @@ function flipAxisAndUpdatePCP(dimension) {
 }
 
 function rotateLabels() {
-  var delta = d3.event.deltaY;
-  delta = delta < 0 ? -5 : delta;
-  delta = delta > 0 ? 5 : delta;
+  // var delta = d3.event.deltaY;
+  // delta = delta < 0 ? -5 : delta;
+  // delta = delta > 0 ? 5 : delta;
 
-  __.dimensionTitleRotation += delta;
-  pc.svg.selectAll("text.label")
-    .attr("transform", "translate(0,-5) rotate(" + __.dimensionTitleRotation + ")");
-  d3.event.preventDefault();
+  // __.dimensionTitleRotation += delta;
+  // pc.svg.selectAll("text.label")
+  //   .attr("transform", "translate(0,-5) rotate(" + __.dimensionTitleRotation + ")");
+  // d3.event.preventDefault();
 }
 
 function dimensionLabels(d) {

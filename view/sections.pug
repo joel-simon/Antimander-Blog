@@ -2,11 +2,19 @@ include mixins
 
 mixin header()
     #header.section
+        .left_col
+        .right_col
+        .line_entry
+            .content
+            .text
+                br
+                h1.main-heading
+                    i Antimander
         .line_entry
             .content
                 .main_viewer
                     .canvas_container
-                        canvas.main_canvas(width=600, height=600)
+                        canvas.main_canvas(width=1024, height=1024)
                 //- .viewer_row(data-datapath='general', data-nx=1, data-ny=1)
                 //-     +district_viewer("Interactive Viewer")
                 //-     .district-text
@@ -17,37 +25,42 @@ mixin header()
                     p.counts
             .text(style='vertical-align: top;')
                 
-                h1.main-heading
-                    i Antimander
+               
                 h2 
                     i Open-source research and software to fight gerrymandering.
                 .index_nav
                     for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'next-steps', 'appendix', 'references']
-                        p.small.navlink: a(href='#'+name)!=idx+': '+name.toUpperCase()
+                        p.navlink: a(href='#'+name)!=idx+': '+name
+                        //- .toUpperCase()
                 .attribution
-                    p.small By #[a(href='http://www.joelsimon.net') Joel Simon]
-                    p.small with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and Nio Ono.
+                    p By #[a(href='http://www.joelsimon.net') Joel Simon]
+                    p with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
+                    
                     //- img(src='imgs/header_pattern.png')
 
 mixin intro()
-    //- div.outer-text-container#intro
-    //-     div.inner-text-container
     #intro.section
+        .left_col
+        .right_col
         .line_entry
             .content
             .text
-                +section_nav('intro')
+                +section_nav2('intro')
         .line_entry
             .content
                 img.medium-img(src='imgs/the_gerrymander.png')
-                h2 The original gerrymander
+                h3 The original gerrymander
             .text
-                p Gerrymandering is difficult for courts to fight becuase there is no agreed upon definition. Properties like compactness and fairness are desired but there are subjective tradeoffs between them and no 'ideal' districting exists. As a result, it is difficult to deffinitively show that a districting could be more fair. Evaluating a districting by comparing it to a set of reasonable alternatives has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives.
+                p 
+                    | Gerrymandering is difficult for courts to fight becuase there is no agreed upon definition.
+                    | Properties like compactness and fairness are desired but there are subjective tradeoffs between them
+                    | and no single 'ideal' districting exists. As a result, it is difficult to definitively show that a districting 
+                    | could be more fair. Evaluating a districting by comparing it to a set of reasonable alternatives has become a theoretically attractive approach. However, generating a large set of satisfactory districts is a significant technical challence because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives.
 
                 // p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than 5% from the state’s total population divided by the number of districts), and each district must be contiguous.
 
                 //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
-                p Antimander is a generative design tool and research project to generate and browse optimized congressional dsitrictings. While districting commitess using it directly is unikely, it could be used as evidence of gerrymandering and also to help inform to public about the tradeoffs and how these trade-offs were made for their districts.
+                p Antimander is a generative design tool and research project to generate and browse optimized congressional districtings. While districting commitess using it directly is unikely, it could be used as evidence of gerrymandering and also to help inform to public about the tradeoffs and how these trade-offs were made for their districts.
 
                 p Antimander proposes connecting algorithmic districting to the research field of multi-objective evolutionary algorithms (MOEAs) and novelty search and presents an open source optimization engine and viewer that does so. It is just a first-step and more work and help is needed.
 
@@ -57,11 +70,12 @@ mixin background()
     //- div.outer-text-container#background
     //-     div.inner-text-container
     #background.section
+        .left_col
+        .right_col
         .line_entry
             .content
             .text
-                +section_nav('background')
-                //- h1 Background
+                +section_nav2('background')
                 p Every decade the US redraws congressional districts, which are divisions of a state each allotted one elected congressional representative. The distribution of elected representatives has significant political impact, motivating political parties to exploit such districting to their advantage, known as gerrymandering. For example, districtings can pack a small number of districts full of the opposing party’s voters to waste many votes, enabling other districts to crack i.e. to be won by a small (but comfortable) amount, thereby securing an outsize proportion of a state’s representatives for the gerrymandering party.
 
                 p TODO - add more
@@ -84,6 +98,8 @@ mixin background()
 
 mixin viewer()
     .section.viewer_row#viewer(data-datapath='general')
+        //- .left_col
+        //- .right_col
         +district_viewer("Interactive Viewer")
         .district-text
             .district-text-inner
@@ -112,94 +128,70 @@ mixin viewer()
 
 mixin metrics()
     #metrics.section
+        .left_col
+        .right_col
         .line_entry
             .content
             .text
-                +section_nav('metrics')
+                +section_nav2('metrics')
         .line_entry
             .content
             .text
-                H2 What makes a good district?
+                //- H2 Metrics:
+                h3 What makes a good district?
                 p The results above were optimized for "fairness", "compactness" and "competitiveness." But what are those and what do they mean?
-
-
+                
         .line_entry
             .content
                 .compactness_tile
-                    //- h3 Polspy-Popper
                     //- p Ratio of area to perimeter (used above).
                     img(src='imgs/compactness/polsby_popper.png', style='max-width:256px;')
+                    h4 Polspy-Popper
 
                 .compactness_tile
-                    //- h3 Convex-Hull
                     //- p Ratio of area to its convex hull.
                     img(src='imgs/compactness/convex_hull.png', style='max-width:256px;')
+                    h4 Convex-Hull
 
                 .compactness_tile
-                    //- h3 Bounding-Circle (Reock)
                     //- p Ratio of area to its minimum bounding circle. Also knows as "Reock."
                     img(src='imgs/compactness/reock.png', style='max-width:256px;')
+                    h4 Bounding-Circle (Reock)
 
                 .compactness_tile
-                    //- h3 Center-Distance
                     //- p The average distance to the centroid of a district.
                     img(src='imgs/compactness/center_distance.png', style='max-width:256px;')
+                    h4 Center-Distance
 
             .text
-                H2 Compactness
+                H3 1. Compactness
                 p The original gerrymander was named for its peculiar shape it is intuitivly desirable to expect to live near people within a same district. A lot of attention is therefore paid to the shad of districts, especially since - unlike other metrics - it is easy to evaluate visually. But what does it mean to be 'compact'? It turns out there are many metrics that can be used. Images below are from #[a(href="https://fisherzachary.github.io/public/r-output.html") this article] which also has additional metrics.
+                p #[strong Polspy-Popper]: The ratio of area to perimeter (used above).
+                p #[strong Convex-Hull]: The ratio of area to perimeter).
+                p #[strong Bounding-Circle (Reock)]: Ratio of area to its minimum bounding circle. Also knows as "Reock."
+                p #[strong Center-Distance]: The average distance of all tiles to the center of the district they belong to.
+
         .line_entry
             .content
             .text
-                h2 Fairness
+                h3 2. Fairness
                 p Generally we want the percent of representatives to correspont to the percent of voters for that party. The efficiency gap [5] is a metric that views fairness through the lens of the lost votes of each party. Votes cast for the losing party, or those cast for the winning party beyond the winning threshold are considered lost.
         .line_entry
             .content
             .text
-                h2 Competitiveness
+                h3 3. Competitiveness
                 p
                 p Close races helps prevent incumbents from being too entrenched (incumbant gerrymandering). Also, less polarized represetnatives are beneficial for a healthy democracy. Competitiveness is measured by the largest ratio by which one party wins over another.
 
-            //- .line_entry
-            //-     .content
-            //-         img(src='imgs/compactness/polsby_popper.png', style='max-width:256px;')
-            //-     .text
-            //-         h2 Polspy-Popper
-            //-         p Ratio of area to perimeter (used above).
-            //- .line_entry
-            //-     .content
-            //-         img(src='imgs/compactness/convex_hull.png', style='max-width:256px;')
-            //-     .text
-            //-         h2 Convex-Hull
-            //-         p Ratio of area to its convex hull.
-            //- .line_entry
-            //-     .content
-            //-         img(src='imgs/compactness/reock.png', style='max-width:256px;')
-            //-     .text
-            //-         h2 Bounding-Circle (Reock)
-            //-         p Ratio of area to its minimum bounding circle. Also knows as "Reock."
-            //- .line_entry
-            //-     .content
-            //-         img(src='imgs/compactness/center_distance.png', style='max-width:256px;')
-            //-     .text
-            //-         h2 Center-Distance
-            //-         p The average distance to the centroid of a district.
-            
-            //- A lot of attention is paid to the shape of dsit
-
-            //- p  Measuring Compactness Article] which
-            //- and we have come to conflate bizzare shapes with gerrymandering.
-            //- and intuitivelty more compact shapes feel better.
-        //- .line_entry
-        //-     .content
-        //-     .text
-        //- div.inner-text-container
+mixin all_compactness_viewer()
     .section.viewer_row#viewer(data-datapath='all_compactness')
+        .left_col
+        .right_col
         +district_viewer("Multiple compactness")
         .district-text
             .district-text-inner
                 .scroll_block
-                    p As you can see compactness is complicated. On the left are districts optimized for all of thecompactness metrics above. They still had to be contiguos and equal (same number of people).
+                    p As you can see compactness is complicated. On the left are districts optimized for all of thecompactness metrics above. They still had to be contiguous and equal (same number of people).
                 .scroll_block
                     p We can see which metrics corelate and which dont, or what it means to be compact for one but not the other.
                 .scroll_block
@@ -210,10 +202,12 @@ mixin metrics()
         
 mixin methods()
     #methods.section
+        .left_col
+        .right_col
         .line_entry
             .content
             .text
-                +section_nav('methods')
+                +section_nav2('methods')
                 
         .line_entry
             .content
@@ -268,11 +262,13 @@ mixin methods()
 
 mixin results()
     #results.section
+        .left_col
+        .right_col
         .line_entry
             .content
                 img.background(src='imgs/results.svg', style='max-width:300px;')
             .text
-                +section_nav('results')
+                +section_nav2('results')
                 p Three methods were compared: NSGA-II, feasible-infeasible search (FIF), and FIF with novelty as an additional objective in the infeasible population only (FIF-NOV). Each run had a total population of 800, and consisted of 1000 generations per each of its five phases. Each run was replicated five times.
                 p FIF with novelty outperformed vanilla NSGA-2 and FIF without novelty. Somewhat suprisingly, FIF did worse than NSGA if no novelty was employed.
         .line_entry
@@ -283,35 +279,52 @@ mixin results()
 
 mixin next-steps()
     #next-steps.section
+        .left_col
+        .right_col
+        .line_entry
+            .content
+            .text
+                +section_nav2('next-steps')
         .line_entry
             .content
                 .background
                     +mailchimp()
             .text
-                //- h2 Conclusion & Next-Steps
-                +section_nav('next-steps')
                 p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may offer relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts. However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
-
 
 mixin appendix()
     #appendix.section
+        .left_col
+        .right_col
         .line_entry
             .content
             .text
-                +section_nav('appendix')
+                +section_nav2('appendix')
 
 mixin references()
     #references.section
+        .left_col
+            img(src='imgs/footer_3.png', style='width:100%;height:100%;position:absolute;bottom:0px;opacity:0.8')
+        .right_col
         .line_entry
             .content
             .text
-                +section_nav('references')
-
+                +section_nav2('references')
         .line_entry.align_top
-            .content.align_top
-                h1 Code
+            .content
             .text.align_top
-                h1 Papers
-                for i in [1,2,3,4,5,6,7,8]
-                    ul
-                        li:  a(href='/'): h2 temp
+                h3(style='margin-top:0px') Libraries used:
+                ul
+                    li: p: a(href='https://pymoo.org/') Pymoo: Multi-objective Optimization.
+                    li: p: a(href='http://regl.party/') Regl: A functional abstraction for webgl.
+                    li: p: a(href='https://cython.org/') Cython: Language and static compiler for Python.
+                h3(style='') Papers cited:
+                ul
+                    li: p Metric Geometry and Gerrymandering Group. 2013. Gerrychain. https://github. com/mggg/GerryChain. (2013).
+                    li: p Joel Lehman and Kenneth O Stanley. 2008. Exploiting open-endedness to solve problems through the search for novelty.. In ALIFE. 329–336.
+                    li: p Antonios Liapis, Georgios N Yannakakis, and Julian Togelius. 2015. Constrained novelty search: A study on game content generation. Evolutionary computation 23, 1 (2015), 101–129.
+                    li: p Yan Y Liu, Wendy K Tam Cho, and Shaowen Wang. 2016. PEAR: a massively parallel evolutionary computation approach for political redistricting optimization and analysis. Swarm and Evolutionary Computation 30 (2016), 78–92.
+                    li: p Nicholas O Stephanopoulos and Eric M McGhee. 2015. Partisan gerrymandering and the e ciency gap. U. Chi. L. Rev. 82 (2015), 831.
+                    li: p Rahul Swamy, Douglas King, and Sheldon Jacobson. [n. d.]. Multi-Objective Optimization for Political Districting: A Scalable Multilevel Approach. ([n. d.]).
+                    li: p Wendy K Tam Cho and Yan Y Liu. 2016. Toward a talismanic redistricting tool: A computational method for identifying extreme redistricting plans. Election Law Journal 15, 4 (2016), 351–366.
+                

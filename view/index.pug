@@ -10,12 +10,14 @@ html(lang='en')
         +d3_scripts()
     body
         #derp
-            .col2(style="border-right: 1px solid;")
+            .col2
+            //- (style="border-right: 1px solid;")
         +header()
         +intro()
         +background()
         +viewer()
         +metrics()
+        +all_compactness_viewer()
         +methods()
         +results()
         +next-steps()

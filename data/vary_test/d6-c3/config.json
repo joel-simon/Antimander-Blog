@@ -1,0 +1,21 @@
+{
+    "state": "../optimize/data/t1000-c3.json",
+    "out": "../view/data/vary_test/d6-c3",
+    "n_districts": 6,
+    "seed": 1,
+    "feasinfeas": false,
+    "feasinfeas_2N": false,
+    "max_start_tiles": 500,
+    "n_gens": 2000,
+    "pop_size": 300,
+    "metrics": [
+        "polsby_popper",
+        "dem_advantage",
+        "rep_advantage"
+    ],
+    "equality_constraint": 0.05,
+    "novelty": false,
+    "NSGA3": false,
+    "dont_fix_seeds": false,
+    "pp_constraint": 0.6
+}

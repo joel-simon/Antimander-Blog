@@ -1,48 +1,62 @@
-.parcoords > svg, .parcoords > canvas {
-  font: 14px sans-serif;
-  position: absolute;
-}
-.parcoords > canvas {
-  pointer-events: none;
-}
-
-.parcoords text.label {
-  cursor: default;
-}
-
-.parcoords rect.background {
-  fill: transparent;
-}
-.parcoords rect.background:hover {
-  fill: rgba(120,120,120,0.2);
-}
-.parcoords .resize rect {
-  fill: rgba(0,0,0,0.1);
-}
-.parcoords rect.extent {
-  fill: rgba(255,255,255,0.25);
-  stroke: rgba(0,0,0,0.6);
-}
-.parcoords .axis line, .parcoords .axis path {
-  fill: none;
-  stroke: #222;
-  shape-rendering: crispEdges;
-}
-.parcoords canvas {
-  opacity: 1;
-  -moz-transition: opacity 0.3s;
-  -webkit-transition: opacity 0.3s;
-  -o-transition: opacity 0.3s;
-}
-.parcoords canvas.faded {
-  opacity: 0.25;
-}
-.parcoords {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-  /* background-color: white; */
-}
+  .parcoords > svg, .parcoords > canvas {
+    font: 18px sans-serif;
+    position: absolute;
+  }
+  .parcoords > canvas {
+    pointer-events: none;
+  }
+  
+  .parcoords text.label {
+    cursor: default;
+  }
+  .parcoords .brush .background {
+    cursor: url('/icons/cursor-crosshairs.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 18 18, auto !important;
+    /* cursor: url('icons/cursor-crosshairs.svg'), auto; */
+  }
+  .parcoords rect.background {
+    fill: transparent;
+  }
+  .parcoords rect.background:hover {
+    fill: rgba(120,120,120,0.2);
+  }
+  .parcoords .resize rect {
+    fill: rgba(0,0,0,0.1);
+  }
+  .parcoords rect.extent {
+    fill: rgba(255,255,255,0.25);
+    stroke: rgba(0,0,0,0.6);
+  }
+  .parcoords .axis line, .parcoords .axis path {
+    fill: none;
+    stroke: #222;
+    shape-rendering: crispEdges;
+  }
+  .parcoords canvas {
+    opacity: 1;
+    -moz-transition: opacity 0.3s;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+  }
+  .parcoords canvas.faded {
+    opacity: 0.25;
+  }
+  .parcoords {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      /* background-color: white; */
+      background-color: transparent;
+      
+  }
+  .parcoords canvas {
+    /* background-color: #ffffff69; */
+  }
+  .parcoords canvas.foreground {
+      opacity: .4;
+  }
+  .parcoords > svg {
+    /* background-color: white; */
+  }

@@ -3,8 +3,17 @@ mixin section_nav(active)
     //- h2!=active.toUpperCase()
     .section_nav
         for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
-            h2.navlink(class = name == active ? 'active' : '')
+            p.navlink(class = name == active ? 'active' : '')
                 a(href='#'+name)!=idx+': '+name.toUpperCase()
+
+mixin section_nav2(active)
+    .section_nav2
+        for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
+            p.navlink(class = name == active ? 'active' : '')
+                a(href='#'+name)!=idx+': '+name
+                //- .toUpperCase()
+                //- a(href='#'+name)!=name
+    h2.section_header!=active+':'
 
 mixin text-container(text)
     div.outer-text-container
@@ -12,10 +21,8 @@ mixin text-container(text)
             p!=text
 
 mixin district_viewer(name)
-    .district-viewer
-        //- h1.header!=name
+    .district-viewer.left_col
         .parcoords
-        .padding
         .canvas_container
         p.view_count Viewing N / K
 
@@ -107,6 +114,8 @@ mixin d3_scripts()
     script(src='src/lib/d3.min.js')
     script(src='src/lib/d3.svg.multibrush.js')
     script(src='src/lib/d3.autodesk.parcoords.js')
+    //- script(src='src/lib/d3.parcoords.js')
+
     //- script(src='https://d3js.org/d3-color.v1.min.js')
     //- script(src='https://d3js.org/d3-interpolate.v1.min.js')
     //- script(src='https://d3js.org/d3-scale-chromatic.v1.min.js')

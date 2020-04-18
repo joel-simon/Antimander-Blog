@@ -1,3 +1,5 @@
+@import 'cursors';
+
 .slider {
   -webkit-appearance: none;
   width: 100%;
@@ -17,7 +19,8 @@
   height: 25px;
   border-radius: 50%;
   background: black;
-  cursor: pointer;
+  // @extend .cursor-pointer;
+  cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto !important;
 }
 
 .slider::-moz-range-thumb {
@@ -25,5 +28,6 @@
   height: 25px;
   border-radius: 50%;
   background: black;
-  cursor: pointer;
+  // @extend .cursor-pointer;
+  cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto !important;
 }

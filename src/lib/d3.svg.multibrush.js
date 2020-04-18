@@ -79,8 +79,9 @@ d3.svg.multibrush = function() {
 
       background.enter().append("rect")
           .attr("class", "background")
+          .attr("class", "parcoord_crosshair")
           .style("visibility", "hidden")
-          .style("cursor", "crosshair");
+          // .style("cursor", "crosshair");
 
       drawExtents(g);
 
