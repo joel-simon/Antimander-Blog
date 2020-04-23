@@ -2,13 +2,13 @@
     cursor: url('/icons/cursor-arrow.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-arrow.svg'), auto;
 }
 .cursor-pointer {
-    cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto !important;
+    cursor: url('/icons/cursor-pointer.svg') 0 0, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto !important;
 }
 
 .cursor-text {
-    cursor: url('/icons/cursor-text-selection.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-text-selection.svg'), auto;
+    cursor: url('/icons/cursor-text-selection.svg') 16 16, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-text-selection.svg'), auto;
 }
 
 .cursor-crosshair {
-    cursor: url('/icons/cursor-crosshairs.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 18 18, auto;
+    cursor: url('/icons/cursor-crosshairs.svg') 0 0, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 0 0, auto;
 }

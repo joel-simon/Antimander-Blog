@@ -1,0 +1,19 @@
+include mixins
+include sections
+doctype html
+
+html(lang='en')
+    head
+        title Antimander
+        meta(content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport")
+        +redaction_font()
+        +d3_scripts()
+    body
+        #viewer.section.viewer_row
+            .district-viewer(style='width:50vw;')
+                .parcoords
+                .canvas_container
+                    canvas.main_canvas(width='1024', height='1024', style='width:100%;')
+                p.view_count Viewing N / K
+
+

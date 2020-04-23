@@ -9,10 +9,7 @@
   .parcoords text.label {
     cursor: default;
   }
-  .parcoords .brush .background {
-    cursor: url('/icons/cursor-crosshairs.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 18 18, auto !important;
-    /* cursor: url('icons/cursor-crosshairs.svg'), auto; */
-  }
+
   .parcoords rect.background {
     fill: transparent;
   }
@@ -59,4 +56,15 @@
   }
   .parcoords > svg {
     /* background-color: white; */
+  }
+
+  .parcoords .brush .background {
+    cursor: url('/icons/cursor-crosshairs.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 18 18, auto !important;
+  }
+  .extent {
+    cursor: url('/icons/cursor-move.svg') 18 18 , url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-move.svg') 18 18, auto !important;
+  }
+
+  .resize.n, .resize.s {
+    cursor: url('/icons/cursor-resize-vertical-wide.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-resize-vertical-wide.svg') 18 18, auto !important;
   }

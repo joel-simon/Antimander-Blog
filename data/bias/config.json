@@ -1,0 +1,22 @@
+{
+    "state": "../optimize/data/WI.json",
+    "out": "../view/data/WI_bias_ppsqrt_s4",
+    "seed": 4,
+    "feasinfeas": true,
+    "feasinfeas_2N": false,
+    "max_start_tiles": 300,
+    "n_districts": 8,
+    "n_gens": 12000,
+    "pop_size": 400,
+    "metrics": [
+        "polsby_popper",
+        "dem_advantage",
+        "rep_advantage"
+    ],
+    "equality_constraint": 0.1,
+    "novelty": "mutual-tiles",
+    "NSGA3": false,
+    "dont_fix_seeds": false,
+    "pp_constraint": 0.6,
+    "nov_params": {}
+}

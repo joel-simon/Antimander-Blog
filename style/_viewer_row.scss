@@ -49,15 +49,19 @@
         }
     }
     .district-text {
-        width: calc(50% - 40px);
+        width: 50%;
+        padding-left: 40px;
         vertical-align: top;
         float: right;
         padding-top: 50vh;
         padding-bottom: 30vh;
-
+        border-bottom: 8px solid;
         .district-text-inner  {
-            max-width: 400px;
+            max-width: 600px;
             float: left;
+            h1 {
+                text-align: left;
+            }
         }
         .scroll_block {
             margin-top: 150px;

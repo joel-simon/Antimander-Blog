@@ -1,9 +1,11 @@
 import image_promise from 'image-promise';
 import ndarray from 'ndarray';
+import npyjs from "npyjs";
+// import { StateData, derp } from './datatypes';
+import { RunData, NdArray } from './datatypes.ts'
 
-export async function image_data(src: string) {
-    /*  Given a url, return the image data as a RGBA ndarray.
-    */
+export async function fetch_imagedata(src:string): Promise<NdArray> {
+    /* Fetch an image data as a RGBA ndarray. */
     const img = await image_promise(src)
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
@@ -14,9 +16,20 @@ export async function image_data(src: string) {
     return ndarray(data, [ canvas.width, canvas.height, 4 ])
 }
 
-export function fetch_json(url: string, params?:object): Promise<any> {
+export function fetch_json(url:string, params?:object): Promise<any> {
     return fetch(url).then(resp => resp.ok ? resp.json() : null )
 }
+
+export function fetch_numpy(path:string): Promise<NdArray> {
+    // Fetch a .npy binary as a ndarray typed array.
+    const np = new npyjs()
+    return new Promise((resolve, reject) => {
+        np.load(path, ({ shape, data, dtype }) => {
+            resolve(ndarray(data, shape))
+        })
+    })
+}
+
 
 export function sum(arr: number[]):number {
     return arr.reduce((a, b) => a+b)

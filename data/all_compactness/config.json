@@ -1,0 +1,20 @@
+{
+    "state": "data/WI.json",
+    "n_gens_last": 1000,
+    "out": "../view/data/all_compactness",
+    "seed": 5,
+    "dont_fix_seeds": false,
+    "feasibleinfeasible": false,
+    "pop_size": 400,
+    "n_gens_first": 1000,
+    "NSGA3": false,
+    "metrics": ["compactness",
+        "polsby_popper",
+        "compactness_convex_hull",
+        "compactness_reock"],
+    "novelty_phases": 1,
+    "n_gens": 400,
+    "equality_range": [0.05,0.05],
+    "max_start_tiles": 300,
+    "n_districts": 8
+}

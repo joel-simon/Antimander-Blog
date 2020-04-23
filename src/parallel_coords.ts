@@ -21,10 +21,8 @@ export default function(div:HTMLElement, data:any[], on_change:Function ) {
 
     parcoords.on('brush', (values: any[]) => {
         if (values.length == 0) {
-            // div.classList.remove('brushed')
             return
         }
-        // div.classList.add('brushed')
         on_change(values.map(o => o.index), values)
     })
     window.pc = parcoords

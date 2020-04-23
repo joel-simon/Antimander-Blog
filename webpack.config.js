@@ -3,11 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = (env, { mode }) => {
   return {
-    entry: './src/index.ts',
+    entry: {
+      'index': './src/index.ts',
+      'viewer': './src/viewer.ts',
+    },
     devtool: (mode == 'production') ? 'source-map' : 'inline-source-map',
     output: {
-      filename: 'bundle.js',
-      path: __dirname//path.resolve(__dirname, 'dist')
+      filename: '[name].js',
+      // path: path.resolve(__dirname, 'build')
+      path: __dirname
     },
     module: {
       rules: [
@@ -25,14 +29,27 @@ module.exports = (env, { mode }) => {
           test: /\.s[ac]ss$/i,
           use: [ 'style-loader','css-loader','sass-loader'],
         },
+        {
+          test: /\.(png|svg|jpe?g|gif|woff)$/,
+          use: 'file-loader'
+        }
       ]
     },
     resolve: {
       extensions: ['.ts', '.js', '.json']
     },
-    plugins: [
+    plugins: [ //https://github.com/jantimon/html-webpack-plugin/issues/218#issuecomment-183066602
       new HtmlWebpackPlugin({
-        template: './view/index.pug'
+        inject:true,
+        chunks: ['index'],
+        template: './view/index.pug',
+        filename: 'index.html'
+      }),
+      new HtmlWebpackPlugin({
+        // inject:false,
+        chunks: ['viewer'],
+        template: './view/viewer.pug',
+        filename: 'viewer.html'
       }),
     ],
   }
