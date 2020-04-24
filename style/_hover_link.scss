@@ -1,0 +1,25 @@
+@import 'includes';
+.hover-link {
+    // @extend .cursor-pointer;
+    &.l-hover {
+        -webkit-transition: 0.2s ease-in;
+        -moz-transition: 0.2s ease-in;
+        -o-transition: 0.2s ease-in;
+        transition: 0.2s ease-in;
+    }
+}
+.content .l-hover {
+    @extend .shadow;
+    z-index:3;
+    padding-left: 10px;
+    padding-right: 10px;
+    transform: scale(1.05);
+    opacity: 1.0 !important;
+    // background-color: white !important;
+    background-color: #FFFFFFAA !important;
+    border-radius: 3px;
+}
+.text .l-hover {
+    background-color: #FFFBCC;
+    @extend .shadow;
+}

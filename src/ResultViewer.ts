@@ -98,9 +98,11 @@ export default class {
 
     onResize() {
         const { parcoords, viewer_div } = this
-        parcoords.width(viewer_div.clientWidth)
-        parcoords.resize()
-        parcoords.render()
+        if (parcoords) {
+            parcoords.width(viewer_div.clientWidth)
+            parcoords.resize()
+            parcoords.render()
+        }
         // nx = _nx
         // ny = _ny
         // nx = Math.floor(canvas.clientWidth / dist_width)

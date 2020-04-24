@@ -56,5 +56,8 @@ export function viewer_update_loop(viewers: ResultViewer[]) {
     canvas.onmouseleave = () => {
         active_viewer?.onMouseLeave()
     }
+    window.onresize = () => {
+        viewers.forEach(v => v.onResize())
+    }
     step()
 }
