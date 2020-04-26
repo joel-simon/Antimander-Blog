@@ -1,11 +1,14 @@
 @import 'cursors';
-h1,h2,h3,h4,p {
+@import 'colors';
+
+h1,h2,h3,h4,p,a {
     font-weight: 400;
     @extend .cursor-text;
+    &::-moz-selection { background: #FBF7BF; }
+    &::selection { background: #FBF7BF; }
 }
 
 a {
-    font-weight: 400;
     @extend .cursor-pointer;
     cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto;
 }
@@ -14,6 +17,9 @@ h1,h2,h3,h4,h5 {
     font-style: italic;
 }
 
+.italic {
+    font-style: italic;
+}
 
 h1 {
     font-size: 72px;
@@ -53,4 +59,11 @@ a {
         font-family: redaction-100; 
         background-color: black;
     }
+}
+.text-arrow {
+    width:16px;
+    height:16px;
+    position: absolute;
+    left: -20px;
+    top: 8px;
 }

@@ -1,5 +1,8 @@
 @import 'includes';
+@import 'colors';
+
 .hover-link {
+    position: relative;
     // @extend .cursor-pointer;
     &.l-hover {
         -webkit-transition: 0.2s ease-in;
@@ -9,17 +12,26 @@
     }
 }
 .content .l-hover {
+    @extend .yellow-20;
     @extend .shadow;
     z-index:3;
-    padding-left: 10px;
-    padding-right: 10px;
+    // padding-left: 10px;
+    // padding-right: 10px;
     transform: scale(1.05);
     opacity: 1.0 !important;
-    // background-color: white !important;
-    background-color: #FFFFFFAA !important;
+    .background {
+        background-color: transparent !important;
+        -webkit-transition: 0.4s ease-in;
+        -moz-transition: 0.4s ease-in;
+        -o-transition: 0.4s ease-in;
+        transition: 0.4s ease-in;
+    }
     border-radius: 3px;
 }
 .text .l-hover {
-    background-color: #FFFBCC;
+    // background-color: #FFFBCC;
+    // background-color: #F8F293;
+    // background-color: #;
+    @extend .yellow-20;
     @extend .shadow;
 }
