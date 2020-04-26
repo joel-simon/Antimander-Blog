@@ -3,16 +3,12 @@ include mixins
 mixin header()
     #header.section
         .left_col
-            .top
-            .bottom
         .right_col
-        .line_entry
-            .content
-            .text
-                br
-                h1.main-heading.italic Antimander
-                //- img(src='icons/antimander.svg')
-                //- i Antimander
+        //- .line_entry
+        //-     .content
+        //-     .text
+        //-         br
+        //-         h1.main-heading.italic Antimander
         .line_entry
             .content
                 .main_viewer
@@ -21,15 +17,22 @@ mixin header()
                 .slider_container
                     p.counts
                     input.slider(type='range', min='0', max='.99', value='.5', step='any')
-                h3 Adjust slider to view computer generated gerrymandering in Wisconsin
-            .text(style='justify-content: flex-start;')
-                h2 Open-source research and software to fight gerrymandering.
+                h4 Adjust slider to view computer generated gerrymandering in Wisconsin
+            
+            .text
+                //- (style='justify-content: flex-start;')
+                h1.main-heading.italic Antimander
+                h2 Open-source research #[br] and software to fight gerrymandering.
+                p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
                 .index_nav
                     for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'next-steps', 'appendix', 'references']
-                        p.navlink: a(href='#'+name)!=idx+': '+name
-                .attribution
-                    p By #[a(href='http://www.joelsimon.net') Joel Simon]
-                    p with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
+                        p.navlink
+                            a(href='#'+name)
+                                span.metadata!=idx+' '
+                                span.caption!=name
+                //- .attribution
+                    
+        img.scroll_down(src='/icons/arrow-down.svg')
 
 mixin overview()
     #overview.section

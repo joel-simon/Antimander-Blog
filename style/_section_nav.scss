@@ -1,14 +1,22 @@
 .navlink {
     text-transform: capitalize;
+    margin: 0px !important;
+    padding: 0px !important;
 }
 .navlink a {
     border-bottom: none;
 }
-.section_nav {
+
+.index_nav {
     .navlink {
         margin: 0px;
+    }
+}
+.section_nav {
+    .navlink {
+        
         margin-right: .5em;
-        margin-bottom: .25em;
+        // margin-bottom: .25em;
         display: inline-block;
         font-size: 1.2em;
     }

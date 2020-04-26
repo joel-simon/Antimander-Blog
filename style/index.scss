@@ -1,4 +1,5 @@
 @import 'slider';
+@import 'sections';
 @import 'viewer_row';
 @import 'includes';
 @import 'section_nav';
@@ -105,6 +106,11 @@ h1:hover, a:hover {
     @extend .red2white;
 }
 
+.main_canvas  {
+    // width: min(50vw, 30vh);
+    max-height: 50vh;
+}
+
 .section {
     position: relative;
     z-index: 1;
@@ -147,44 +153,22 @@ h1:hover, a:hover {
 //     }
 // }
 
-#header {
-    height: 100vh;
-    h1 {
-        font-family: redaction-10;
-        margin-top: 0em;
-        margin-bottom: 0em;
-        text-align: left;
-    }
-    .slider {
-        margin-top: 20px;
-        width: 25vw;
-    }
-    h2 {
-        font-family: redaction-20;
-        text-align: left;
-    }
-    .attribution {
-        position: absolute;
-        bottom: 0px;
-    }
-}
-
-#header-container {
-    color:white;
-    h1 {
-        letter-spacing: .08em;
-        font-size: 5.5em;
-        margin: 0px;
-    }
-    a {
-        color: white;
-    }
-    .main-heading {
-        img {
-            max-width: 900px;
-        }
-    }
-}
+// #header-container {
+//     color:white;
+//     h1 {
+//         letter-spacing: .08em;
+//         font-size: 5.5em;
+//         margin: 0px;
+//     }
+//     a {
+//         color: white;
+//     }
+//     .main-heading {
+//         img {
+//             max-width: 900px;
+//         }
+//     }
+// }
 
 
 
