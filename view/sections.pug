@@ -23,7 +23,13 @@ mixin header()
                 //- (style='justify-content: flex-start;')
                 h1.main-heading.italic Antimander
                 h2 Open-source research #[br] and software to fight gerrymandering.
-                p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
+                
+                .github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
+                    //- a(href='https://github.com/joel-simon/Antimander', target='_blank')
+                    h4 Github
+                    img(src='/icons/arrow-up.svg')
+
+                p.metadata.authors By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
                 .index_nav
                     for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'next-steps', 'appendix', 'references']
                         p.navlink

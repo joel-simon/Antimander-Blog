@@ -6,6 +6,9 @@
     .line_entry > * {
         justify-content: center;
     }
+    .line_entry .text {
+        height: calc(100% - 200px);
+    }
     .main_canvas  {
         // width: min(50vw, 30vh);
         max-height: 50vh;
@@ -21,13 +24,19 @@
         width: 25vw;
     }
     h2 {
+        margin: 0px;
+        margin-top: 20px;
+        margin-bottom: 29px;
         // font-family: redaction-20;
         text-align: left;
     }
-    .attribution {
-        position: absolute;
-        bottom: 0px;
+    .authors {
+        margin-top: 15px;
     }
+    // .attribution {
+    //     position: absolute;
+    //     bottom: 0px;
+    // }
     img.scroll_down {
         position: absolute;
         right: 0px;
@@ -58,5 +67,9 @@
         .caption {
             
         }
+    }
+    .github-button {
+        position: relative;
+        left: -10px;
     }
 }

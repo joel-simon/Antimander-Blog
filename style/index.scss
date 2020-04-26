@@ -87,18 +87,7 @@ h1:hover, a:hover {
     // background: linear-gradient(to bottom, #fcfbf7, #ff312d 1%, #fcfbf7);
 }
 
-// .left_col {
-//     .top {
-//         height: 50%;
-//         width: 100%;
-//         @extend .blue2white;
-//     }
-//     .bottom {
-//         height: 50%;
-//         width: 100%;
-//         @extend .red2white;
-//     }
-// }
+
 .section:nth-child(odd) .left_col {
     @extend .blue2white;
 }
@@ -142,36 +131,6 @@ h1:hover, a:hover {
 }
 
 
-// #derp {
-//     position: fixed;
-//     z-index: 0;
-//     top: 0px;
-//     width: 100vw;
-//     .col2 {
-//         background: linear-gradient(to bottom, var(--color-red), var(--color-blue));
-//         height: 100vh;
-//     }
-// }
-
-// #header-container {
-//     color:white;
-//     h1 {
-//         letter-spacing: .08em;
-//         font-size: 5.5em;
-//         margin: 0px;
-//     }
-//     a {
-//         color: white;
-//     }
-//     .main-heading {
-//         img {
-//             max-width: 900px;
-//         }
-//     }
-// }
-
-
-
 .compactness_tile_container {
     width: 100%;
     display:flex;
@@ -208,30 +167,28 @@ h1:hover, a:hover {
     }
 }
 
-
-
-.outer-text-container {
-    width: 100%;
-    text-align: center;
-    .inner-text-container {
-        width: 100%;
-        max-width: 900px;
-        display: inline-block;
-
-        p {
-            text-align: justify;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        img {
-            text-align: center;
-            width: 100%;
-            max-width: 700px;
-        }
+.github-button {
+    border-radius: 21px;
+    @extend .cursor-pointer;
+    @extend .yellow-50;
+    width: fit-content;
+    border: 1px solid;
+    padding-left: 6px;
+    padding-right: 6px;
+    img {
+        height: 20px;
+        transform: rotate(45deg);
+        bottom: -2px;
+        margin-left: 2px;
+        position: relative;
     }
-    .inner-text-container.wide {
-        max-width: 1200px;
-        // max-width: 290%
+    h4 {
+        display: inline-block;
+        margin: 0px;
+        @extend .cursor-pointer;
+    }
+    &:hover {
+        // @extend .shadow;
     }
 }
 
