@@ -34,6 +34,15 @@ async function load_viewers(): Promise<ResultViewer[]> {
     return viewers
 }
 
+(document.querySelector('#header .scroll_down') as HTMLElement).onclick = () => {
+    window.scrollTo({
+        top: window.innerHeight,
+        left: 0,
+        behavior: 'smooth'
+    });
+}
+
+
 async function main() {
     const viewers = await load_viewers()
     viewer_update_loop(viewers)

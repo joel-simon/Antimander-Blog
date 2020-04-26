@@ -1,3 +1,5 @@
+@import 'cursors';
+
 #header {
     height: 100vh;
     .line_entry {
@@ -9,19 +11,12 @@
     .line_entry .text {
         height: calc(100% - 200px);
     }
-    .main_canvas  {
-        // width: min(50vw, 30vh);
-        max-height: 50vh;
-    }
+
     h1 {
         // font-family: redaction-10;
         margin-top: 0em;
         margin-bottom: 0em;
         text-align: left;
-    }
-    .slider {
-        margin-top: 20px;
-        width: 25vw;
     }
     h2 {
         margin: 0px;
@@ -38,6 +33,7 @@
     //     bottom: 0px;
     // }
     img.scroll_down {
+        @extend .cursor-pointer;
         position: absolute;
         right: 0px;
         bottom: 16px;
@@ -71,5 +67,21 @@
     .github-button {
         position: relative;
         left: -10px;
+    }
+    .content {
+        h4 {
+            // width: 30vw;
+            margin-top: 10px;
+            max-width: 500px;
+        }
+        .slider {
+            // margin-top: 20px;
+            // width: 25vw;
+            // max-width: 
+            width: 300px;
+        }
+        .main_canvas  {
+            max-height: 50vh;
+        }
     }
 }

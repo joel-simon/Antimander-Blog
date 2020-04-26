@@ -1,12 +1,5 @@
 @import 'cursors';
 
-.parcoords > svg, .parcoords > canvas {
-    font-family: redaction;
-}
-.parcoords {
-    text-transform: capitalize;
-}
-
 
 .viewer_row {
     width: 100%;
@@ -25,12 +18,11 @@
         justify-content: center;
         //  calc(50% - 4vw);
         .parcoords {
+            text-transform: capitalize;
             text-align: initial;
             width:100%;
             height:200px;
-            // margin-top: 10px;
             margin-bottom: 20px;
-            // background-color: transparent;
         }
         canvas.main_canvas {
             // width: 100%;

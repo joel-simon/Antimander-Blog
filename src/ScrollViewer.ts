@@ -45,4 +45,25 @@ export default class extends Viewer {
             most_middle[1].classList.add('block_focus')
         }
     }
+
+    onResize() {
+        const { parcoords, viewer_div } = this
+        const vw = viewer_div.clientWidth
+        if (vw < 400) {
+            this.nx_max = 2
+            this.ny_max = 2
+        } else if (vw < 600) {
+            this.nx_max = 3
+            this.ny_max = 3
+        } else {
+            this.nx_max = 4
+            this.ny_max = 4
+        }
+        // console.log(vw)
+        if (parcoords) {
+            parcoords.width(vw)
+            parcoords.resize()
+            parcoords.render()
+        }
+    }
 }

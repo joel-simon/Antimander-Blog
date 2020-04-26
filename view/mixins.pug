@@ -25,7 +25,7 @@ mixin district_viewer(name)
     .district-viewer.left_col
         .parcoords
         .canvas_container
-        p.view_count Viewing N / K
+        p.view_count.metadata Viewing N / K
 
 mixin mailchimp()
     .mailchimp
@@ -83,8 +83,18 @@ mixin redaction_font()
             font-weight: bold;
         }
         @font-face {
+            font-family: "redaction-20";
+            src: url("./fonts/Redaction20-Italic.woff") format('woff');
+            font-style: italic;
+        }
+        @font-face {
             font-family: "redaction-35";
             src: url("./fonts/Redaction35-Regular.woff") format('woff');
+        }
+        @font-face {
+            font-family: "redaction-35";
+            src: url("./fonts/Redaction35-Italic.woff") format('woff');
+            font-style: italic;
         }
         @font-face {
             font-family: "redaction-35";

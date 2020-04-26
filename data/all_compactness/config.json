@@ -8,10 +8,16 @@
     "pop_size": 400,
     "n_gens_first": 1000,
     "NSGA3": false,
-    "metrics": ["compactness",
+    "_metrics": ["compactness",
         "polsby_popper",
         "compactness_convex_hull",
         "compactness_reock"],
+    "metrics": [
+        "center-dist",
+        "polsby-popper",
+        "convex-cull",
+        "reock"
+    ],
     "novelty_phases": 1,
     "n_gens": 400,
     "equality_range": [0.05,0.05],

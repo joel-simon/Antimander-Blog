@@ -1,6 +1,7 @@
   .parcoords > svg, .parcoords > canvas {
     font: 18px sans-serif;
     position: absolute;
+    font-family: vg5000;
   }
   .parcoords > canvas {
     pointer-events: none;

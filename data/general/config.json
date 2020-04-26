@@ -9,6 +9,11 @@
     "n_gens": 12000,
     "pop_size": 350,
     "metrics": [
+        "compactness",
+        "competitiveness",
+        "fairness"
+    ],
+    "_metrics": [
         "polsby_popper",
         "competitiveness",
         "efficiency_gap"

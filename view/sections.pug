@@ -4,21 +4,15 @@ mixin header()
     #header.section
         .left_col
         .right_col
-        //- .line_entry
-        //-     .content
-        //-     .text
-        //-         br
-        //-         h1.main-heading.italic Antimander
         .line_entry
             .content
                 .main_viewer
                     .canvas_container
                         canvas.main_canvas(width=1024, height=1024)
                 .slider_container
-                    p.counts
+                    p.counts.metadata
                     input.slider(type='range', min='0', max='.99', value='.5', step='any')
-                h4 Adjust slider to view computer generated gerrymandering in Wisconsin
-            
+                h4 Adjust slider to view computer generated gerrymandering in Wisconsin            
             .text
                 //- (style='justify-content: flex-start;')
                 h1.main-heading.italic Antimander
@@ -83,10 +77,10 @@ mixin overview()
                 
                 p.hover-link(data-hover_name='algoev')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen.
+                    i Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen showing how a proposed plan (red) is less compact than randomly sampled solution. 
 
                 //- p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each political party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than specific percentage from the state’s total population divided by the number of districts), and each district must be contiguous.
-                p There remains a need for both an open-source library that can optimize such a complex problem with many objectives in addition to an interface for making the results accessible. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
+                p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
 
                 //- button View supplementary technical overview.
                 br
@@ -111,8 +105,6 @@ mixin overview()
 
             //- p However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
 
-
-
             //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
 
 
@@ -125,7 +117,7 @@ mixin viewer()
             .district-text-inner
                 .scroll_block
                     h1 Browser
-                    p  An interactive browser for viewing of one run of the software. Each districting is 'optimal' for a slighty different weighing of the objectives.
+                    p  An interactive browser of one run of the software. Each districting is 'optimal' for a slightly different weighing of the objectives.
                 .scroll_block
                     p  On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
                 .scroll_block
@@ -258,11 +250,11 @@ mixin methods()
                     h3 Single Vs. Multi-Objective Optimization.
                     br
             .text
-                p Optimization is typically a process considered for a goal; however, many real world problems are complex with multiple competing goals. Some domains handle this by creating a weighted average 'composite' goal. This requires picking a precise and often arbitrary weighting A priori. Consider picking an airplane flight, usually some balance of speed and affordability is desired but that tradeoff is subjective and it's hard to weight them without seeing the options. Multi objective optimization is the process of finding the optimal set of solutions.
+                p Optimization is typically a process considered for a goal; however, many real world problems are complex with multiple competing goals. Some domains handle this by creating a weighted average 'composite' goal. This requires picking a precise and often arbitrary weighting A priori. Consider choosing an airplane flight, usually some balance of speed and affordability is desired but that tradeoff is subjective and it's hard to weight them before seeing the options. Multi objective optimization is the process of finding the optimal set of solutions.
 
                 p.hover-link(data-hover_name='moo')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i #[b Left]: Minimizing the error rate of a single-objective over time. #[b Right]: In multi-objective optimization there is a "pareto-front" or n-dimensional surface of solutions where every solution in the front has no other solution that is better in every regard (dominates) These are called  "pareto-optimal."
+                    i #[b Left]: Minimizing the error rate of a single-objective over time. #[b Right]: In multi-objective optimization there is a "pareto-front" or n-dimensional surface of solutions where every solution in the front has no other solution that is better in every regard (dominates). These are called  "pareto-optimal."
         .line_entry
             .content
             .text
@@ -303,7 +295,8 @@ mixin methods()
             .content
                 img(src='imgs/mutation.svg', style='width:60%;').hover-link(data-hover_name='mutate')
             .text
-                p.hover-link(data-hover_name='mutate')
+                p
+                    //- .hover-link(data-hover_name='mutate')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     i Mutation process: A node (orange outline) is random selected to swap districts. The circles are the immediate adjacency graph, a simple DFS is done on nodes in the same district (black-circles). Here we see that removing the orange node would break the district and is therefore prohibited. A full graph traversal is not needed because of assumptions about the structure of districts (such that one district will never fully enclosed another district) that are preserved by the objectives.
         .line_entry
@@ -316,9 +309,10 @@ mixin methods()
             .content
                 img(src='imgs/novelty_metrics/center_histograms.svg', style='width:85%;').hover-link(data-hover_name='center_histograms')
             .text
-                H4.hover-link(data-hover_name='center_histograms')
+                p
+                    //- .hover-link(data-hover_name='center_histograms')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    | N-1: Tile-Histograms. A historam of the distances between nodes within the same district. Inspired by shape features used to characterize 3D meshes [cite osada2002shape] for object databases in ways invariant to scale and rotation. It was used as a novelty metric for #[a(href='http://www.joelsimon.net/corals.html') Evolving Alien Corals]. 
+                    | Method #1: Tile-Histograms. A historam of the distances between nodes within the same district. Inspired by shape features used to characterize 3D meshes [cite osada2002shape] for object databases in ways invariant to scale and rotation. It was used as a novelty metric for #[a(href='http://www.joelsimon.net/corals.html') Evolving Alien Corals]. 
                     
                     //- Here, our BC is the histogram of the distances between the centers of all districts.
                 //- p #[b Left:] Three novelty metrics tested. TODO explain each one.
@@ -326,16 +320,18 @@ mixin methods()
             .content
                 img(src='imgs/novelty_metrics/centers.svg', style='width:85%;').hover-link(data-hover_name='n_centers')
             .text
-                H4.hover-link(data-hover_name='n_centers')
+                //- H4.hover-link(data-hover_name='n_centers')
+                p
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    | N-2: Sorted-Centers. The Simplest method whereby the centroid of each district is sorted by 'x+y' and concatenated.
+                    | Method #2: Sorted-Centers. The Simplest method whereby the centroid of each district is sorted by 'x+y' and concatenated.
         .line_entry
             .content
                 img(src='imgs/novelty_metrics/mutual_tiles.svg', style='width:85%;').hover-link(data-hover_name='mutual_tiles')
             .text
-                H4.hover-link(data-hover_name='mutual_tiles')
+                //- H4.hover-link(data-hover_name='mutual_tiles')
+                p
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    | N-3: Mutual-Tiles. Pairs of tiles are selected at the start of each run (dashed lines). Then, a binary array is constructed such that Vi is 1 if the ith pair is in teh same district and 0 otherwise. The k top principal components of this binary array are the features. It captures the most information at the expense of the most meta-parameters.
+                    | Method #3: Mutual-Tiles. Pairs of tiles are selected at the start of each run (dashed lines). Then, a binary array is constructed such that Vi is 1 if the ith pair is in teh same district and 0 otherwise. The k top principal components of this binary array are the features. It captures the most information at the expense of the most meta-parameters.
 
         .line_entry
             .content
