@@ -16,7 +16,8 @@ mixin header()
             .text
                 //- (style='justify-content: flex-start;')
                 h1.main-heading.italic Antimander
-                h2 Open-source research #[br] and software to fight gerrymandering.
+                h2 Fighting gerrymandering with generative algorithms. 
+                //- h2 Open-source research #[br] and software to fight Gerrymandering.
                 
                 .github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
                     //- a(href='https://github.com/joel-simon/Antimander', target='_blank')
@@ -261,7 +262,7 @@ mixin methods()
 
                 p.hover-link(data-hover_name='moo')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i #[b Left]: Minimizing the error rate of a single-objective over time. #[b Right]: In multi-objective optimization there is a "pareto-front" or n-dimensional surface of solutions where every solution in the front has no other solution that is better in every regard (dominates). These are called  "pareto-optimal."
+                    i #[b Left]: Minimizing the error rate of a single-objective over time. #[br] #[b Right]: In multi-objective optimization there is a "pareto-front" or n-dimensional surface of solutions where every solution in the front has no other solution that is better in every regard (dominates). These are called  "pareto-optimal."
         .line_entry
             .content
             .text
@@ -276,7 +277,7 @@ mixin methods()
         .line_entry
             .content
                 .hover-link(data-hover_name='nsgaii')
-                    img.background(src='imgs/nsgaii.png', style='width:550px;')
+                    img.background(src='imgs/methods/nsgaii.png', style='width:550px;')
                     h3 NSGA-II Algorithm.
             .text
                 p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [cite] is used here which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed due to the challenges of combining diverse partitions to generate viable and meaningful new solutions.
@@ -302,7 +303,7 @@ mixin methods()
                 
         .line_entry
             .content.cjsut
-                img(src='imgs/mutation.svg', style='width:60%;').hover-link(data-hover_name='mutate')
+                img(src='imgs/methods/mutation.svg', style='width:60%;').hover-link(data-hover_name='mutate')
             .text
                 p The mutation operator simply takes a node bordering another district and swaps the district it belongs to. To make exploring the search space practical, the mutation operator only allows mutations that preserve the contiguity of the district. Calculating graph connectedness after every mutation would be computationally prohibitive and so a local adjacency graph is created for each node for fast checks.
                 //-  Instead, local adjacency graph for every node is pre-computed. This graph on node N is the sub-graph where every node is a neighbor of N. To determine if a node N may be removed from a partition without breaking contiguity, a simple search is done on the graph to see if all members that belong to that district remain connected. 
@@ -351,12 +352,12 @@ mixin methods()
         .line_entry
             .content.cjsut
                 //- img.shadow(src='imgs/feas_infeas_drawing.svg', style='opacity:.9;max-width:300px;margin-top:0px')
-                img(src='imgs/feas_infeas_drawing.svg', style='max-width:350px;')
+                img(src='imgs/methods/feas_infeas_drawing.svg', style='max-width:350px;')
             .text                
                 p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majority of the possibilities are inviable. Often, finding a good solution requires explores some bad ones first. Some genetic-algorithms simply throw out invalid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satisfy all constraints) and one for infeasible (FIF). The feasible optimize for all the objectives while the infeasible optimize to satisfy the objectives. Liapis et all (cite Enhancements to Constrained Novelty Search) propose combining novelty search with FIF.
                 p
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i Re-creation of figure 1-C in Liapis et all. 
+                    i Re-creation of figure 1-C in Liapis et all showing the total solution space with disjoint spaces of feasible solutions. Infeasible solutions (orange) also have a pressure to explore, making them more likely to discover novel solutions.
 
         .line_entry
             .content
@@ -364,7 +365,7 @@ mixin methods()
                 h2 Multi-Phase
         .line_entry
             .content
-                img.shadow.medium-img(src='imgs/contract.png', style='opacity:.9;')
+                img.shadow.medium-img(src='imgs/methods/contract.png', style='opacity:.9;')
             .text
                 p Because optimizing a large number of nodes directly is challenging, districts are optimized through a multi-phase evolutionary algorithm, where each successive phase divides districts more granularly (similarly to Swarmy et al. cite{swamymulti}). To create a series of coarsening graphs, the graph is iteratively contracted using star contraction \cite[ch. 13]{ab-algorithms} until the state has reached 500 nodes. An additional bias is added to preserve compact shapes across graph resolutions. 
                 p
@@ -388,24 +389,37 @@ mixin results()
                 +section_nav2('results')
         .line_entry
             .content
-                img(src='imgs/results.svg', style='max-width:300px;')
+                img.hover-link.background(src='imgs/results/optimization_comp.svg',
+                    data-hover_name='comp',
+                    style='max-width:600px;padding:20px;')
             .text
-                p Three methods were compared: NSGA-II, feasible-infeasible search (FIF), and FIF with novelty as an additional objective in the infeasible population only (FIF-NOV). Each run had a total population of 800, and consisted of 1000 generations per each of its five phases. Each run was replicated five times.
-                p FIF with novelty outperformed vanilla NSGA-2 and FIF without novelty. Somewhat suprisingly, FIF did worse than NSGA if no novelty was employed.
-
-        .line_entry
-            .content
-                img(src='imgs/novelty_results.svg', style='max-width:300px;')
-            .text
-                p 
+                p Three novelty methods were compared using NSGA-II as well as with and without feasible-infeasible search (FIF). Novelty was added as an additional objective. Each run had a total population of 700, and consisted of 15000 generations across five phases. Each run was replicated five times.
+                //- 
+                //- , and FIF with novelty as an additional objective in the infeasible population only (FIF-NOV).
                 
+                p.hover-link(data-hover_name='comp')
+                    img.text-arrow(src='/icons/arrow-left.svg')
+                    i All three novelty metrics outperformed the baseline with 'Centers' metric doing the best. Surprisingly, novelty search without Feas-Infeas did the worst, and seemed to struggle with the complexity of later phases. This validates that novelty search combined with Feas-Infeas is an effective combination. 
+                //- FIF with novelty outperformed vanilla NSGA-2 and FIF without novelty. Somewhat suprisingly, FIF did worse than NSGA if no novelty was employed.
 
         .line_entry
             .content
-                img(src='imgs/results_top.png')
-                img(src='imgs/results_bott.png')
+                img.hover-link(src='imgs/results/results.png',data-hover_name='results')
+                //- img(src='imgs/results/results_.png')
             .text
-                p Comparing actual and optimized Wisconsin districts. Shown optimized solutions are hand-chosen from those that dominate the actual districting (i.e. strictly lower score on all measures) (a) Wisconsin's 2011 districts have scores: fairness=0.788, competitiveness=%53.16, equality=%8.46. (b) An optimized compact district from a FIF-NOV run: fairness=0.647, competitiveness=%17.98, equality=%0.76. The solution is quantatively and qualitatively more compact than the actual districting. (c) An optimized district with maximum fairness and competitiveness from a FIF-NOV run: fairness=0.762, competitiveness=%13.12, equality=%0.0 Remarkably this districting had exactly 726419 lost votes for each party.        
+                p.hover-link(data-hover_name='results')
+                    img.text-arrow(src='/icons/arrow-left.svg')
+                    i Comparing actual and optimized Wisconsin districts. Shown optimized solutions are hand-chosen from those that dominate the actual districting (i.e. strictly lower score on all measures) (a) Wisconsin's 2011 districts have scores: fairness=0.788, competitiveness=%53.16, equality=%8.46. (b) An optimized compact district from a FIF-NOV run: fairness=0.647, competitiveness=%17.98, equality=%0.76. The solution is quantitatively and qualitatively more compact than the actual districting. (c) An optimized district with maximum fairness and competitiveness from a FIF-NOV run: fairness=0.762, competitiveness=%13.12, equality=%0.0 Remarkably this districting had exactly 726419 lost votes for each party.        
+        
+        .line_entry
+            .content
+                img.hover-link.background(src='imgs/results/novelty.png', style='max-width:600px;', data-hover_name='novelty_grid')
+            .text
+                p For a final analysis the diversity of generated solutions was evaluated. As discussed previously, a comparison is most meaningful when done against a diverse set of alternatives. The 'Centers' metric is used as the basis of exploring diversity since it created the most optimal solutions. Multiple runs of four different methods were combined and the features of final solutions were projected into 2D with PCA. 
+
+                p.hover-link(data-hover_name='novelty_grid')
+                    img.text-arrow(src='/icons/arrow-left.svg')
+                    i The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. Feas-Infeas with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline. 
 
 mixin next-steps()
     #next-steps.section
@@ -417,20 +431,36 @@ mixin next-steps()
                 +section_nav2('next-steps')
         .line_entry
             .content
+                //- .card
+                    
+                //- br
                 .card
                     +mailchimp()
+                br
+                .card
+                    h3 Contact
+                    //- p: a(href='mailto:joelsimon6@gmail.com', target="_top") joelsimon6@gmail.com
+                    p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
                 br
                 .github_row.card
                     h3 Contribute:
                     .github
                         img(src='/imgs/github.png')
                         a(href='https://github.com/joel-simon/Antimander') Github
-
                     .github
                         img(src='/imgs/Discord-Logo-Color.png')
                         a(href='https://discord.gg/UmgaE74') Discord
+                br
+
             .text
-                p Despite gerrdymandering remaining a challenge, there is promise that algorithmic developments may offer relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts. However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
+                p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may offer relief. Antimander an open-source high-performance optimization library and interactive browser with the goal of making districting more transparent. However, to be successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, designer and policy experts. If this is something you are interested in being art of or supporting please reach out. 
+                //-  is the best way to achieve this. By bringing together 
+                //-  This will require a diverse set of skills in many fields including interface design, high performance optimization and policy.
+                //- p Antimander hopes that this initial work and results can grow into . If you're at all interested in cotnributing to the research, design or funding of this project please get reach out. 
+                //-  Antimander will need 
+                //-  Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. 
+                //- Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts.  
+                //- We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
 
 mixin appendix()
     #appendix.section
