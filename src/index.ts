@@ -8,6 +8,9 @@ import { fetch_all_data, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
 declare let window: any;
 import './hover_link'
+import inlineSVG from './lib/inlineSVG.js'
+// declare let inlineSVG: any;
+
 import smoothscroll from 'smoothscroll-polyfill';
 import ndarray from 'ndarray';
 // Safari polyfill.
@@ -45,6 +48,11 @@ async function load_viewers(): Promise<ResultViewer[]> {
         behavior: 'smooth'
     });
 }
+
+inlineSVG.init({
+    svgSelector: '.inline', // the class attached to all images that should be inlined
+    // initClass: 'js-inlinesvg', // class added to <html>
+});
 
 
 async function main() {

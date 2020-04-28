@@ -177,7 +177,7 @@ h1:hover, a:hover {
     border: 1px solid;
     padding-left: 6px;
     padding-right: 6px;
-    img {
+    svg {
         height: 20px;
         transform: rotate(45deg);
         bottom: -2px;
@@ -193,6 +193,7 @@ h1:hover, a:hover {
         color: var(--yellow-50);
         background-color: var(--gray-100);
         border: 1px solid var(--gray-100);
+        fill: var(--yellow-50);
         // @extend .shadow;
     }
 }
