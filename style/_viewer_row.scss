@@ -1,5 +1,5 @@
 @import 'cursors';
-
+@import 'colors';
 
 .viewer_row {
     width: 100%;
@@ -46,7 +46,8 @@
     }
     .district-text {
         width: 50%;
-        padding-left: 40px;
+        padding-left: 32px;
+        padding-right: 32px;
         vertical-align: top;
         float: right;
         padding-top: 50vh;
@@ -70,7 +71,10 @@
             border-left: 1px solid rgba(0, 0, 0, 0.0);
         }
         .scroll_block.block_focus {
-            border-left: 1px solid;
+            // border-left: 1px solid;
+            background-color: var(--yellow-30);
+            border-radius: 3px;
+            @extend .shadow;
         }
         .scroll_block img {
             max-width: 100%;
