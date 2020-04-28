@@ -1,0 +1,22 @@
+{
+    "state": "../optimize/data/WI.json",
+    "out": "../view/data/test_novelty_big/centers_s0",
+    "seed": 0,
+    "feasinfeas": true,
+    "feasinfeas_2N": false,
+    "max_start_tiles": 400,
+    "n_districts": 8,
+    "n_gens": 16000,
+    "pop_size": 700,
+    "metrics": [
+        "polsby_popper",
+        "competitiveness",
+        "efficiency_gap"
+    ],
+    "equality_constraint": 0.05,
+    "novelty": "centers",
+    "NSGA3": false,
+    "dont_fix_seeds": false,
+    "pp_constraint": null,
+    "nov_params": {}
+}

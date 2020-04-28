@@ -40,21 +40,26 @@ export class DrawController {
     canvas: HTMLCanvasElement
     draw_cmd: Function
     color_scale: any
+    
     constructor(cscale_image:string ='imgs/scale_rdbu_1px.png') {
         this.buffer_r = 1024
         this.cscale_image = cscale_image
         this.canvas = document.querySelector('canvas.main_canvas') as HTMLCanvasElement
         this.color_values = new Float32Array(this.buffer_r*this.buffer_r).fill(0)
+        const gl = this.canvas.getContext("webgl", {preserveDrawingBuffer: false});
+        console.log(gl);
+        
         this.regl = Regl({
-            canvas: this.canvas,
+            gl,
             extensions: [ 'oes_texture_float' ],
-            optionalExtensions: [ 'oes_texture_half_float'],
-            attributes: { antialias: true }
+            // optionalExtensions: [ 'oes_texture_half_float', 'oes_texture_float_linear'],
+            // attributes: { antialias: false }
         })
+        // console.log(this.regl);
         this.draw_cmd = draw_map_shader(this.regl)
     }
     async initialize() {
-        // Anyc calls go here. Load common data.
+        // Async calls go here. Load common data.
         this.color_scale = this.regl.texture(
             await fetch_imagedata(this.cscale_image)
         )
@@ -63,8 +68,9 @@ export class DrawController {
         /* Returns a simple function that the viewers can call. Abstracts
            away any shader or texture business.
         */
-        const state = this.regl.texture(rundata.state_image)
-        const background  = this.regl.texture(background_img)
+        const { regl, color_scale } = this
+        const state = regl.texture(rundata.state_image)
+        const background  = regl.texture(background_img)
         return (nx: number, ny: number, selected_id:number, solutions: NdArray[]) => {
             let idx = 0
             console.time('draw')
@@ -80,17 +86,16 @@ export class DrawController {
                 }
             }
             this.color_values.fill(255, idx)
-            const colors = this.regl.texture({
+            const colors = regl.texture({
                 data: this.color_values,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
             this.draw_cmd({
-                colors, nx, ny, selected_id, background,
-                map: state,
-                all_colors: this.color_scale,
+                colors, nx, ny, selected_id, background, state, color_scale,
                 n_tiles: rundata.state_data.voters.length,
                 color_texture_size: this.buffer_r
             })
+            // console.log(regl.read());
             console.timeEnd('draw')
         }
     }

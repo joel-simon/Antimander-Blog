@@ -24,9 +24,11 @@ a {
     // display: block;
     border-bottom: 1px solid;
     &:hover {
-        color: white;
+        color: black;
+        background-color: var(--yellow-50);
         // font-family: redaction-100; 
-        background-color: black;
+        // color: white;
+        // background-color: black;
     }
 }
 
@@ -61,8 +63,8 @@ h5 {
     line-height: 24px;
 }
 p {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 24px;
+    line-height: 32px;
 }
 .caption {
     font-size: 16px;

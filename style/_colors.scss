@@ -1,10 +1,24 @@
-.yellow-10 { background-color: #FDFCE5; }
-.yellow-20 { background-color: #FBF7BF; }
-.yellow-30 { background-color: #F8F293; }
-.yellow-40 { background-color: #F6EC67; }
-.yellow-50 { background-color: #F3E841; }
-.yellow-60 { background-color: #F0E306; }
-.yellow-70 { background-color: #F2D201; }
-.yellow-80 { background-color: #F2BA00; }
-.yellow-90 { background-color: #F2A100; }
-.yellow-100 { background-color: #F07600; }
+:root {
+    --yellow-10: #FDFCE5;
+    --yellow-20: #FBF7BF;
+    --yellow-30: #F8F293;
+    --yellow-40: #F6EC67;
+    --yellow-50: #F3E841;
+    --yellow-60: #F0E306;
+    --yellow-70: #F2D201;
+    --yellow-80: #F2BA00;
+    --yellow-90: #F2A100;
+    --yellow-100: #F07600;
+
+    --gray-10: #FCFBF7;
+    --gray-20: #F7F6F2;
+    --gray-30: #F2F1ED;
+    --gray-40: #E5E4E0;
+    --gray-50: #C2C1BE;
+    --gray-60: #A4A39F;
+    --gray-70: #7A7A76;
+    --gray-80: #666562;
+    --gray-90: #474643;
+    --gray-100: #252522;
+}
+

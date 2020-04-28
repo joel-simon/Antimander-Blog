@@ -15,7 +15,6 @@ export default class extends Viewer {
         this.sorted_idxs = range(this.values.length).sort((i, j) => {
             return this.values[i][sort_key] - this.values[j][sort_key]
         })
-        console.log(this.sorted_idxs)
         this.draw_idx = this.sorted_idxs[Math.floor(rundata.X.shape[0] / 2)]
         this.p_counts = container.querySelector('p.counts')
         this.slider = container.querySelector('.slider')

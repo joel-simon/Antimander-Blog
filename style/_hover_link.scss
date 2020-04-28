@@ -12,7 +12,7 @@
     }
 }
 .content .l-hover {
-    @extend .yellow-20;
+    background-color: var(--yellow-20);
     @extend .shadow;
     z-index:3;
     // padding-left: 10px;
@@ -29,9 +29,6 @@
     border-radius: 3px;
 }
 .text .l-hover {
-    // background-color: #FFFBCC;
-    // background-color: #F8F293;
-    // background-color: #;
-    @extend .yellow-20;
+    background-color: var(--yellow-20);
     @extend .shadow;
 }

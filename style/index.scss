@@ -19,6 +19,8 @@ html, body {
     -webkit-font-smoothing: antialiased;
     padding: 0px;
     margin: 0px;
+    background-color: var(--gray-10);
+    color: var(--gray-100);
 }
 
 .index_nav .navlink {
@@ -170,7 +172,7 @@ h1:hover, a:hover {
 .github-button {
     border-radius: 21px;
     @extend .cursor-pointer;
-    @extend .yellow-50;
+    background-color: var(--yellow-50);
     width: fit-content;
     border: 1px solid;
     padding-left: 6px;
@@ -188,6 +190,9 @@ h1:hover, a:hover {
         @extend .cursor-pointer;
     }
     &:hover {
+        color: var(--yellow-50);
+        background-color: var(--gray-100);
+        border: 1px solid var(--gray-100);
         // @extend .shadow;
     }
 }

@@ -8,6 +8,10 @@ import { fetch_all_data, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
 declare let window: any;
 import './hover_link'
+import smoothscroll from 'smoothscroll-polyfill';
+import ndarray from 'ndarray';
+// Safari polyfill.
+smoothscroll.polyfill();
 
 async function load_viewers(): Promise<ResultViewer[]> {
     const viewers = []
