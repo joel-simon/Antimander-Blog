@@ -391,7 +391,7 @@ mixin results()
             .content
                 img.hover-link.background(src='imgs/results/optimization_comp.svg',
                     data-hover_name='comp',
-                    style='max-width:600px;padding:20px;')
+                    style='max-width:600px;padding:20px;margin-bottom:32px;')
             .text
                 p Three novelty methods were compared using NSGA-II as well as with and without feasible-infeasible search (FIF). Novelty was added as an additional objective. Each run had a total population of 700, and consisted of 15000 generations across five phases. Each run was replicated five times.
                 //- 
@@ -403,17 +403,18 @@ mixin results()
                 //- FIF with novelty outperformed vanilla NSGA-2 and FIF without novelty. Somewhat suprisingly, FIF did worse than NSGA if no novelty was employed.
 
         .line_entry
-            .content
+            .content.cjust
                 img.hover-link(src='imgs/results/results.png',data-hover_name='results')
                 //- img(src='imgs/results/results_.png')
             .text
                 p.hover-link(data-hover_name='results')
-                    img.text-arrow(src='/icons/arrow-left.svg')
+                    img.text-arrow(src='/icons/arrow-left.svg', style='top:50%;')
                     i Comparing actual and optimized Wisconsin districts. Shown optimized solutions are hand-chosen from those that dominate the actual districting (i.e. strictly lower score on all measures) (a) Wisconsin's 2011 districts have scores: fairness=0.788, competitiveness=%53.16, equality=%8.46. (b) An optimized compact district from a FIF-NOV run: fairness=0.647, competitiveness=%17.98, equality=%0.76. The solution is quantitatively and qualitatively more compact than the actual districting. (c) An optimized district with maximum fairness and competitiveness from a FIF-NOV run: fairness=0.762, competitiveness=%13.12, equality=%0.0 Remarkably this districting had exactly 726419 lost votes for each party.        
         
         .line_entry
             .content
                 img.hover-link.background(src='imgs/results/novelty.png', style='max-width:600px;', data-hover_name='novelty_grid')
+                .padding(style='height:40px;')
             .text
                 p For a final analysis the diversity of generated solutions was evaluated. As discussed previously, a comparison is most meaningful when done against a diverse set of alternatives. The 'Centers' metric is used as the basis of exploring diversity since it created the most optimal solutions. Multiple runs of four different methods were combined and the features of final solutions were projected into 2D with PCA. 
 
@@ -450,7 +451,7 @@ mixin next-steps()
                     .github
                         img(src='/imgs/Discord-Logo-Color.png')
                         a(href='https://discord.gg/UmgaE74') Discord
-                br
+                .padding(style='height:40px;')
 
             .text
                 p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may offer relief. Antimander an open-source high-performance optimization library and interactive browser with the goal of making districting more transparent. However, to be successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, designer and policy experts. If this is something you are interested in being art of or supporting please reach out. 
@@ -473,8 +474,8 @@ mixin appendix()
 
 mixin references()
     #references.section
-        .left_col
-            img(src='imgs/footer_3.png', style='width:100%;height:100%;position:absolute;bottom:0px;opacity:0.8')
+        .left_col(style='background:none;')
+            img(src='imgs/tJvAfyaW.png', style='width:100%;height:100%;position:absolute;bottom:0px;opacity:1.0')
         .right_col
         .line_entry
             .content

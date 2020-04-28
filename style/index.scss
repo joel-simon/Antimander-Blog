@@ -7,6 +7,7 @@
 @import 'cursors';
 @import 'hover_link';
 @import 'line_entry';
+@import 'colors';
 
 * {
     box-sizing: border-box;
@@ -26,67 +27,6 @@ html, body {
 .index_nav .navlink {
     margin: .5em;
     margin-left: 0em;
-}
-
-// .navlink:hover a {
-//     color: white;
-// }
-
-
-h1:hover, a:hover {
-    // font-family: redaction-50;
-}
-
-.blue2white {
-    background: linear-gradient(
-        to bottom,
-        hsl(203.06, 100%, 50%) 0%,
-        hsl(210.84, 98.51%, 69.86%) 6.3%,
-        hsl(212.89, 96.33%, 77.08%) 12.2%,
-        hsl(214.05, 93.41%, 82%) 17.8%,
-        hsl(214.77, 89.66%, 85.67%) 23.1%,
-        hsl(215.22, 84.92%, 88.5%) 28.4%,
-        hsl(215.45, 79.02%, 90.72%) 33.6%,
-        hsl(215.49, 71.8%, 92.47%) 39%,
-        hsl(215.32, 63.13%, 93.85%) 44.6%,
-        hsl(214.83, 52.95%, 94.93%) 50.5%,
-        hsl(213.8, 41.33%, 95.77%) 57%,
-        hsl(211.5, 28.44%, 96.43%) 64%,
-        hsl(204.04, 14.4%, 96.94%) 71.6%,
-        hsl(107.4, 4.4%, 97.45%) 80.1%,
-        hsl(51.49, 18.27%, 97.71%) 89.6%,
-        hsl(45, 40%, 98.04%) 100%
-    );
-    // background: linear-gradient(to bottom, #1F47CD, #1069EC, #007BFF,
-    //                             #008FFF, #019EFF, #1EADFF, #57BDFF,
-    //                             #8DD0FF, #BBE2FD, #E3F4FF)
-    // background: linear-gradient(to bottom, #fcfbf7, #007bff 1%, #fcfbf7);
-}
-
-.red2white {
-    background: linear-gradient(
-        to bottom,
-        hsl(358.98, 93.65%, 62.94%) 0%,
-        hsl(359.27, 93%, 67.97%) 2.4%,
-        hsl(359.62, 92.21%, 72.56%) 5%,
-        hsl(0.08, 91.23%, 76.67%) 7.8%,
-        hsl(0.65, 90.07%, 80.23%) 11%,
-        hsl(1.39, 88.63%, 83.4%) 14.6%,
-        hsl(2.36, 86.8%, 86.2%) 18.8%,
-        hsl(3.66, 84.46%, 88.63%) 23.7%,
-        hsl(5.44, 81.48%, 90.73%) 29.3%,
-        hsl(7.9, 77.67%, 92.5%) 35.9%,
-        hsl(11.38, 72.85%, 93.95%) 43.4%,
-        hsl(16.3, 66.98%, 95.11%) 52.1%,
-        hsl(23.06, 60.3%, 95.99%) 62%,
-        hsl(31.45, 53.65%, 96.59%) 73.2%,
-        hsl(39.42, 48.57%, 96.94%) 85.8%,
-        hsl(42.86, 46.67%, 97.06%) 100%
-    );
-    // background: linear-gradient(to bottom, #C30011, #d10420, #DE1427,
-    //                             #F0232D, #FF312D, #F9474A, #EE6D6F,
-    //                             #F69798, #FFCBD1, #FFEAEE)
-    // background: linear-gradient(to bottom, #fcfbf7, #ff312d 1%, #fcfbf7);
 }
 
 
@@ -118,10 +58,11 @@ h1:hover, a:hover {
     }
     .left_col {
         left: 0px;
+        border-right: 1px solid var(--gray-100);
     }
     .right_col {
         right: 0px;
-        border-bottom: 8px solid black;
+        border-bottom: 8px solid var(--gray-100);
     }
 }
 
