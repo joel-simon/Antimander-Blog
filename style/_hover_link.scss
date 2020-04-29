@@ -12,11 +12,9 @@
     }
 }
 .content .l-hover {
-    background-color: var(--yellow-20);
+    background-color: var(--gray-10);
     @extend .shadow;
     z-index:3;
-    // padding-left: 10px;
-    // padding-right: 10px;
     transform: scale(1.05);
     opacity: 1.0 !important;
     .background {

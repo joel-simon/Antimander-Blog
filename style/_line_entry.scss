@@ -58,5 +58,11 @@
         p {
             margin-top: 0px;
         }
+        p:last-child {
+            margin-bottom: 0px;
+        }
+    }
+    &:last-child {
+        padding-bottom: 32px;
     }
 }

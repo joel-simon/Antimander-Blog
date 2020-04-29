@@ -79,10 +79,11 @@ html, body {
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     .compactness_tile {
-        // @extend .zoomable;
-        display: inline-block;
-        width: calc(50% - 22px);
+        display: inline-flex;
+        flex-direction: column;
+        max-width: calc(50% - 22px);
         vertical-align: top;
         padding-left: 10px;
         padding-right: 10px;
@@ -93,20 +94,9 @@ html, body {
         h4 {
             margin-top: 0px;
         }
-        // &:nth-child(1) {
-        //     border-bottom: 1px dashed;
-        //     border-right: 1px dashed;
-        // }
-        // &:nth-child(2) {
-        //     border-bottom: 1px dashed;
-        // }
-        // &:nth-child(3) {
-        //     border-right: 1px dashed;
-        //     border-bottom: 1px dashed;
-        // }
-        // &:nth-child(4) {
-        //     border-bottom: 1px dashed;
-        // }
+        img {
+            width: 100%;
+        }
     }
 }
 
