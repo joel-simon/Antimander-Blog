@@ -33,8 +33,8 @@ nav {
             bottom: 32px;
             right: -64px;
             background-color: var(--gray-10);
-            border-bottom: 1px solid var(--gray-100);
             z-index: -1;
+            border-bottom: 1px solid var(--gray-100);
             box-shadow: 0px var(--nav-box-shadow-size) var(--nav-box-shadow-size) var(--gray-100);
             transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
         }

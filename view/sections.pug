@@ -47,7 +47,7 @@ mixin overview()
                     h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019)
                 br
             .text
-                h2.section_header Overview:
+                h2.section_header Overview
                 p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How they are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
                 
                 p.hover-link(data-hover_name='the_gerrymander') 
@@ -109,7 +109,7 @@ mixin viewer()
         .district-text
             .district-text-inner
                 .scroll_block
-                    h1 Browser
+                    h2 Browser
                     p  An interactive browser of one run of Antimander for Wisconsin. Each districting is 'optimal' for a slightly different weighing of the three objectives.
                 .scroll_block
                     p  On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
@@ -140,7 +140,7 @@ mixin metrics()
         .line_entry
             .content
             .text
-                //- H2 Metrics:
+                H2 Metrics
                 //- h3 What makes a good district?
                 p The results above were optimized for "fairness", "compactness" and "competitiveness." But what are those and what do they mean and what makes a 'good' district?
         .line_entry
@@ -247,6 +247,7 @@ mixin methods()
                     h3 Single Vs. Multi-Objective Optimization.
                     br
             .text
+                h2 Methods
                 p Optimization is typically a process considered for a goal; however, many real world problems are complex with multiple competing goals. Some domains handle this by creating a weighted average 'composite' goal. This requires picking a precise and often arbitrary weighting A priori. Consider choosing an airplane flight, usually some balance of speed and affordability is desired but that tradeoff is subjective and it's hard to weight them before seeing the options. Multi objective optimization is the process of finding the optimal set of solutions.
                 p.hover-link(data-hover_name='moo')
                     img.text-arrow(src='/icons/arrow-left.svg')
@@ -330,7 +331,7 @@ mixin methods()
         .line_entry
             .content
             .text
-                h2 Feasible-Infeasible Search
+                h3 Feasible-Infeasible Search
         .line_entry
             .content.cjsut
                 //- img.shadow(src='imgs/feas_infeas_drawing.svg', style='opacity:.9;max-width:300px;margin-top:0px')
@@ -348,7 +349,7 @@ mixin methods()
         .line_entry
             .content
             .text
-                h2 Multi-Phase
+                h3 Multi-Phase
         .line_entry
             .content
                 img.shadow.medium-img.hover-link(
@@ -379,6 +380,7 @@ mixin results()
                     data-hover_name='comp',
                     style='max-width:600px;padding:20px;margin-bottom:32px;')
             .text
+                h2 Results
                 p Three novelty methods were compared using NSGA-II as well as with and without feasible-infeasible search (FIF). Novelty was added as an additional objective. Each run had a total population of 700, and consisted of 15000 generations across five phases. Each run was replicated five times.
                 //- 
                 //- , and FIF with novelty as an additional objective in the infeasible population only (FIF-NOV).
@@ -415,7 +417,7 @@ mixin next-steps()
         .line_entry
             .content
             .text
-                h2 Conclusion and Next Steps.
+                h2 Conclusion & Next Steps
         .line_entry
             .content
                 .card
@@ -447,6 +449,7 @@ mixin appendix()
         .line_entry
             .content
             .text
+                h2 Appendix
                 p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
 
 mixin references()
@@ -457,14 +460,15 @@ mixin references()
         .line_entry.align_top
             .content
             .text.align_top
-                h3(style='margin-top:0px') Libraries used:
+                h2 References
+                h3 Libraries used
                 ul
                     li: p: a(href='https://pymoo.org/') Pymoo: Multi-objective Optimization.
                     li: p: a(href='http://regl.party/') Regl: A functional abstraction for webgl.
                     li: p: a(href='https://cython.org/') Cython: Language and static compiler for Python.
                     li: p: a(href='https://www.redaction.us/') Redaction: Typeface used.
                     
-                h3(style='') Papers cited:
+                h3(style='') Papers cited
                 ul
                     li: p Metric Geometry and Gerrymandering Group. 2013. Gerrychain. https://github. com/mggg/GerryChain. (2013).
                     li: p K. Deb, A. Pratap, S. Agarwal and T. Meyarivan, "A fast and elitist multiobjective genetic algorithm: NSGA-II," in IEEE Transactions on Evolutionary Computation, vol. 6, no. 2, pp. 182-197, April 2002.
