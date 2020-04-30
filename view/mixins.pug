@@ -1,20 +1,9 @@
-
-mixin section_nav(active)
-    //- h2!=active.toUpperCase()
-    .section_nav
-        for name, idx in ['intro', 'background', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
-            p.navlink(class = name == active ? 'active' : '')
-                a(href='#'+name)!=idx+': '+name.toUpperCase()
-
-mixin section_nav2(active, include_header=true)
-    ol.section_nav2
-        for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
-            li.navlink.caption(class = name == active ? 'active' : '')
-                a(href='#'+name)!=name
-                //- .toUpperCase()
-                //- a(href='#'+name)!=name
-    if include_header
-        h2.section_header!=active+':'
+mixin nav(active, include_header=true)
+    nav
+        ol
+            for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
+                li.navlink.caption(class = name == active ? 'active' : '')
+                    a(href='#'+name)!=name
 
 mixin text-container(text)
     div.outer-text-container
