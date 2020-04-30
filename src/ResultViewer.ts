@@ -17,20 +17,26 @@ export default class {
     rundata: RunData
     brushed_indexes: number[]
     hover_idx: number
+    use_parcoords: boolean
     constructor(draw_cmd, container:HTMLElement, rundata: RunData, use_parcoords=true) {
         this.draw_cmd = draw_cmd
         this.container = container
         this.rundata = rundata
         this.draw_cmd
-        this.nx_max = 4
-        this.ny_max = 4
+        this.nx_max = 3
+        this.ny_max = 3
         this.nx = this.nx_max
         this.ny = this.ny_max
+        this.use_parcoords = use_parcoords
+        this.setRunData(rundata)
+    }
+
+    setRunData(rundata) {
         this.needs_draw = true
+        this.hover_idx = -1
         this.brushed_indexes = range(rundata.X.shape[0])
         this.current = sample(this.brushed_indexes, this.nx*this.ny)
-        this.rundata = rundata
-        this.hover_idx = -1
+        this.viewer_div = this.container.querySelector('.district-viewer')
         this.values = new Array(rundata.F.shape[0]).fill(0).map((_, i) => {
             const obj:object = { index: i }
             for (let j = 0; j < rundata.F.shape[1]; j++) {
@@ -38,12 +44,11 @@ export default class {
             }
             return obj
         })        
-        if (use_parcoords) {
+        if (this.use_parcoords) {
             this.parcoords = bind_parcoords(
-                container.querySelector('.parcoords'), this.values, (idx) => this._onParCoordsUpdate(idx)
+                this.container.querySelector('.parcoords'), this.values, (idx) => this._onParCoordsUpdate(idx)
             )
         }
-        this.viewer_div = this.container.querySelector('.district-viewer')
     }
 
     _onParCoordsUpdate(brushed_indexes: number[]) {
@@ -96,7 +101,29 @@ export default class {
         this.needs_draw = true
     }
 
+
     onResize() {
+        const { parcoords, viewer_div } = this
+
+        const vw = viewer_div.clientWidth
+        if (vw < 400) {
+            this.nx_max = 2
+            this.ny_max = 2
+        }
+        //  else if (vw < 600) {
+        //     this.nx_max = 3
+        //     this.ny_max = 3
+        // }
+         else {
+            this.nx_max = 3
+            this.ny_max = 3
+        }
+        // console.log(vw)
+        if (parcoords) {
+            parcoords.width(vw)
+            parcoords.resize()
+            parcoords.render()
+        }
         // nx = _nx
         // ny = _ny
         // nx = Math.floor(canvas.clientWidth / dist_width)

@@ -85,4 +85,15 @@
             max-height: 50vh;
         }
     }
+    .slider_container {
+        p { 
+            margin-top: 15px;
+            margin-bottom: 0px;
+            display: flex;
+            justify-content: center;
+        }
+        img {
+            margin-left: 3px;
+        }
+    }
 }

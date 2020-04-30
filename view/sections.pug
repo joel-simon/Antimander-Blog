@@ -11,8 +11,16 @@ mixin header()
                         canvas.main_canvas(width=1024, height=1024)
                 .slider_container
                     p.counts.metadata
-                    input.slider(type='range', min='0', max='.99', value='.5', step='any')
-                h4 Adjust slider to view computer generated gerrymandering in Wisconsin            
+                    p.metadata
+                        | Better shapes
+                        img(src='icons/arrow-right.svg')
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='polsby popper')
+                    p.metadata
+                        | More Fair
+                        img(src='icons/arrow-right.svg')
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='efficiency gap')
+                p Adjust to see alternatives. Read more to see why gerrymandering is so complex.
+                //- h4 Adjust slider to view computer generated gerrymandering in Wisconsin            
             .text
                 //- (style='justify-content: flex-start;')
                 h1.main-heading.italic Antimander
@@ -114,8 +122,7 @@ mixin overview()
             //-
 
 mixin viewer()
-    //- .section.viewer_row#viewer(data-datapath='general', data-stage='5')
-    .section.viewer_row#viewer(data-datapath='general_fif_centers', data-stage='5')
+    .section.viewer_row.sticky(data-datapath='general_fif_centers', data-stage='5')
         +district_viewer("Interactive Viewer")
         .district-text
             .district-text-inner
@@ -230,18 +237,19 @@ mixin metrics()
                 p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
 mixin all_compactness_viewer()
-    .section.viewer_row#viewer(data-datapath='all_compactness', data-stage='5')
-        .left_col
-        .right_col
+    .section.viewer_row.sticky(
+        data-datapath='all_compactness',
+        data-stage='5'
+    )
         +district_viewer("Multiple compactness")
         .district-text
             .district-text-inner
                 .scroll_block
-                    p As you can see above, compactness is complicated!
+                    p As you can see above, there are many many things we want in districts and being good in one regard may result in being be bad in another.
                 .scroll_block
                     p Generative algorithms can also be used here to help explore the space of tradeoffs.
                 .scroll_block
-                    p On the left are districts optimized for all of the compactness metrics above. They still had to be contiguous and equal (same number of people).
+                    p On the left are districts optimized for all of the compactness metrics above. They still had to be contiguous and have equal population.
                 .scroll_block
                     p We can see which metrics corelate and which do not, or what it means to be compact for one but not the other.
                 .scroll_block
@@ -470,9 +478,39 @@ mixin appendix()
         .right_col
         .line_entry
             .content
+                //- .viewer_row(
+                    data-datapath='vary_test_2k/d7-c1',
+                    data-stage='3',
+                    background='data/vary_test_2k/empty.png',
+                    style='height:80vh'
+                //- )
+                //- +district_viewer()
             .text
                 +section_nav2('appendix')
+                h3 Popular Vote Interstate Compact:
                 p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
+
+mixin derp()
+    .section.viewer_row(
+        data-datapath='vary_test_2k/d7-c2',
+        data-viewertype='single',
+        data-stage='3',
+    )
+        .district-viewer.left_col
+            .parcoords
+            .canvas_container
+            p.view_count.metadata Viewing N / K
+        .district-text
+            .district-text-inner
+                .scroll_block
+                    h3 Varying Cities and Districts:
+                    p Another benefit of a generative tool the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
+                
+                .scroll_block
+                    p In these experiments Antimander optimizes for compactness as well as partisan bias for varying numbers of districts and cities. These states were artificially constructed and have equal voters of each party.
+
+                .scroll_block
+                    p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.
 
 mixin references()
     #references.section
