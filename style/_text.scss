@@ -29,7 +29,7 @@ a {
     color: var(--gray-100);
     text-decoration: none;
     // display: block;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid var(--gray-100); 
     
     &:hover {
         color: black;
@@ -40,7 +40,13 @@ a {
     }
 }
 
-h1,h2,h3,h4,h5 {
+@mixin font-metadata {
+    font-size: 18px;
+    line-height: 24px;
+    font-family: vg5000;
+}
+
+h1,h2,h3,h4,h5,.button {
     font-style: italic;
     font-family: redaction-35; 
     
@@ -62,7 +68,7 @@ h3 {
     font-size: 36px;
     line-height: 40px;
 }
-h4 {
+h4, .button {
     font-size: 24px;
     line-height: 32px;
 }
@@ -79,15 +85,33 @@ p {
     line-height: 24px;
 }
 .metadata {
-    font-size: 18px;
-    line-height: 24px;
-    font-family: vg5000;
+    @include font-metadata;
 }
 // p.small {
 //     font-size: 12px;
 //     line-height: 16px;
 // }
 
+// Custom styling for numbered lists
+ol li {
+    counter-increment: customlistcounter;
+    position: relative;
+
+    &:before {
+        content: "0" counter(customlistcounter) " ";
+        display: inline-block;
+        float: left;
+        position: absolute;
+        left: -24px;
+        @include font-metadata;
+        z-index: 10;
+        pointer-events: none;
+    }
+    
+    &:first-child {
+        counter-reset: customlistcounter;
+    }
+}
 
 .text-arrow {
     width:24px;
