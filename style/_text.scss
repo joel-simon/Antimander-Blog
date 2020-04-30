@@ -6,6 +6,9 @@
     -moz-font-feature-settings: "calt";
     -webkit-font-feature-settings: "calt";
     font-feature-settings: "calt";
+    
+    ::-moz-selection { background: var(--yellow-50); }
+    ::selection {      background: var(--yellow-50); }
 }
 
 .redaction { font-family: redaction; }
@@ -19,8 +22,6 @@
 h1,h2,h3,h4,p,a {
     font-weight: 400;
     @extend .cursor-text;
-    &::-moz-selection { background: #FBF7BF; }
-    &::selection { background: #FBF7BF; }
 }
 
 a {
@@ -104,8 +105,8 @@ ol li {
         position: absolute;
         left: -24px;
         @include font-metadata;
-        z-index: 10;
-        pointer-events: none;
+        z-index: 10; // Ensures numeral is visible if text has background
+        pointer-events: none; // Ensures links work if you click on numeral
     }
     
     &:first-child {
@@ -118,5 +119,5 @@ ol li {
     height:24px;
     position: absolute;
     left: -24px;
-    top: 8px;
+    top: 3px;
 }
