@@ -1,6 +1,13 @@
 @import 'cursors';
 @import 'colors';
 
+:root {
+    font-variant-ligatures: contextual;
+    -moz-font-feature-settings: "calt";
+    -webkit-font-feature-settings: "calt";
+    font-feature-settings: "calt";
+}
+
 .redaction { font-family: redaction; }
 .redaction-10 { font-family: redaction-10; }
 .redaction-20 { font-family: redaction-20; }
@@ -19,10 +26,11 @@ h1,h2,h3,h4,p,a {
 a {
     @extend .cursor-pointer;
     cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto;
-    color: black;
+    color: var(--gray-100);
     text-decoration: none;
     // display: block;
     border-bottom: 1px solid;
+    
     &:hover {
         color: black;
         background-color: var(--yellow-50);
@@ -59,20 +67,20 @@ h4 {
     line-height: 32px;
 }
 h5 {
-    font-size: 22px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 32px;
 }
 p {
     font-size: 24px;
     line-height: 32px;
 }
 .caption {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 24px;
 }
 .metadata {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 24px;
     font-family: vg5000;
 }
 // p.small {
@@ -82,9 +90,9 @@ p {
 
 
 .text-arrow {
-    width:16px;
-    height:16px;
+    width:24px;
+    height:24px;
     position: absolute;
-    left: -20px;
+    left: -24px;
     top: 8px;
 }
