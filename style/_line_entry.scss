@@ -49,9 +49,9 @@
         padding-left: 32px;
         padding-right: 16px;
         display: flex;
-        justify-content: center;
+//         justify-content: center;
         flex-direction: column;
-        
+                
         h2,h3,h4 {
             text-align: left;
         }
@@ -72,4 +72,8 @@
     &:last-child {
         padding-bottom: 32px;
     }
+}
+
+.section#overview h2 {
+    margin-top: 112px;
 }
