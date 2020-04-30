@@ -7,10 +7,10 @@ mixin section_nav(active)
                 a(href='#'+name)!=idx+': '+name.toUpperCase()
 
 mixin section_nav2(active, include_header=true)
-    .section_nav2
+    ol.section_nav2
         for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
-            p.navlink(class = name == active ? 'active' : '')
-                a(href='#'+name)!=idx+': '+name
+            li.navlink.caption(class = name == active ? 'active' : '')
+                a(href='#'+name)!=name
                 //- .toUpperCase()
                 //- a(href='#'+name)!=name
     if include_header
