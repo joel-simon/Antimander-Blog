@@ -49,7 +49,7 @@
         padding-left: 32px;
         padding-right: 16px;
         display: flex;
-//         justify-content: center;
+        justify-content: center;
         flex-direction: column;
                 
         h2,h3,h4 {
@@ -60,7 +60,7 @@
         }
         
         h3 {
-            margin-top: 24px; // 64px baseline to baseline
+            margin-top: 32px; // 64px baseline to baseline
         }
         p {
             margin-top: 16px; // 48px baseline to baseline

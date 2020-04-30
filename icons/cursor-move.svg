@@ -1,45 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	width='32' height='32' viewBox="0 0 33 33" style="enable-background:new 0 0 33 33;" xml:space="preserve">
+	 viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#FCFBF7;stroke-miterlimit:10;}
+	.st0{fill:#FCFBF7;}
 	.st1{fill:#252522;}
 </style>
 <g>
-	<rect x="14.5" y="8.5" class="st0" width="4.1" height="16"/>
-	<rect x="14.5" y="28.5" class="st0" width="4.1" height="4"/>
-	<rect x="14.5" y="0.5" class="st0" width="4.1" height="4"/>
-	<rect x="18.6" y="4.5" class="st0" width="3.9" height="4"/>
-	<rect x="10.5" y="4.5" class="st0" width="4" height="4"/>
-	<rect x="18.6" y="24.5" class="st0" width="3.9" height="4"/>
-	<rect x="10.5" y="24.5" class="st0" width="4" height="4"/>
+	<path class="st0" d="M20.1,34H14v-6h6.1V34z M16,32h2.1v-2H16V32z"/>
+	<path class="st0" d="M20.1,6H14V0h6.1V6z M16,4h2.1V2H16V4z"/>
+	<path class="st0" d="M24,10h-5.9V4H24V10z M20.1,8H22V6h-1.9V8z"/>
+	<path class="st0" d="M16,10h-6V4h6V10z M12,8h2V6h-2V8z"/>
+	<path class="st0" d="M24,30h-5.9v-6H24V30z M20.1,28H22v-2h-1.9V28z"/>
+	<path class="st0" d="M16,30h-6v-6h6V30z M12,28h2v-2h-2V28z"/>
+	<path class="st0" d="M20.1,26H14v-5.9H8V14h6V8h6.1v6H26v6.1h-5.9V26z M16,24h2.1v-5.9H24V16h-5.9v-6H16v6h-6v2.1h6V24z"/>
+	<path class="st0" d="M6,20.1H0V14h6V20.1z M2,18.1h2V16H2V18.1z"/>
+	<path class="st0" d="M34,20.1h-6V14h6V20.1z M30,18.1h2V16h-2V18.1z"/>
+	<path class="st0" d="M30,24h-6v-5.9h6V24z M26,22h2v-1.9h-2V22z"/>
+	<path class="st0" d="M30,16h-6v-6h6V16z M26,14h2v-2h-2V14z"/>
+	<path class="st0" d="M10,24H4v-5.9h6V24z M6,22h2v-1.9H6V22z"/>
+	<path class="st0" d="M10,16H4v-6h6V16z M6,14h2v-2H6V14z"/>
 </g>
 <g>
-	<rect x="8.5" y="14.5" class="st0" width="16" height="4.1"/>
-	<rect x="0.5" y="14.5" class="st0" width="4" height="4.1"/>
-	<rect x="28.5" y="14.5" class="st0" width="4" height="4.1"/>
-	<rect x="24.5" y="18.6" class="st0" width="4" height="3.9"/>
-	<rect x="24.5" y="10.5" class="st0" width="4" height="4"/>
-	<rect x="4.5" y="18.6" class="st0" width="4" height="3.9"/>
-	<rect x="4.5" y="10.5" class="st0" width="4" height="4"/>
-</g>
-<g>
-	<rect x="8.5" y="14.5" class="st1" width="16" height="4.1"/>
-	<rect x="0.5" y="14.5" class="st1" width="4" height="4.1"/>
-	<rect x="28.5" y="14.5" class="st1" width="4" height="4.1"/>
-	<rect x="24.5" y="18.6" class="st1" width="4" height="3.9"/>
-	<rect x="24.5" y="10.5" class="st1" width="4" height="4"/>
-	<rect x="4.5" y="18.6" class="st1" width="4" height="3.9"/>
-	<rect x="4.5" y="10.5" class="st1" width="4" height="4"/>
-</g>
-<g>
-	<rect x="14.5" y="8.5" class="st1" width="4.1" height="16"/>
-	<rect x="14.5" y="28.5" class="st1" width="4.1" height="4"/>
-	<rect x="14.5" y="0.5" class="st1" width="4.1" height="4"/>
-	<rect x="18.6" y="4.5" class="st1" width="3.9" height="4"/>
-	<rect x="10.5" y="4.5" class="st1" width="4" height="4"/>
-	<rect x="18.6" y="24.5" class="st1" width="3.9" height="4"/>
-	<rect x="10.5" y="24.5" class="st1" width="4" height="4"/>
+	<polygon class="st1" points="19.1,15 19.1,9 15,9 15,15 9,15 9,19.1 15,19.1 15,25 19.1,25 19.1,19.1 25,19.1 25,15 	"/>
+	<rect x="1" y="15" class="st1" width="4" height="4.1"/>
+	<rect x="29" y="15" class="st1" width="4" height="4.1"/>
+	<rect x="25" y="19.1" class="st1" width="4" height="3.9"/>
+	<rect x="25" y="11" class="st1" width="4" height="4"/>
+	<rect x="5" y="19.1" class="st1" width="4" height="3.9"/>
+	<rect x="5" y="11" class="st1" width="4" height="4"/>
+	<rect x="15" y="29" class="st1" width="4.1" height="4"/>
+	<rect x="15" y="1" class="st1" width="4.1" height="4"/>
+	<rect x="19.1" y="5" class="st1" width="3.9" height="4"/>
+	<rect x="11" y="5" class="st1" width="4" height="4"/>
+	<rect x="19.1" y="25" class="st1" width="3.9" height="4"/>
+	<rect x="11" y="25" class="st1" width="4" height="4"/>
 </g>
 </svg>
