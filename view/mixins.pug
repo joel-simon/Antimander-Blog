@@ -1,4 +1,4 @@
-mixin nav(active, include_header=true)
+mixin nav()
     nav
         ol
             for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
@@ -10,7 +10,7 @@ mixin text-container(text)
         div.inner-text-container
             p!=text
 
-mixin district_viewer(name)
+mixin district_viewer()
     .district-viewer.left_col
         .parcoords
         .canvas_container
@@ -35,6 +35,16 @@ mixin mailchimp()
                         input(type='text', name='b_a8bf2c0baf9814ce560cee82d_9ea5be3557', tabindex='-1', value='')
                     .clear
                         input#mc-embedded-subscribe.button(type='submit', value='Subscribe', name='subscribe')
+
+mixin google_analytics()
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-101632858-6')
+    script.
+        if (document.location.hostname != 'localhost') {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-101632858-6');
+        }
 
 mixin redaction_font()
     style.

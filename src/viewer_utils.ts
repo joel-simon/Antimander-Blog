@@ -14,6 +14,7 @@ export function fetch_all_data(run:string, stage:number): Promise<RunData> {
         fetch_numpy(`data/${run}/F_${stage}.npy`)
     ]).then(([ config, state_data, state_image, X, F ]: RunDataResponse) => {
         console.timeEnd('fetch_all_data')
+        config.metrics = config.metrics.map(v => v.replace(/_/g, ' '))
         return { config, state_data, state_image, X, F }
     })
 }

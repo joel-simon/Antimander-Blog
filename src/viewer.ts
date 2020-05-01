@@ -13,9 +13,9 @@ async function main(run, stage) {
     if (!rundata ) { 
         return console.log('Data not found.')
     }
-    const background = await fetch_imagedata('imgs/district.png')
+    // const background = await fetch_imagedata('imgs/district.png')
     const container  = document.getElementById('viewer')
-    const draw_cmd:DrawCMD = draw_controller.createViewerDrawCmd(rundata, background)
+    const draw_cmd:DrawCMD = draw_controller.createViewerDrawCmd(rundata, 0.7)
     const viewer = new ResultViewer(draw_cmd, container, rundata)
     viewer_update_loop([ viewer ])
 }

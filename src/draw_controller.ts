@@ -22,11 +22,12 @@ function district_color_values(district:NdArray, n_districts:number, statedata:S
     return tile_values
 }
 
-function tile_color_values(district:number[], n_districts:number, statedata:StateData ):number[] {
+function tile_color_values(statedata:StateData ):number[] {
     const n_tiles = statedata.voters.length
     const dist_colors = statedata.voters.map(voters => {
         const v = (voters[0]-voters[1]) / (voters[0]+voters[1])
-        return clamp(v+0.5, 0, 1)
+        // return clamp(v+0.5, 0, 1)
+        return clamp((v*.5)+0.5, 0, 1)
     })
     return dist_colors
 }
@@ -36,65 +37,64 @@ export class DrawController {
     regl: any
     buffer_r: number
     cscale_image: string
-    color_values: Float32Array
+    tile_district_values: Float32Array
     canvas: HTMLCanvasElement
     draw_cmd: Function
     color_scale: any
-    
+    // constructor(cscale_image:string ='imgs/partisan-gradient-export.png') {
     constructor(cscale_image:string ='imgs/scale_rdbu_1px.png') {
         this.buffer_r = 1024
         this.cscale_image = cscale_image
         this.canvas = document.querySelector('canvas.main_canvas') as HTMLCanvasElement
-        this.color_values = new Float32Array(this.buffer_r*this.buffer_r).fill(0)
-        const gl = this.canvas.getContext("webgl", {preserveDrawingBuffer: false});
-        console.log(gl);
-        
+        this.tile_district_values = new Float32Array(this.buffer_r*this.buffer_r).fill(0)
+        const gl = this.canvas.getContext("webgl", { preserveDrawingBuffer: false })
         this.regl = Regl({
             gl,
             extensions: [ 'oes_texture_float' ],
-            // optionalExtensions: [ 'oes_texture_half_float', 'oes_texture_float_linear'],
-            // attributes: { antialias: false }
+            optionalExtensions: [ 'oes_texture_half_float' ],
+            attributes: { antialias: false }
         })
-        // console.log(this.regl);
         this.draw_cmd = draw_map_shader(this.regl)
     }
-    async initialize() {
-        // Async calls go here. Load common data.
+    async initialize() { // Async calls go here. Load common data.
         this.color_scale = this.regl.texture(
             await fetch_imagedata(this.cscale_image)
         )
     }
-    createViewerDrawCmd(rundata: RunData, background_img): DrawCMD {
+    createViewerDrawCmd(rundata: RunData, mix: number): DrawCMD {
         /* Returns a simple function that the viewers can call. Abstracts
            away any shader or texture business.
         */
         const { regl, color_scale } = this
         const state = regl.texture(rundata.state_image)
-        const background  = regl.texture(background_img)
+        // const background = regl.texture(background_img)
+        const voters = regl.texture({
+            data: tile_color_values(rundata.state_data).map(v => v * 255),
+            shape: [ rundata.state_data.voters.length, 1, 1 ]
+        })
         return (nx: number, ny: number, selected_id:number, solutions: NdArray[]) => {
             let idx = 0
             console.time('draw')
             for (let i = 0; i < solutions.length; i++) {
-                let values
-                // if (method == 'districts') {
-                values = district_color_values(solutions[i], 8, rundata.state_data)
-                // } else {
-                //     values = tile_color_values(solutions[i], 8, rundata.state_data)
-                // }
+                let values = district_color_values(solutions[i], 8, rundata.state_data)
                 for (let j = 0; j < values.length; j++) {
-                    this.color_values[idx++] = values[j]
+                    this.tile_district_values[idx++] = values[j]
                 }
             }
-            this.color_values.fill(255, idx)
-            const colors = regl.texture({
-                data: this.color_values,
+            this.tile_district_values.fill(0, idx)
+            const districts = regl.texture({
+                data: this.tile_district_values,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
             this.draw_cmd({
-                colors, nx, ny, selected_id, background, state, color_scale,
+                nx, ny, selected_id, state, color_scale, mix,
+                voters,
+                colors: districts,
+                n_solutions: solutions.length,
                 n_tiles: rundata.state_data.voters.length,
                 color_texture_size: this.buffer_r
             })
+            
             // console.log(regl.read());
             console.timeEnd('draw')
         }

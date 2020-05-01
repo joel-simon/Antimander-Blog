@@ -1,0 +1,22 @@
+{
+    "state": "../optimize/data/t2000-c3.json",
+    "out": "../view/data/vary_test_2k/d8-c3",
+    "n_districts": 8,
+    "seed": 1,
+    "feasinfeas": true,
+    "feasinfeas_2N": false,
+    "max_start_tiles": 500,
+    "n_gens": 2000,
+    "pop_size": 400,
+    "metrics": [
+        "polsby_popper",
+        "dem_advantage",
+        "rep_advantage"
+    ],
+    "equality_constraint": 0.05,
+    "novelty": "centers",
+    "NSGA3": false,
+    "dont_fix_seeds": false,
+    "pp_constraint": 0.6,
+    "nov_params": {}
+}
