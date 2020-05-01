@@ -56,7 +56,7 @@
             text-align: left;
         }
         h2 {
-            margin-top: 56px; // 96px baseline to baseline
+            margin-top: 78px; // 120px baseline to baseline
         }
         
         h3 {
@@ -72,8 +72,4 @@
     &:last-child {
         padding-bottom: 32px;
     }
-}
-
-.section#overview h2 {
-    margin-top: 112px;
 }
