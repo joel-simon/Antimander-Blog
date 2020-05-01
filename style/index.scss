@@ -31,10 +31,10 @@ html, body {
 }
 
 
-.section:nth-child(odd) .left_col {
+section:nth-child(odd) .left_col {
     @extend .blue2white;
 }
-.section:nth-child(even) .left_col {
+section:nth-child(even) .left_col {
     @extend .red2white;
 }
 
@@ -43,11 +43,11 @@ html, body {
     max-height: 50vh;
 }
 
-.section {
+section {
     position: relative;
     z-index: 1;
     min-height: 30vh;
-    .section_header {
+    section_header {
         text-transform: capitalize;
     }
     .left_col, .right_col {
@@ -67,7 +67,7 @@ html, body {
     }
 }
 
-.section#header {
+section#header {
     .right_col {
         right: 0px;
         border-top: 8px solid black;

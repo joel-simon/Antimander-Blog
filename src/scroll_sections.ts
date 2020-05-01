@@ -41,7 +41,7 @@ function updateScrollBlocks({ section, scroll_blocks }: sdata) {
 
 let last_scroll = null
 const section_divs: sdata[] = []
-document.querySelectorAll('.section.viewer_row').forEach((section: HTMLElement) => {
+document.querySelectorAll('section.viewer_row').forEach((section: HTMLElement) => {
     const scroll_blocks = section.querySelectorAll('.scroll_block') as NodeListOf<HTMLElement>
     section_divs.push({ section, scroll_blocks })
 })

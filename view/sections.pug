@@ -1,7 +1,7 @@
 include mixins
 
 mixin header()
-    #header.section
+    section#header
         .left_col
         .right_col
         .line_entry
@@ -37,7 +37,7 @@ mixin header()
         img.scroll_down(src='/icons/arrow-down.svg')
 
 mixin overview()
-    #overview.section
+    section#overview
         .left_col
         .right_col
         .line_entry
@@ -55,7 +55,7 @@ mixin overview()
                     h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019)
                 br
             .text
-                h2.section_header Overview
+                h2 Overview
                 p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How they are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
                 
                 p.hover-link(data-hover_name='the_gerrymander') 
@@ -111,7 +111,7 @@ mixin overview()
             //-
 
 mixin viewer()
-    .section.viewer_row.sticky(data-datapath='general_fif_centers', data-stage='5')
+    section.viewer_row.sticky(data-datapath='general_fif_centers', data-stage='5')
         +district_viewer("Interactive Viewer")
         .district-text
             .district-text-inner
@@ -141,7 +141,7 @@ mixin viewer()
                 //- .padding(style='height:30vh;')
 
 mixin metrics()
-    #metrics.section
+    section#metrics
         .left_col
         .right_col
         .line_entry
@@ -222,7 +222,7 @@ mixin metrics()
                 p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
 mixin all_compactness_viewer()
-    .section.viewer_row.sticky(
+    section.viewer_row.sticky(
         data-datapath='all_compactness',
         data-stage='5'
     )
@@ -245,7 +245,7 @@ mixin all_compactness_viewer()
                     p Which metrics (or pairs of) best correspond do your idea of 'compactness?'
              
 mixin methods()
-    #methods.section
+    section#methods
         .left_col
         .right_col
         .line_entry
@@ -382,7 +382,7 @@ mixin methods()
                 p Wisconsin is chosen as a test as in [cite{liu2016pear,swamymulti}]. Census and geographic data was downloaded from the Metric Geometry and Gerrymandering Group's mggg-states #[a(href='https://github.com/mggg-states/WI-shapefiles') Github repository]. Voters for each party were the average voters in the 2012 and 2016 presidential election. Wisconsin has eight congressional districts composed from 6634 census wards.
 
 mixin results()
-    #results.section
+    section#results
         .left_col
         .right_col
         .line_entry
@@ -422,7 +422,7 @@ mixin results()
                     i The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. Feas-Infeas with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline. 
 
 mixin next-steps()
-    #next-steps.section
+    section#next-steps
         .left_col
         .right_col
         .line_entry
@@ -454,7 +454,7 @@ mixin next-steps()
                 P Antimander an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statistician, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
 
 mixin appendix()
-    #appendix.section
+    section#appendix
         .left_col
         .right_col
         .line_entry
@@ -465,7 +465,7 @@ mixin appendix()
                 p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
 
 mixin derp()
-    .section.viewer_row(
+    section.viewer_row(
         data-datapath='vary_test_2k/d7-c2',
         data-viewertype='single',
         data-stage='3',
@@ -487,7 +487,7 @@ mixin derp()
                     p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.
 
 mixin references()
-    #references.section
+    section#references
         .left_col(style='background:none;')
             img(src='imgs/tJvAfyaW.png', style='width:100%;height:100%;position:absolute;bottom:0px;opacity:1.0')
         .right_col
