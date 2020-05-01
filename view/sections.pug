@@ -27,19 +27,12 @@ mixin header()
                 h2 Fighting gerrymandering with generative algorithms. 
                 //- h2 Open-source research #[br] and software to fight Gerrymandering.
                 
-                .github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
+                .github-button.button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
                     //- a(href='https://github.com/joel-simon/Antimander', target='_blank')
-                    h4 Github
+                    | Github
                     img.inline(src='/icons/arrow-up.svg')
 
                 p.metadata.authors By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
-                .index_nav
-                    for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'next-steps', 'appendix', 'references']
-                        p.navlink
-                            a(href='#'+name)
-                                span.metadata!=idx+' '
-                                span.caption!=name
-                //- .attribution
                     
         img.scroll_down(src='/icons/arrow-down.svg')
 
@@ -47,10 +40,6 @@ mixin overview()
     #overview.section
         .left_col
         .right_col
-        .line_entry
-            .content
-            .text
-                +section_nav2('overview', false)
         .line_entry
             .content
                 .hover-link(data-hover_name='the_gerrymander')
@@ -66,7 +55,7 @@ mixin overview()
                     h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019)
                 br
             .text
-                h2.section_header Overview:
+                h2.section_header Overview
                 p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How they are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
                 
                 p.hover-link(data-hover_name='the_gerrymander') 
@@ -127,7 +116,7 @@ mixin viewer()
         .district-text
             .district-text-inner
                 .scroll_block
-                    h1 Browser
+                    h2 Browser
                     p  An interactive browser of one run of Antimander for Wisconsin. Each districting is 'optimal' for a slightly different weighing of the three objectives.
                 .scroll_block
                     p  On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
@@ -158,11 +147,7 @@ mixin metrics()
         .line_entry
             .content
             .text
-                +section_nav2('metrics')
-        .line_entry
-            .content
-            .text
-                //- H2 Metrics:
+                H2 Metrics
                 //- h3 What makes a good district?
                 p The results above were optimized for "fairness", "compactness" and "competitiveness." But what are those and what do they mean and what makes a 'good' district?
         .line_entry
@@ -266,7 +251,7 @@ mixin methods()
         .line_entry
             .content
             .text
-                +section_nav2('methods')
+                h2 Methods
         .line_entry
             .content
                 .hover-link(data-hover_name='moo')
@@ -357,7 +342,7 @@ mixin methods()
         .line_entry
             .content
             .text
-                h2 Feasible-Infeasible Search
+                h3 Feasible-Infeasible Search
         .line_entry
             .content.cjsut
                 //- img.shadow(src='imgs/feas_infeas_drawing.svg', style='opacity:.9;max-width:300px;margin-top:0px')
@@ -375,7 +360,7 @@ mixin methods()
         .line_entry
             .content
             .text
-                h2 Multi-Phase
+                h3 Multi-Phase
         .line_entry
             .content
                 img.shadow.medium-img.hover-link(
@@ -403,7 +388,7 @@ mixin results()
         .line_entry
             .content
             .text
-                +section_nav2('results')
+                h2 Results
         .line_entry
             .content
                 img.hover-link.background(src='imgs/results/optimization_comp.svg',
@@ -411,9 +396,6 @@ mixin results()
                     style='max-width:600px;padding:20px;margin-bottom:32px;')
             .text
                 p Three novelty methods were compared using NSGA-II as well as with and without feasible-infeasible search (FIF). Novelty was added as an additional objective. Each run had a total population of 700, and consisted of 15000 generations across five phases. Each run was replicated five times.
-                //- 
-                //- , and FIF with novelty as an additional objective in the infeasible population only (FIF-NOV).
-                
                 p.hover-link(data-hover_name='comp')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     i All three novelty metrics outperformed the baseline with 'Centers' metric doing the best. Surprisingly, novelty search without Feas-Infeas did the worst, and seemed to struggle with the complexity of later phases. This validates that novelty search combined with Feas-Infeas is an effective combination. 
@@ -446,8 +428,7 @@ mixin next-steps()
         .line_entry
             .content
             .text
-                +section_nav2('next-steps', false)
-                h2 Conclusion and Next Steps.
+                h2 Conclusion & Next Steps
         .line_entry
             .content
                 .card
@@ -478,15 +459,8 @@ mixin appendix()
         .right_col
         .line_entry
             .content
-                //- .viewer_row(
-                    data-datapath='vary_test_2k/d7-c1',
-                    data-stage='3',
-                    background='data/vary_test_2k/empty.png',
-                    style='height:80vh'
-                //- )
-                //- +district_viewer()
             .text
-                +section_nav2('appendix')
+                h2 Appendix
                 h3 Popular Vote Interstate Compact:
                 p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
 
@@ -517,21 +491,18 @@ mixin references()
         .left_col(style='background:none;')
             img(src='imgs/tJvAfyaW.png', style='width:100%;height:100%;position:absolute;bottom:0px;opacity:1.0')
         .right_col
-        .line_entry
-            .content
-            .text
-                +section_nav2('references')
         .line_entry.align_top
             .content
             .text.align_top
-                h3(style='margin-top:0px') Libraries used:
+                h2 References
+                h3 Libraries used
                 ul
                     li: p: a(href='https://pymoo.org/') Pymoo: Multi-objective Optimization.
                     li: p: a(href='http://regl.party/') Regl: A functional abstraction for webgl.
                     li: p: a(href='https://cython.org/') Cython: Language and static compiler for Python.
                     li: p: a(href='https://www.redaction.us/') Redaction: Typeface used.
                     
-                h3(style='') Papers cited:
+                h3(style='') Papers cited
                 ul
                     li: p Metric Geometry and Gerrymandering Group. 2013. Gerrychain. https://github. com/mggg/GerryChain. (2013).
                     li: p K. Deb, A. Pratap, S. Agarwal and T. Meyarivan, "A fast and elitist multiobjective genetic algorithm: NSGA-II," in IEEE Transactions on Evolutionary Computation, vol. 6, no. 2, pp. 182-197, April 2002.

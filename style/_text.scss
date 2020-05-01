@@ -1,6 +1,16 @@
 @import 'cursors';
 @import 'colors';
 
+:root {
+    font-variant-ligatures: contextual;
+    -moz-font-feature-settings: "calt";
+    -webkit-font-feature-settings: "calt";
+    font-feature-settings: "calt";
+    
+    ::-moz-selection { background: var(--yellow-50); }
+    ::selection {      background: var(--yellow-50); }
+}
+
 .redaction { font-family: redaction; }
 .redaction-10 { font-family: redaction-10; }
 .redaction-20 { font-family: redaction-20; }
@@ -12,17 +22,16 @@
 h1,h2,h3,h4,p,a {
     font-weight: 400;
     @extend .cursor-text;
-    &::-moz-selection { background: #FBF7BF; }
-    &::selection { background: #FBF7BF; }
 }
 
 a {
     @extend .cursor-pointer;
     cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto;
-    color: black;
+    color: var(--gray-100);
     text-decoration: none;
     // display: block;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid var(--gray-100); 
+    
     &:hover {
         color: black;
         background-color: var(--yellow-50);
@@ -32,7 +41,13 @@ a {
     }
 }
 
-h1,h2,h3,h4,h5 {
+@mixin font-metadata {
+    font-size: 18px;
+    line-height: 24px;
+    font-family: vg5000;
+}
+
+h1,h2,h3,h4,h5,.button {
     font-style: italic;
     font-family: redaction-35; 
     
@@ -54,37 +69,55 @@ h3 {
     font-size: 36px;
     line-height: 40px;
 }
-h4 {
+h4, .button {
     font-size: 24px;
     line-height: 32px;
 }
 h5 {
-    font-size: 22px;
-    line-height: 24px;
+    font-size: 24px;
+    line-height: 32px;
 }
 p {
     font-size: 24px;
     line-height: 32px;
 }
 .caption {
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 24px;
 }
 .metadata {
-    font-size: 16px;
-    line-height: 20px;
-    font-family: vg5000;
+    @include font-metadata;
 }
 // p.small {
 //     font-size: 12px;
 //     line-height: 16px;
 // }
 
+// Custom styling for numbered lists
+ol li {
+    counter-increment: customlistcounter;
+    position: relative;
+
+    &:before {
+        content: "0" counter(customlistcounter) " ";
+        display: inline-block;
+        float: left;
+        position: absolute;
+        left: -24px;
+        @include font-metadata;
+        z-index: 10; // Ensures numeral is visible if text has background
+        pointer-events: none; // Ensures links work if you click on numeral
+    }
+    
+    &:first-child {
+        counter-reset: customlistcounter;
+    }
+}
 
 .text-arrow {
-    width:16px;
-    height:16px;
+    width:24px;
+    height:24px;
     position: absolute;
-    left: -20px;
-    top: 8px;
+    left: -24px;
+    top: 3px;
 }

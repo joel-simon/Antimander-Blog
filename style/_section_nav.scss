@@ -1,43 +1,68 @@
 @import 'colors';
 
-.navlink {
-    text-transform: capitalize;
-    margin: 0px !important;
-    padding: 0px !important;
-}
-.navlink a {
-    border-bottom: none;
-}
-
-.index_nav {
-    .navlink {
-        margin: 0px;
+nav {
+    margin-left: 50vw;
+    width: 50vw;
+    position: sticky;
+    top: -1px; // So that browser can tell when nav is at top of view
+    height: 0;
+    margin-top: 100vh;
+    margin-bottom: -100vh;
+    z-index: 2;
+    --nav-box-shadow-size: 0;
+    
+    &.atTop {
+        --nav-box-shadow-size: 8px
     }
-}
-
-.section_nav2 {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    // max-width: 800px;
-    .navlink {
-        flex-shrink: 0;
-        margin: 0px;
-        display: inline-flex;
-        font-size: 1.2em;
-    }
-    .navlink a {
-        padding: 2px;
-        padding-left: 8px;
-        padding-right: 8px;
-        // color: #838383;
-        &:hover {
-            color: white;
+    
+    ol {
+        position: relative;
+        overflow: hidden; // Hide excess shadow
+        z-index: 2; // Keep above main text
+        padding-bottom: 32px; // Ensure that shadow is visible
+        
+        column-count: 4;
+        column-rule: 1px solid var(--gray-100);
+        column-gap: 0;
+        
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -32px;
+            bottom: 32px;
+            right: -64px;
+            background-color: var(--gray-10);
+            z-index: -1;
+            border-bottom: 1px solid var(--gray-100);
+            box-shadow: 0px var(--nav-box-shadow-size) var(--nav-box-shadow-size) var(--gray-100);
+            transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
         }
-    }
-    .navlink.active a {
-        // font-size: 1.4em;
-        color: var(--gray-10);
-        background-color: var(--gray-100);
+        
+        li.navlink {
+            text-indent: 32px;
+            mix-blend-mode: multiply;
+            
+            &.active, &.active a {
+                color: var(--gray-10);
+                background-color: var(--gray-100);
+            }
+            
+            a {
+                // Hide 1px gap on top row of links
+                // due to the -1px offset of the nav.
+                padding-top: 1px;
+                top: -1px;
+                
+                display: block;
+                position: relative;
+                text-transform: capitalize;
+                border-bottom-color: transparent;
+                
+                &:hover {
+                    border-bottom-color: var(--gray-100);
+                }
+            }
+        }
     }
 }

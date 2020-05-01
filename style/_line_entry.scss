@@ -13,14 +13,13 @@
     }
     .text p {
         position: relative;
-        padding: 5px;
+//         padding: 5px;
     }
     .content {
         @extend .col2;
         padding-left: 32px;
         padding-right: 32px;
         text-align: center;
-
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -47,22 +46,33 @@
     .text {
         @extend .col2;
         padding-left: 32px;
-        padding-right: 32px;
-        // text-align: justify;
+        padding-right: 16px;
         display: flex;
         justify-content: center;
         flex-direction: column;
+                
         h2,h3,h4 {
             text-align: left;
         }
-        p {
-            margin-top: 0px;
+        h2 {
+            margin-top: 56px; // 96px baseline to baseline
         }
-        p:last-child {
-            margin-bottom: 0px;
+        
+        h3 {
+            margin-top: 32px; // 64px baseline to baseline
+        }
+        p {
+            margin-top: 16px; // 48px baseline to baseline
+        }
+        i { // This should really be a class or a figcaption 
+            font-style: italic;
         }
     }
     &:last-child {
         padding-bottom: 32px;
     }
+}
+
+.section#overview h2 {
+    margin-top: 112px;
 }
