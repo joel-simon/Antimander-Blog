@@ -36,6 +36,16 @@ mixin mailchimp()
                     .clear
                         input#mc-embedded-subscribe.button(type='submit', value='Subscribe', name='subscribe')
 
+mixin google_analytics()
+    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-101632858-6')
+    script.
+        if (document.location.hostname != 'localhost') {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-101632858-6');
+        }
+
 mixin redaction_font()
     style.
         @font-face {
