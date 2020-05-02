@@ -1,4 +1,5 @@
 @import "_reset";
+@import "_layout";
 @import 'slider';
 @import 'sections';
 @import 'viewer_row';
@@ -19,8 +20,6 @@ html, body {
     font-family: redaction;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
-    padding: 0px;
-    margin: 0px;
     background-color: var(--gray-10);
     color: var(--gray-100);
 }
@@ -30,23 +29,15 @@ html, body {
     margin-left: 0em;
 }
 
-
-section:nth-child(odd) .left_col {
-    @extend .blue2white;
-}
-section:nth-child(even) .left_col {
-    @extend .red2white;
-}
-
 .main_canvas  {
     // width: min(50vw, 30vh);
     max-height: 50vh;
 }
 
-section {
-    position: relative;
-    z-index: 1;
-    min-height: 30vh;
+.section {
+//     position: relative;
+//     z-index: 1;
+//     min-height: 30vh;
     section_header {
         text-transform: capitalize;
     }

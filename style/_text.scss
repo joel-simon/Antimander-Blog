@@ -77,13 +77,19 @@ h5 {
     font-size: 24px;
     line-height: 32px;
 }
-p {
+
+p, ol, ul {
     font-size: 24px;
     line-height: 32px;
 }
-.caption {
+
+b, strong {
+    font-weight: 600;
+}
+.caption, figcaption, figcaption * {
     font-size: 18px;
     line-height: 24px;
+    font-style: italic;
 }
 .metadata {
     @include font-metadata;
@@ -92,6 +98,8 @@ p {
 //     font-size: 12px;
 //     line-height: 16px;
 // }
+
+// LISTS
 
 // Custom styling for numbered lists
 ol li {
@@ -104,7 +112,14 @@ ol li {
         float: left;
         position: absolute;
         left: -24px;
+/*
         @include font-metadata;
+        line-height: 32px;
+        height: 32px;
+*/
+        font-family: vg5000;
+        font-variant-caps: small-caps;
+        font-style: normal;
         z-index: 10; // Ensures numeral is visible if text has background
         pointer-events: none; // Ensures links work if you click on numeral
     }
@@ -114,10 +129,12 @@ ol li {
     }
 }
 
-.text-arrow {
-    width:24px;
-    height:24px;
-    position: absolute;
-    left: -24px;
-    top: 3px;
+/*
+figcaption ol li {
+    list-style: upper-alpha;
+    counter-increment: none;
+    &:before {
+        content: "";
+    }
 }
+*/

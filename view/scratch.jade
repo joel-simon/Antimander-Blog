@@ -1,0 +1,122 @@
+mixin header()
+    .section#header
+        .left_col
+        .right_col
+        .line_entry
+            .content
+                .main_viewer
+                    .canvas_container
+                        canvas.main_canvas(width=1024, height=1024)
+                .slider_container
+                    p.counts.metadata
+                    p.metadata
+                        | Better shapes
+                        img(src='icons/arrow-right.svg')
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='polsby popper')
+                    p.metadata
+                        | More Fair
+                        img(src='icons/arrow-right.svg')
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='efficiency gap')
+                p Adjust to see alternatives. Read more to see why gerrymandering is so complex.
+                //- h4 Adjust slider to view computer generated gerrymandering in Wisconsin            
+            .text
+                //- (style='justify-content: flex-start;')
+                h1.main-heading.italic Antimander
+                h2 Fighting gerrymandering with generative algorithms. 
+                //- h2 Open-source research #[br] and software to fight Gerrymandering.
+                
+                .github-button.button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
+                    //- a(href='https://github.com/joel-simon/Antimander', target='_blank')
+                    | Github
+                    img.inline(src='/icons/arrow-up.svg')
+
+                p.metadata.authors By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
+                    
+        // img.scroll_down(src='/icons/arrow-down.svg')
+
+
+
+
+mixin viewer()
+    .section.viewer_row.sticky(data-datapath='general_fif_centers', data-stage='5')
+        +district_viewer("Interactive Viewer")
+        .district-text
+            .district-text-inner
+                .scroll_block
+                    h2 Browser
+                    p  An interactive browser of one run of Antimander for Wisconsin. Each districting is 'optimal' for a slightly different weighing of the three objectives.
+                .scroll_block
+                    p  On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
+                .scroll_block
+                    p You can drag (brush) on an axis to filter values. This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one objective and also how those solutions rank in other objectives.
+                    img.shadow(src='imgs/filter.png')
+
+                .scroll_block
+                    p You may also click on any district to enlarge it.
+
+                .scroll_block
+                    p Wisconsin is divided into eight districts. The color represents what party that district is leaning towards.
+                    img.legend(src='imgs/figure_legend.png')
+
+                .scroll_block
+                    p Exploring the results allows us to build intuition about the tradeoffs.
+
+                //- for _ in [1,2,3]
+                //-     .scroll_block
+                //-         p Test
+                //- p Test2
+                //- .padding(style='height:30vh;')
+
+
+
+
+
+
+
+mixin all_compactness_viewer()
+    .section.viewer_row.sticky(
+        data-datapath='all_compactness',
+        data-stage='5'
+    )
+        +district_viewer("Multiple compactness")
+        .district-text
+            .district-text-inner
+                .scroll_block
+                    p As you can see above, there are many many things we want in districts and being good in one regard may result in being be bad in another.
+                .scroll_block
+                    p Generative algorithms can also be used here to help explore the space of tradeoffs.
+                .scroll_block
+                    p On the left are districts optimized for all of the compactness metrics above. They still had to be contiguous and have equal population.
+                .scroll_block
+                    p We can see which metrics corelate and which do not, or what it means to be compact for one but not the other.
+                .scroll_block
+                    p The dark colors mean these districts are not competitive, which is not surprising since that was not something optimized for.
+                .scroll_block
+                    p Metrics like Polsby-Popper that are based on surface area more inverse (more lines cross) to metrics that are based on general shape (like center dist).
+                .scroll_block
+                    p Which metrics (or pairs of) best correspond do your idea of 'compactness?'
+
+
+
+mixin derp()
+    .section.viewer_row(
+        data-datapath='vary_test_2k/d7-c2',
+        data-viewertype='single',
+        data-stage='3',
+    )
+        .district-viewer.left_col
+            .parcoords
+            .canvas_container
+            p.view_count.metadata Viewing N / K
+        .district-text
+            .district-text-inner
+                .scroll_block
+                    h3 Varying Cities and Districts:
+                    p Another benefit of a generative tool the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
+                
+                .scroll_block
+                    p In these experiments Antimander optimizes for compactness as well as partisan bias for varying numbers of districts and cities. These states were artificially constructed and have equal voters of each party.
+
+                .scroll_block
+                    p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.
+
