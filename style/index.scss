@@ -1,15 +1,18 @@
-@import "_reset";
-@import "_layout";
+@import "reset";
+@import "layout";
+@import 'colors';
+@import 'shape';
+@import 'text';
+@import 'components';
+@import 'cursors';
+
 @import 'slider';
-@import 'sections';
 @import 'viewer_row';
 @import 'includes';
 @import 'section_nav';
-@import 'text';
-@import 'cursors';
+@import 'header';
 @import 'hover_link';
 @import 'line_entry';
-@import 'colors';
 
 * {
     box-sizing: border-box;
@@ -50,7 +53,7 @@ html, body {
     }
     .left_col {
         left: 0px;
-        border-right: 1px solid var(--gray-100);
+        border-right: var(--border);
     }
     .right_col {
         right: 0px;
@@ -92,34 +95,6 @@ section#header {
     }
 }
 
-.github-button {
-    border-radius: 21px;
-    @extend .cursor-pointer;
-    background-color: var(--yellow-50);
-    width: fit-content;
-    border: 1px solid;
-    padding-left: 6px;
-    padding-right: 6px;
-    svg {
-        height: 20px;
-        transform: rotate(45deg);
-        bottom: -2px;
-        margin-left: 2px;
-        position: relative;
-    }
-    h4 {
-        display: inline-block;
-        margin: 0px;
-        @extend .cursor-pointer;
-    }
-    &:hover {
-        color: var(--yellow-50);
-        background-color: var(--gray-100);
-        border: 1px solid var(--gray-100);
-        fill: var(--yellow-50);
-        // @extend .shadow;
-    }
-}
 
 .github_row {
     // display: flex;
@@ -159,6 +134,7 @@ section#header {
 //     }
 // }
 
+/*
 @media only screen and (max-width: 800px) {
 
     #header-container {
@@ -200,3 +176,4 @@ section#header {
 
 
 }
+*/

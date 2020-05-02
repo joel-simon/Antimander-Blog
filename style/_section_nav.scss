@@ -8,7 +8,7 @@ nav {
     height: 0;
     margin-top: 100vh;
     margin-bottom: -100vh;
-    z-index: 2;
+    z-index: 3;
     --nav-box-shadow-size: 0;
     
     &.atTop {
@@ -22,8 +22,10 @@ nav {
         padding-bottom: 32px; // Ensure that shadow is visible
         
         column-count: 4;
-        column-rule: 1px solid var(--gray-100);
+        column-rule: var(--border);
         column-gap: 0;
+        
+        top: 33px;
         
         &:after {
             content: "";
@@ -34,7 +36,7 @@ nav {
             right: -64px;
             background-color: var(--gray-10);
             z-index: -1;
-            border-bottom: 1px solid var(--gray-100);
+            border-bottom: var(--border);
             box-shadow: 0px var(--nav-box-shadow-size) var(--nav-box-shadow-size) var(--gray-100);
             transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
         }

@@ -23,6 +23,7 @@ $breakpoint-s: 768px;
 @mixin grid {
     display: grid;
     grid-template-columns: var(--grid-template-columns);
+    grid-template-rows: auto;
     grid-column-gap: 24px;
 }
 

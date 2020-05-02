@@ -1,7 +1,7 @@
 @import 'cursors';
 @import 'colors';
 input[type='range'] {
-  border: 1px solid var(--gray-100);
+  border: var(--border);
   @extend .cursor-pointer;
   outline: none;
 }

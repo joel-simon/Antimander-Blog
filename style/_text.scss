@@ -30,14 +30,11 @@ a {
     color: var(--gray-100);
     text-decoration: none;
     // display: block;
-    border-bottom: 1px solid var(--gray-100); 
+    border-bottom: var(--border); 
     
     &:hover {
         color: black;
         background-color: var(--yellow-50);
-        // font-family: redaction-100; 
-        // color: white;
-        // background-color: black;
     }
 }
 
@@ -47,57 +44,87 @@ a {
     font-family: vg5000;
 }
 
+@mixin font-h1 {
+    font-size: 72px;
+    line-height: 72px;
+}
+@mixin font-h2 {
+    font-size: 48px;
+    line-height: 48px;
+}
+@mixin font-h3 {
+    font-size: 36px;
+    line-height: 40px;
+}
+@mixin font-h4 {
+    font-size: 24px;
+    line-height: 32px;
+}
+@mixin font-h5 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+@mixin font-p {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+@mixin font-italic {
+    font-style: italic;
+}
+
+@mixin font-bold {
+    font-weight: 600;
+}
+
+@mixin font-caption {
+    font-size: 18px;
+    line-height: 24px;
+    font-style: italic;
+}
+
 h1,h2,h3,h4,h5,.button {
     font-style: italic;
     font-family: redaction-35; 
     
 }
 
-.italic {
-    font-style: italic;
-}
-
 h1 {
-    font-size: 72px;
-    line-height: 72px;
+    @include font-h1;
 }
 h2 {
-    font-size: 48px;
-    line-height: 48px;
+    @include font-h2;
 }
 h3 {
-    font-size: 36px;
-    line-height: 40px;
+    @include font-h3;
 }
-h4, .button {
-    font-size: 24px;
-    line-height: 32px;
+h4 {
+    @include font-h4;
 }
 h5 {
-    font-size: 24px;
-    line-height: 32px;
+    @include font-h5;
 }
 
 p, ol, ul {
-    font-size: 24px;
-    line-height: 32px;
+    @include font-p;
+}
+
+.italic {
+    @include font-italic;
 }
 
 b, strong {
-    font-weight: 600;
+    @include font-bold;
 }
+
 .caption, figcaption, figcaption * {
-    font-size: 18px;
-    line-height: 24px;
-    font-style: italic;
+    @include font-caption;
 }
+
 .metadata {
     @include font-metadata;
 }
-// p.small {
-//     font-size: 12px;
-//     line-height: 16px;
-// }
 
 // LISTS
 

@@ -64,21 +64,21 @@ $breakpoint-s: 768px;
         left: calc(-1 * var(--grid-outer-gap-l));
         position: absolute;
         z-index: -1;
-        border-right: 1px solid var(--gray-100);
-        border-top: 1px solid var(--gray-100);
+        border-right: var(--border);
+        border-top: var(--border);
         
         @media screen and (min-width: $breakpoint-s) {
             width: 50vw;
         }
     }
-    &:nth-child(odd):after {
+    &:nth-child(even):after {
         background: var(--blue-gradient);
     }
-    &:nth-child(even):after {
+    &:nth-child(odd):after {
         background: var(--red-gradient);
     }
 
-    h2, h3, h4, p, ol, ul {
+    h1, h2, h3, h4, p, ol, ul, section, .button {
         grid-column: var(--grid-column-right);
     }
     
@@ -171,9 +171,13 @@ $breakpoint-s: 768px;
             display: block;
             
             -webkit-mask-image: url(/icons/arrow-left.svg);
+                    mask-image: url(/icons/arrow-left.svg);
             -webkit-mask-repeat: no-repeat;
+                    mask-repeat: no-repeat;
             -webkit-mask-size: 100% 100%;
+                    mask-size: 100% 100%;
             -webkit-mask-position: left bottom;
+                    mask-position: left bottom;
             background-color: var(--gray-100);
             
         }

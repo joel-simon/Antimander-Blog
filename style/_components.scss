@@ -1,0 +1,47 @@
+label {
+    display: block;
+}
+
+.button {
+    border-radius: 24px;
+    @extend .cursor-pointer;
+    background-color: var(--yellow-50);
+    width: fit-content;
+    border: var(--border);
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: -8px;
+    
+    @include font-h4;
+    
+    &:after {
+        content: " ";
+        height: 18px;
+        width:  18px;
+        border: 1px solid red;
+        display: inline-block;
+        position: relative;
+        top: 2px;
+        
+        -webkit-mask-image: var(--icon-url); // Set this variable in HTML
+                mask-image: var(--icon-url);
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-size: 100% 100%;
+                mask-size: 100% 100%;
+        -webkit-mask-position: left bottom;
+                mask-position: left bottom;
+                
+        background-color: var(--gray-100);
+    }
+    
+    &:hover {
+        color: var(--gray-10);
+        background-color: var(--gray-100);
+        fill: var(--yellow-50);
+        
+        &:after {
+            background-color: var(--gray-10);
+        }
+    }
+}
