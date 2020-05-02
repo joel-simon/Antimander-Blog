@@ -26,7 +26,11 @@
         text-align: left;
     }
     .authors {
-        margin-top: 15px;
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        text-align: left;
+        // margin-top: 15px;
     }
     // .attribution {
     //     position: absolute;
@@ -65,9 +69,11 @@
         }
     }
     .github-button {
-        position: relative;
+        top: 16px;   
+        right: 8px;
+        position: absolute;
         display: table;
-        left: -10px;
+        // left: -10px;
     }
     .content {
         h4 {
@@ -87,13 +93,13 @@
     }
     .slider_container {
         p { 
-            margin-top: 15px;
-            margin-bottom: 0px;
+            margin-top: 0px;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: center;
+            // justify-content: center;
         }
         img {
-            margin-left: 3px;
+            // margin-left: 3px;
         }
     }
 }

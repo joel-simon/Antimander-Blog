@@ -1,3 +1,4 @@
+// @import 'cursors';
 .col {
     display: inline-block;
     vertical-align: middle;
@@ -31,3 +32,8 @@
 .cjust {
     justify-content: center;
 }
+
+// .text_button {
+//     text-decoration: underline;
+//     @extend .cursor-pointer;
+// }

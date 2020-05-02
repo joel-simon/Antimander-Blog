@@ -9,7 +9,8 @@ input[type='range'] {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   input[type='range'] {
     overflow: hidden;
-    width: 300px;
+    width: 100%;
+    max-width: 450px;
     -webkit-appearance: none;
     // background-color: #9a905d;
   }
@@ -26,7 +27,7 @@ input[type='range'] {
     -webkit-appearance: none;
     height: 20px;
     background: var(--gray-100);
-    box-shadow: -300px 0 0 300px var(--yellow-50);
+    box-shadow: -1000px 0 0 1000px var(--yellow-50);
     // cursor: ew-resize;
     cursor: url('/icons/cursor-resize-horizontal-wide.svg') 16 16, auto;
     // @extend .cursor-resize-horizontal;

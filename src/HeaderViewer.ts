@@ -1,7 +1,9 @@
-import { StateData, RunData, DrawCMD } from './datatypes'
+import { StateData, RunData, DrawCMD, NdArray } from './datatypes'
 import Viewer from './ResultViewer'
 import { clamp, range } from './utils'
 import ndarray from 'ndarray'
+import { X_real, F_real } from './real_data'
+import * as array_utils from './array_utils'
 
 export default class extends Viewer {
     p_counts: HTMLInputElement
@@ -9,36 +11,58 @@ export default class extends Viewer {
     draw_idx: number
     winners: Uint8Array
     sliders: NodeListOf<any>
+    rundata: RunData
     constructor(draw_cmd, container:HTMLElement, rundata: RunData) {
         super(draw_cmd, container, rundata, false)
+        rundata.X = array_utils.append(rundata.X, X_real)
+        const f = rundata.config.metrics.map(name => F_real[name]).filter(v => v)
+        console.log(f);
         
+        rundata.F = array_utils.append(rundata.F, f)
+        this.rundata = rundata
         this.draw_idx = null
         this.p_counts = container.querySelector('p.counts')
         this.sliders = container.querySelectorAll('.slider') as NodeListOf<any>
+        // const ranges = array_utils.minmax(rundata.F)
+        // console.log(rundata.F);
+        // console.log(ranges);
         
-        this.sliders.forEach(slider => {
+        
+        this.sliders.forEach((slider, idx) => {
             const { metric } = slider.dataset
             slider.metric_index = rundata.config.metrics.indexOf(metric)
+            // slider.min = ranges.mins[slider.metric_index]
+            // slider.max = ranges.maxs[slider.metric_index]
             slider.sorted_idxs = range(this.values.length).sort((i, j) => {
                 return this.values[j][metric] - this.values[i][metric]
             })
-            slider.oninput = () => this._udpateSlider(slider)
+            slider.oninput = () => this._udpateSliders(slider)
         })
-        this._udpateSlider(this.sliders[0])
-        // this.draw_idx = this.sorted_idxs[Math.floor(rundata.X.shape[0] / 2)]
-        // this.slider = container.querySelector('.slider')
-
-        this.winners = this._calculateWinners(rundata)  
-
+        this.winners = this._calculateWinners(rundata)
+        const button:HTMLElement = document.querySelector('.set_current')
+        button.onclick = () => {
+            this.setRealMap()
+        }
+        this.setRealMap()
+        
     }
-    _udpateSlider(slider) {
+    setRealMap() {
+        this.draw_idx = this.rundata.X.shape[0]-1
+        this.sliders.forEach((slider, idx) => {
+            const m_idx = slider.metric_index
+            slider.value = this.rundata.F.get(this.draw_idx, m_idx)
+        })
+        this.needs_draw = true
+    }
+    _udpateSliders(slider) {
         const v = parseFloat(slider.value)
         this.draw_idx = slider.sorted_idxs[Math.floor(v * this.values.length)]
         this.needs_draw = true
         this.sliders.forEach(_slider => {
+            const m_idx = _slider.metric_index
             if (slider != _slider) {
-                const other_idx = _slider.sorted_idxs.indexOf(this.draw_idx)
-                _slider.value = (other_idx / this.values.length).toString()
+                // _slider.value = this.rundata.F.get(this.draw_idx, m_idx).toString()
+                _slider.value  = (_slider.sorted_idxs.indexOf(this.draw_idx) / this.rundata.X.shape[0]).toString()
             }
         })            
     }
