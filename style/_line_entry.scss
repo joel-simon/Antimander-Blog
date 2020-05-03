@@ -4,25 +4,6 @@ $breakpoint-m: 1024px;
 $breakpoint-s: 768px;
 
 
-:root {
-    --grid-template-columns: repeat(4, 1fr) 16px repeat(4, 1fr);
-    --grid-column-left: 1 / 5;
-    --grid-column-right: 6 / 10;
-    --grid-column-all: 1 / 10;
-    
-    @media screen and (max-width: $breakpoint-s) {
-        --grid-column-left: 1 / 10;
-        --grid-column-right: 1 / 10;
-        --grid-column-all: 1 / 10;
-    }
-}
-
-@mixin grid {
-    display: grid;
-    grid-template-columns: var(--grid-template-columns);
-    grid-column-gap: 24px;
-}
-
 .section {
 //     grid-template-rows: auto;
     align-items: start;
@@ -64,7 +45,6 @@ $breakpoint-s: 768px;
         left: calc(-1 * var(--grid-outer-gap-l));
         position: absolute;
         z-index: -1;
-        border-right: var(--border);
         border-top: var(--border);
         
         @media screen and (min-width: $breakpoint-s) {
@@ -160,26 +140,28 @@ $breakpoint-s: 768px;
     figcaption {
         position: relative;
         
-        // Arrow
-        &:before {
-            content: " ";
-            position: absolute;
-            left: -24px;
-            top: 18px;
-            height: 18px;
-            width: 18px;
-            display: block;
-            
-            -webkit-mask-image: url(/icons/arrow-left.svg);
-                    mask-image: url(/icons/arrow-left.svg);
-            -webkit-mask-repeat: no-repeat;
-                    mask-repeat: no-repeat;
-            -webkit-mask-size: 100% 100%;
-                    mask-size: 100% 100%;
-            -webkit-mask-position: left bottom;
-                    mask-position: left bottom;
-            background-color: var(--gray-100);
-            
+        @media screen and (min-width: $breakpoint-s) {
+            // Arrow
+            &:before {
+                content: " ";
+                position: absolute;
+                left: -24px;
+                top: 18px;
+                height: 18px;
+                width: 18px;
+                display: block;
+                
+                -webkit-mask-image: url(/icons/arrow-left.svg);
+                        mask-image: url(/icons/arrow-left.svg);
+                -webkit-mask-repeat: no-repeat;
+                        mask-repeat: no-repeat;
+                -webkit-mask-size: 100% 100%;
+                        mask-size: 100% 100%;
+                -webkit-mask-position: left bottom;
+                        mask-position: left bottom;
+                background-color: var(--gray-100);
+                
+            }
         }
 /*
         

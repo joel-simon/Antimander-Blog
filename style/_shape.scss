@@ -6,11 +6,15 @@
 body:after {
     content: " ";
     height: 100vh;
-    width: 50vw;
+    width: 24px;
     border-right: var(--border);
     position: fixed;
     top: 0;
     bottom: 0;
     z-index: 1000;
     pointer-events: none;
+    
+    @media screen and (min-width: $breakpoint-s) {
+        width: 50vw;
+    }
 }

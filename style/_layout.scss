@@ -3,7 +3,8 @@ $breakpoint-s: 768px;
 
 
 :root {
-    --grid-template-columns: repeat(4, 1fr) 1px repeat(4, 1fr);
+    --grid-template-columns: repeat(4, 1fr) 0px repeat(4, 1fr);
+    --grid-column-gap: 24px;
     
     --grid-column-left: 1 / 10;
     --grid-column-right: 1 / 10;
@@ -12,11 +13,13 @@ $breakpoint-s: 768px;
     --grid-outer-gap-r: 16px;
         
     @media screen and (min-width: $breakpoint-s) {
+        --grid-column-gap: 32px;
+        
         --grid-column-left: 1 / 5;
         --grid-column-right: 6 / 10;
         --grid-column-all: 1 / 10;
-        --grid-outer-gap-l: 24px;
-        --grid-outer-gap-r: 24px;
+        --grid-outer-gap-l: var(--grid-column-gap);
+        --grid-outer-gap-r: var(--grid-column-gap);
     }
 }
 
@@ -24,7 +27,7 @@ $breakpoint-s: 768px;
     display: grid;
     grid-template-columns: var(--grid-template-columns);
     grid-template-rows: auto;
-    grid-column-gap: 24px;
+    grid-column-gap: var(--grid-column-gap);
 }
 
 
