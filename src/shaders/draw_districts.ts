@@ -4,7 +4,8 @@ export default function(regl: any): any {
         precision highp float;
         precision highp int;
         uniform sampler2D state;
-        uniform sampler2D colors;
+        uniform sampler2D tile_district_colors;
+        uniform sampler2D tile_district_values;
         uniform sampler2D voters;
         // uniform sampler2D background;
         uniform sampler2D color_scale;
@@ -44,11 +45,12 @@ export default function(regl: any): any {
             return tile_index;
         }
 
-        vec3 get_dist_color(int tile_index, vec2 cell) {
+        vec4 get_dist_data(int tile_index, vec2 cell) {
             vec2 colorPos = tileIdx2colorPos(tile_index - 1, cell);
-            float color_value = texture2D(colors, colorPos).x;
+            float color_value = texture2D(tile_district_colors, colorPos).x;
+            float dist_idx   =  texture2D(tile_district_values, colorPos).x;
             vec3 color = texture2D(color_scale, vec2(color_value, 0.0)).rgb;
-            return color;
+            return vec4(color, dist_idx);
         }
 
         vec3 get_voter_color(int tile_index) {
@@ -73,7 +75,9 @@ export default function(regl: any): any {
                 discard;
             }
             
-            vec3 dist_color = get_dist_color(tile_index, cell);
+            vec4 dist_data = get_dist_data(tile_index, cell);
+            vec3 dist_color = dist_data.rgb;
+            float dist_idx  = dist_data.a;
             vec3 voter_color = get_voter_color(tile_index);
             
             vec2 uv_top    = vec2(uv+vec2(0.0, -1.0)*u_size);
@@ -81,16 +85,29 @@ export default function(regl: any): any {
             vec2 uv_bottom = vec2(uv+vec2(0.0, 1.0)*u_size);
             vec2 uv_right  = vec2(uv+vec2(1.0, 0.0)*u_size);
 
+            /*
+            bool eq = (get_tile_index(uv_left, cell) == tile_index) && \
+                      (get_tile_index(uv_right, cell) == tile_index) && \
+                      (get_tile_index(uv_top, cell) == tile_index) && \
+                      (get_tile_index(uv_bottom, cell) == tile_index);
+            */
+            
             int ti_left   = get_tile_index(uv_left, cell);
             int ti_top    = get_tile_index(uv_top, cell);
             int ti_right  = get_tile_index(uv_right, cell);
             int ti_bottom = get_tile_index(uv_bottom, cell);
 
+            /*
             bool eq = all(equal(dist_color, get_dist_color(ti_top, cell))) && \
                       all(equal(dist_color, get_dist_color(ti_left, cell))) && \
                       all(equal(dist_color, get_dist_color(ti_right, cell))) && \
                       all(equal(dist_color, get_dist_color(ti_bottom, cell)));
+            */
             
+            bool dist_border = (get_dist_data(ti_top, cell).a == dist_idx) && \
+                               (get_dist_data(ti_right, cell).a == dist_idx) && \
+                               (get_dist_data(ti_bottom, cell).a == dist_idx) && \
+                               (get_dist_data(ti_left, cell).a == dist_idx);
             bool cell_border = \
                 !all(equal(cell, get_cell(uv_top))) || \
                 !all(equal(cell, get_cell(uv_left))) ||
@@ -103,7 +120,7 @@ export default function(regl: any): any {
 
             if (cell_border) {
                 gl_FragColor = vec4(BLACK, 1.0);
-            } else if (!eq) {
+            } else if (!dist_border) {
                 bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
                 gl_FragColor = is_selected ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
             } else {
@@ -129,7 +146,9 @@ export default function(regl: any): any {
             n_solutions: regl.prop('n_solutions'),
             selected_id: regl.prop('selected_id'),
             state: regl.prop('state'),
-            colors: regl.prop('colors'),
+            tile_district_values: regl.prop('tile_district_values'),
+            tile_district_colors: regl.prop('tile_district_colors'),
+            // colors: regl.prop('colors'),
             // background: regl.prop('background'),
             color_scale: regl.prop('color_scale'),
             n_tiles: regl.prop('n_tiles'),

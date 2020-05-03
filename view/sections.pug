@@ -15,22 +15,26 @@ mixin header()
                     | from #[a(href='http://joellehman.com/') Joel Lehman] and design by #[a(href='http://nioono.com/') Nio Ono].
             .text
                 h1.main-heading.italic Antimander
-                h2 Open source library to fight gerrymandering with generative algorithms. 
+                h2 An open source software to generate congressional districts. 
                 .github-button.button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
                     | Github
                     img.inline(src='/icons/arrow-up.svg')
-                p Adjust to see alternatives to Wisconsin's districts. Read more to see why this isn't complete and why gerrymandering is so complex.
+                p Adjust to see alternatives to Wisconsin's districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
                 br
                 .slider_container
-                    input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='polsby popper')
+                    input.slider( type='range', min='0', max='.99', value='.5', step='any',
+                                  data-metric='polsby popper' )
                     p.metadata Compactness
                     
-                    input.slider(
-                        type='range', min='0', max='.99', value='.5', step='any', 
-                        data-metric='efficiency gap'
-                    )
+                    input.slider( type='range', min='0', max='.99', value='.5', step='any', 
+                                  data-metric='efficiency gap' )
+                    p.metadata Fairness
+
+                    input.slider( type='range', min='0', max='.99', value='.5', step='any', 
+                                  data-metric='competitiveness' )
+                    p.metadata Competitiveness
+
                     //- data-metric='rep advantage'
-                    p.metadata Efficiency gap
                     a.metadata.set_current See the current map
                     
         img.scroll_down(src='/icons/arrow-down.svg')

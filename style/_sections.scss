@@ -77,18 +77,14 @@
     }
     .content {
         h4 {
-            // width: 30vw;
             margin-top: 10px;
             max-width: 500px;
         }
         .slider {
-            // margin-top: 20px;
-            // width: 25vw;
-            // max-width: 
             width: 300px;
         }
         .main_canvas  {
-            max-height: 50vh;
+            max-height: 70vh;
         }
     }
     .slider_container {
@@ -96,10 +92,6 @@
             margin-top: 0px;
             margin-bottom: 10px;
             display: flex;
-            // justify-content: center;
-        }
-        img {
-            // margin-left: 3px;
         }
     }
 }
