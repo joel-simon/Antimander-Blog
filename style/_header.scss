@@ -64,7 +64,7 @@ header {
 .section#cover {
     min-height: 100vh;
     @include grid;
-//     margin-top: 0;
+    margin-top: 0;
 //     margin-top: 128px;
 //     overflow: visible;
 //     margin-top: -64px !important; // Compensate for header top margin

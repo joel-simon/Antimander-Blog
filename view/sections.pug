@@ -4,15 +4,15 @@ mixin cover()
     .section#cover
         h1 Fighting gerrymandering with generative algorithms. 
         //- h2 Open-source research #[br] and software to fight Gerrymandering.
+        .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
+        
+        p Adjust to see alternatives. Read more to see why gerrymandering is so complex.
+        
         section.controls
-            p Adjust to see alternatives. Read more to see why gerrymandering is so complex.
             label.metadata Better shapes
             input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='polsby popper')
             label.metadata More Fair
             input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='efficiency gap')
-        .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
-        author
-            p.metadata.authors By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and #[a(href='http://nioono.com/') Nio Ono].
                         
         // img.scroll_down(src='/icons/arrow-down.svg')
         figure.canvas-container
@@ -20,6 +20,9 @@ mixin cover()
             .counts.metadata
         //- h4 Adjust slider to view computer generated gerrymandering in Wisconsin            
         //- (style='justify-content: flex-start;')
+        
+        author
+            p.metadata.authors By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and design by #[a(href='http://nioono.com/') Nio Ono].
         
 mixin overview()
     .section#overview

@@ -13,8 +13,11 @@ $breakpoint-s: 768px;
     @include grid;
     padding-left:  var(--grid-outer-gap-l); // Simulates gutters on outside of grid
     padding-right: var(--grid-outer-gap-r);
-    padding-bottom: 96px;
+//     padding-bottom: 96px;
+
     overflow: hidden;
+    // Push down section so it doesn't collide with nav when scrolling to anchor
+    --vertical-offset: 98px; 
     
     // Divider
     &:before {
@@ -23,6 +26,7 @@ $breakpoint-s: 768px;
         width: 100vw;
         margin-left: -8px;
         height: 8px;
+        margin-top: var(--vertical-offset);
         top: 0;
 //         margin-top: -8px;
         background-color: var(--gray-100);
@@ -41,7 +45,7 @@ $breakpoint-s: 768px;
         grid-column: var(--grid-column-all);
         width: calc(var(--grid-outer-gap-l) - 8px);
         height: 100%; //256px;
-        top: 8px;
+        top: calc(var(--vertical-offset) + 8px);
         left: calc(-1 * var(--grid-outer-gap-l));
         position: absolute;
         z-index: -1;
@@ -124,9 +128,12 @@ $breakpoint-s: 768px;
         height: auto;
     }
     
+    >*:first-child { // This should always be an H2
+        margin-top:calc(72px + var(--vertical-offset));
+    }
     
     h2 {
-        margin-top: 84px; // 96px baseline to baseline
+        margin-top: 72px; // 96px baseline to baseline
     }
     
     h3 {
@@ -176,82 +183,12 @@ $breakpoint-s: 768px;
 //         margin-bottom: 32px;
     }
     
-}
-
-.line_entry {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    &#cover {
+        --vertical-offset: 0px;
+    }
     
-    .content,.text {
-        max-width: 800px;
-    }
-    .text p,h1,h2 {
-        max-width: 700px;
-    }
-    .text p {
-        position: relative;
-//         padding: 5px;
-    }
-    .content {
-        @extend .col2;
-        padding-left: 32px;
-        padding-right: 32px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        img,canvas {
-            max-width: calc(100%);
-            max-height: calc(100%);
-        }
-        img.medium-img {
-//             width: 450px;
-        }
-        p {
-            text-align: center;
-        }
-        .background {
-            background-color:#ffffffb5;
-            border-radius:5px;
-            padding: 5px;
-        }
-        h3 {
-            margin: 20px;
-        }
-    }
-    .text {
-        @extend .col2;
-        padding-left: 32px;
-        padding-right: 16px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-                
-        h2,h3,h4 {
-            text-align: left;
-        }
-        
-        h2 {
-            margin-top: 56px; // 96px baseline to baseline
-        }
-        
-        h3 {
-            margin-top: 32px; // 64px baseline to baseline
-        }
-        p {
-            margin-top: 16px; // 48px baseline to baseline
-        }
-        i { // This should really be a class or a figcaption 
-            font-style: italic;
-        }
-    }
-    &:last-child {
-        padding-bottom: 32px;
+    &#overview {
+        margin-top: calc(var(--vertical-offset) * -1);
     }
 }
 
-section#overview h2 {
-    margin-top: 112px;
-}

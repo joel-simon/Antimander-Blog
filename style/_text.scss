@@ -135,16 +135,8 @@ ol li {
 
     &:before {
         content: "0" counter(customlistcounter) " ";
-        display: inline-block;
-        float: left;
         position: absolute;
-        left: -24px;
-/*
-        @include font-metadata;
-        line-height: 32px;
-        height: 32px;
-*/
-        font-family: vg5000;
+        left: -24px;        font-family: vg5000;
         font-variant-caps: small-caps;
         font-style: normal;
         z-index: 10; // Ensures numeral is visible if text has background
