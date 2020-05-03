@@ -25,6 +25,7 @@ html, body {
     -webkit-font-smoothing: antialiased;
     background-color: var(--gray-10);
     color: var(--gray-100);
+    scroll-behavior: smooth;
 }
 
 .index_nav .navlink {
