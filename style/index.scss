@@ -3,7 +3,7 @@
 @import 'sections';
 @import 'viewer_row';
 @import 'includes';
-@import 'section_nav';
+@import 'nav';
 @import 'text';
 @import 'cursors';
 @import 'hover_link';
@@ -102,13 +102,17 @@ html, body {
 }
 
 .github-button {
+    position: relative;
+    display: table;
+    left: -8px;
     border-radius: 21px;
     @extend .cursor-pointer;
     background-color: var(--yellow-50);
     width: fit-content;
-    border: 1px solid;
-    padding-left: 6px;
-    padding-right: 6px;
+    border: 1px solid var(--gray-100);
+    box-sizing: border-box;
+    padding-left: 8px;
+    padding-right: 8px;
     svg {
         height: 20px;
         transform: rotate(45deg);
@@ -122,10 +126,10 @@ html, body {
         @extend .cursor-pointer;
     }
     &:hover {
-        color: var(--yellow-50);
+        color: var(--gray-10);
         background-color: var(--gray-100);
         border: 1px solid var(--gray-100);
-        fill: var(--yellow-50);
+        fill: var(--gray-10);
         // @extend .shadow;
     }
 }

@@ -100,8 +100,6 @@ ol li {
 
     &:before {
         content: "0" counter(customlistcounter) " ";
-        display: inline-block;
-        float: left;
         position: absolute;
         left: -24px;
         @include font-metadata;

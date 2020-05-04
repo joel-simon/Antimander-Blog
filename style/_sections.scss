@@ -9,7 +9,8 @@
         justify-content: center;
     }
     .line_entry .text {
-        height: calc(100% - 200px);
+        // height: calc(100% - 200px);
+        height: 100%;
     }
 
     h1 {
@@ -68,13 +69,13 @@
             
         }
     }
-    .github-button {
-        top: 16px;   
-        right: 8px;
-        position: absolute;
-        display: table;
+    // .github-button {
+    //     top: 16px;   
+    //     right: 8px;
+    //     position: absolute;
+    //     display: table;
         // left: -10px;
-    }
+    // }
     .content {
         h4 {
             margin-top: 10px;
