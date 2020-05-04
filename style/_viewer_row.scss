@@ -1,6 +1,90 @@
 @import 'cursors';
 @import 'colors';
 
+body.scroll-snap {
+    scroll-snap-type: y proximity;
+//     scroll-snap-points-y: repeat(100vh);
+    scroll-padding-top: 48px;
+    
+    overflow-y: scroll;
+    
+    * {
+//         scroll-snap-type: none; 
+//         scroll-snap-align: none;
+        
+    }
+}
+
+.viewer-track {
+//     height: 100vh;
+    grid-column: var(--grid-column-left);
+    border: 1px solid lime;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 64px;
+//     @include grid;
+    
+    .viewer-container {
+        height: 500px;
+        width: 100%;
+        background: teal;
+        position: sticky;
+        top: 128px;
+/*         grid-column: var(--grid-column-left); */
+        
+    }
+}
+
+.section.viewer {
+    padding-bottom: 512px; // Extra space so sticky viewer stays on screen
+/*
+    scroll-snap-type: y mandatory;
+    scroll-snap-points-y: repeat(100vh);
+    scroll-padding-top: 64px;
+    overflow: scroll;
+*/
+    
+    section.scroll-block {
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+//         scroll-margin-top: 64px;
+    }
+    section.scroll-block {
+//         margin-top: -48px;
+        margin-bottom: 256px;
+        transition: var(--motion-duration-med) var(--motion-easing);
+        transition-property: filter opacity;
+        
+        &.focused {
+            opacity: 1;
+//             color: var(--gray-100);
+        }
+        
+        &.defocused:not(:nth-child(2))/* , &.defocused * */ {
+            opacity: .125;
+            filter: saturate(.25);
+//             color: var(--gray-40);
+//             border-color: var(--gray-40);
+            
+            img {
+//                 opacity: .25;
+            }
+        }
+        
+        &:nth-child(2) {
+            margin-top: 112px;
+        }
+    }
+    
+    h2 {
+//         scroll-margin-top: 128px;
+    }
+}
+
+
+/*
 .viewer_row {
     width: 100%;
     display: inline-block;
@@ -82,6 +166,7 @@
         }
     }
 }
+*/
 @media only screen and (max-width: 1400px) {
     .viewer_row {
         .district-viewer {

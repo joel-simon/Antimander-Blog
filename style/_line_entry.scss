@@ -15,7 +15,7 @@ $breakpoint-s: 768px;
     padding-right: var(--grid-outer-gap-r);
 //     padding-bottom: 96px;
 
-    overflow: hidden;
+//     overflow: hidden;
     // Push down section so it doesn't collide with nav when scrolling to anchor
     --vertical-offset: 98px; 
     
@@ -62,8 +62,31 @@ $breakpoint-s: 768px;
         background: var(--red-gradient);
     }
 
-    h1, h2, h3, h4, p, ol, ul, section, .button {
+    h1, h2, h3, h4, p, ol, ul, .button,
+    section {
         grid-column: var(--grid-column-right);
+    }
+    
+    section {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: var(--grid-column-gap);
+                
+        >* {
+            grid-column: 1 / 5;
+        }
+        
+        img.inline {
+            grid-column: 1 / 3;
+            
+            &.narrow {
+                grid-column: 1 / 2;
+            }
+            
+            &.wide {
+                grid-column: 1 / 5;
+            }
+        }
     }
     
     figure {
@@ -133,15 +156,15 @@ $breakpoint-s: 768px;
     }
     
     h2 {
-        margin-top: 72px; // 96px baseline to baseline
+        padding-top: 64px; // 96px baseline to baseline
     }
     
     h3 {
-        margin-top: 32px; // 64px baseline to baseline
+        padding-top: 32px; // 64px baseline to baseline
     }
     
     p, ol, ul {
-        margin-top: 16px; // 48px baseline to baseline
+        padding-top: 16px; // 48px baseline to baseline
     }
     
     figcaption {
