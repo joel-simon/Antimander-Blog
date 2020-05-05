@@ -30,7 +30,6 @@ export function fetch_numpy(path:string): Promise<NdArray> {
     })
 }
 
-
 export function sum(arr: number[]):number {
     return arr.reduce((a, b) => a+b)
 }
@@ -60,20 +59,23 @@ export function range(n: number):number[] {
 
 export function inView(el: HTMLElement): boolean {
     const { top, bottom } = el.getBoundingClientRect()
-    // console.log({ top, bottom });
-    return (
-        (top <= 0 && bottom >= 0) ||
-        (top <= window.innerHeight && bottom >= window.innerHeight)
-    )
+    return ((top <= 0 && bottom >= 0) ||
+            (top <= window.innerHeight && bottom >= window.innerHeight))
 }
 
-// function norm(array) {
-//     let [min, max] = [Infinity, -Infinity]
-//     for (const v of array) {
-//         min = v < min ? v : min
-//         max = v > max ? v : min
-//     }
-//     // const min = Math.min(...array.filter(x => !isNaN(x)))
-//     // const max = Math.max(...array.filter(x => !isNaN(x)))
-//     return array.map(x => (x-min) / (max-min))
+export function percentSeen(el: HTMLElement): number {
+    // Returns what percent of the screen height is taken by the element. Assumes full-width.
+    const { top, bottom } = el.getBoundingClientRect()
+    return (clamp(bottom, 0, window.innerHeight) - clamp(top, 0, window.innerHeight)) / window.innerHeight
+}
+
+export function queryAll(q:string, parent:HTMLElement|Document = document):HTMLElement[] {
+    return Array.from(parent.querySelectorAll<HTMLElement>(q))
+}
+
+export function query(q:string, parent:HTMLElement|Document = document):HTMLElement {
+    return parent.querySelector<HTMLElement>(q)
+}
+// export function max(arr: any[], cmp: Function) {
+//     return arr.sort(a, bcmp)[0]
 // }

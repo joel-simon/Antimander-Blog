@@ -8,34 +8,38 @@ mixin header()
             .content
                 .main_viewer
                     .canvas_container
+                        //- img.tmp_image(src='/imgs/placeholder.png')
                         canvas.main_canvas(width=1024, height=1024)
                     p.counts.metadata                
                 p.metadata.authors 
                     | By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br]
                     | from #[a(href='http://joellehman.com/') Joel Lehman] and design by #[a(href='http://nioono.com/') Nio Ono].
             .text
-                h1.main-heading.italic Antimander
-                h2 An open source software to generate congressional districts. 
+                //- h1.main-heading.italic 
+                h2 Antimander: An open source software to generate congressional districts. 
                 .github-button.button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
                     | Github
                     img.inline(src='/icons/arrow-up.svg')
+                //- .github-button.button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
+                //-     | Contact
+                //-     img.inline(src='/icons/arrow-up.svg')
                 p Adjust to see alternatives to Wisconsin's districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
                 br
                 .slider_container
-                    input.slider( type='range', min='0', max='.99', value='.5', step='any',
-                                  data-metric='polsby popper' )
-                    p.metadata Compactness
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any',
+                                 data-metric='polsby popper' )
+                    p.metadata Compact districts
                     
-                    input.slider( type='range', min='0', max='.99', value='.5', step='any', 
-                                  data-metric='efficiency gap' )
-                    p.metadata Fairness
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any', 
+                                 data-metric='efficiency gap' )
+                    p.metadata Fair ratios of representatives to voters
 
-                    input.slider( type='range', min='0', max='.99', value='.5', step='any', 
-                                  data-metric='competitiveness' )
-                    p.metadata Competitiveness
+                    input.slider(type='range', min='0', max='.99', value='.5', step='any', 
+                                 data-metric='competitiveness' )
+                    p.metadata Competitive elections
 
                     //- data-metric='rep advantage'
-                    a.metadata.set_current See the current map
+                    a.metadata.set_current See the current 2011 districts
                     
         img.scroll_down(src='/icons/arrow-down.svg')
 
@@ -52,11 +56,8 @@ mixin overview()
                 .hover-link(data-hover_name='how2win')
                     img.medium-img(src='imgs/pack&crack.svg', style='position:relative;margin-top:00px;top:0px;opacity: .85;')
                     h3.no-marg-top How to steal an Election
-                .divider(style='height:64px;')
-                .hover-link(data-hover_name='algoev', style='padding:16px')
-                    img.medium-img(src='imgs/nc_evidence.png')
-                    h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019)
-                br
+                //- .divider(style='height:64px;')
+                //- br
             .text
                 h2.section_header Overview
                 p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How they are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
@@ -74,47 +75,30 @@ mixin overview()
 
                 p While a districting should intuitively be 'fair' to each party, often multiple objectives are desired, such as being 'regularly shaped' and having competitive elections.  Many metrics have been defined (#[a(href='#metrics') discussed below]) but their relative importance are ultimately subjective and the baselines for 'good' vary by state. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
 
-                p Thankfully, the admissibility of algorithmic evidence provides some hope. Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it takes into account natural biases of geography and voter distribution and provides clear counter examples. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives. In Common Cause v. Lewis, comparing a proposed plan to randomly sampled and algorithmically generated examples helped convince the court that the proposed plan was a biased outlier. More discussion of current methods is (#[a(href='#methods') discussed below])
                 
+                
+                br
+            
+        .line_entry 
+            .content.cjust
+                .hover-link(data-hover_name='algoev', style='padding:16px')
+                    img.medium-img(src='imgs/nc_evidence.png')
+                    h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019)
+            .text
+                p Thankfully, the admissibility of algorithmic evidence provides some hope. Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it takes into account natural biases of geography and voter distribution and provides clear counter examples. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives. In Common Cause v. Lewis, comparing a proposed plan to randomly sampled and algorithmically generated examples helped convince the court that the proposed plan was a biased outlier. More discussion of current methods is (#[a(href='#methods') discussed below])
+
                 p.hover-link(data-hover_name='algoev')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     i Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen showing how a proposed plan (red) is less compact than randomly sampled solutions. 
 
-                //- p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each political party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than specific percentage from the state’s total population divided by the number of districts), and each district must be contiguous.
-                p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings.
+                //- p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings.
 
                 p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
 
                 //- button View supplementary technical overview.
-                br
-
-
-            //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
-            //- p Antimander is a generative design tool and research project to both help detect gerrymandering and also bring transparancy to the the complex trade-offs in district design. 
-            
-            //- generate and browse optimized congressional districtings. While districting commitess using it directly is unikely, it could be used as evidence of gerrymandering and also to help inform to public about the tradeoffs and how these trade-offs were made for their districts.
-
-            //- p Antimander proposes connecting algorithmic districting to the research field of multi-objective evolutionary algorithms (MOEAs) and novelty search and presents an open source optimization engine and viewer that does so. It is just a first-step and more work and help is needed.
-
-
-            //- p TODO - add more
-            //- p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings. Antimander is a open source, multi-objective evolutionary that creates optimzied dsitricts for comparison.
-
-            //- h4 The  original "Gerrymander"] in Massachusetts
-            //- img(src='img=s/the_gerrymander.jpg', style='width:256px;')
-            //- H2 The role of Software
-            //- P
-            //- p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may o er relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts.
-
-            //- p However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
-
-            //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
-
-
-            //-
 
 mixin viewer()
-    .section.viewer_row.sticky(data-datapath='general_fif_centers', data-stage='5')
+    #viewer.section.viewer_row.sticky(data-datapath='general_fif_centers', data-stage='5')
         +district_viewer("Interactive Viewer")
         .district-text
             .district-text-inner
@@ -122,7 +106,11 @@ mixin viewer()
                     h2 Browser
                     p  An interactive browser of one run of Antimander for Wisconsin. Each districting is 'optimal' for a slightly different weighing of the three objectives.
                 .scroll_block
-                    p  On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
+                    p On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
+
+                .scroll_block
+                    p Lower is better (smaller error rate).
+
                 .scroll_block
                     p You can drag (brush) on an axis to filter values. This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one objective and also how those solutions rank in other objectives.
                     img.shadow(src='imgs/filter.png')
@@ -212,17 +200,18 @@ mixin metrics()
             .text
                 h3 3. Competitiveness
                 p Close races helps prevent incumbents from being too entrenched (incumbent gerrymandering). Also, less polarized representatives are beneficial for a healthy democracy. Competitiveness is measured by the largest ratio by which one party wins over another.
-                
+            
         .line_entry
             .content
             .text
-                h3 4. Voter Rights Act
+                h2 Additional metrics
+                h3 4. Minority representation
                 p While partisan gerrymandering is not illegal, #[a(href='http://www.publicmapping.org/what-is-redistricting/redistricting-criteria-the-voting-rights-act') racial gerrymandering is under the Voting Rights Act]. There should be enough "majority-minority" district that minority groups representatives. However, defining racial gerrymandering is also complicated and #[a(href='https://fivethirtyeight.com/features/is-gerrymandering-the-best-way-to-make-sure-black-voters-are-represented/') is also complicated] and North Carolina illustrated how preventing one kind of gerrymandering may come directly at the expense of another.
         .line_entry
             .content
             .text
-                h3 5. Areas of interest.
-                p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
+                h3 5. Preserving communities.
+                p Another desired redistricting criteria is to not divide communities or "areas of interest". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
 mixin all_compactness_viewer()
     .section.viewer_row.sticky(
@@ -431,7 +420,7 @@ mixin next-steps()
         .line_entry
             .content
             .text
-                h2 Conclusion & Next Steps
+                h2 Next Steps
         .line_entry
             .content
                 .card
@@ -443,7 +432,7 @@ mixin next-steps()
                     p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
                 br
                 .github_row.card
-                    h3 Contribute:
+                    h3 Contribute code design or advice:
                     .github
                         img(src='/imgs/github.png')
                         a(href='https://github.com/joel-simon/Antimander') Github
@@ -467,8 +456,8 @@ mixin appendix()
                 h3 Popular Vote Interstate Compact:
                 p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
 
-mixin derp()
-    .section.viewer_row(
+mixin vary_tests()
+    #varytest.section.viewer_row(
         data-datapath='vary_test_2k/d7-c2',
         data-viewertype='single',
         data-stage='3',
@@ -485,6 +474,13 @@ mixin derp()
                 
                 .scroll_block
                     p In these experiments Antimander optimizes for compactness as well as partisan bias for varying numbers of districts and cities. These states were artificially constructed and have equal voters of each party.
+                
+                .scroll_block.map_opts
+                    p Click a map to view
+                    img(src='imgs/varytest/c1_small.jpg', data-datapath='vary_test_2k/d7-c1', data-stage='3')
+                    img(src='imgs/varytest/c2_small.jpg', data-datapath='vary_test_2k/d7-c2', data-stage='3')
+                    img(src='imgs/varytest/c3_small.jpg', data-datapath='vary_test_2k/d7-c3', data-stage='3')
+                    img(src='imgs/varytest/WI.png', data-datapath='bias', data-stage='5')
 
                 .scroll_block
                     p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.

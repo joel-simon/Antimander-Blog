@@ -1,49 +1,22 @@
 import '../style/index.scss'
 import ResultViewer from './ResultViewer'
 import HeaderViewer from './HeaderViewer'
-import { fetch_imagedata } from './utils'
+import { fetch_imagedata, query, queryAll } from './utils'
 import { RunData, DrawCMD } from './datatypes'
-import { fetch_all_data, viewer_update_loop } from './viewer_utils'
+import { fetch_rundata, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
 // import './hover_link'
 import './scroll_sections'
+import init_varytest  from './varytest'
 import smoothscroll from 'smoothscroll-polyfill'
 import inlineSVG from './lib/inlineSVG.js'
 import ndarray from 'ndarray'
-smoothscroll.polyfill() // Safari polyfill.
 declare let window: any
 
-async function load_viewers(): Promise<ResultViewer[]> {
-    const viewers = []
-    const draw_controller = new DrawController()
-    await draw_controller.initialize()
-    // Load the single-viewer for the header.
-    
-    const rundata = await fetch_all_data('general_fif_centers', 5)
-    // const rundata = await fetch_all_data('bias', 5)
-    viewers.push(
-        new HeaderViewer(
-            draw_controller.createViewerDrawCmd(rundata, .5),
-            document.querySelector('#header'),
-            rundata
-        )
-    )
-    document.querySelectorAll('.viewer_row').forEach(async (row: HTMLElement) => {
-        let { datapath, background, stage } = row.dataset
-        const sticky = row.classList.contains('sticky')
-        const rundata = await fetch_all_data(datapath, +stage)
-        const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
-        viewers.push(new ResultViewer(draw_cmd, row, rundata))
-    })
-    return viewers
-}
-
-(document.querySelector('#header .scroll_down') as HTMLElement).onclick = () => {
-    window.scrollTo({
-        top: window.innerHeight,
-        left: 0,
-        behavior: 'smooth'
-    });
+// Bind scroll down button
+smoothscroll.polyfill() // Safari polyfill.
+query('#header .scroll_down').onclick = () => {
+    window.scrollTo({ top: window.innerHeight, left: 0, behavior: 'smooth' })
 }
 
 inlineSVG.init({
@@ -51,9 +24,36 @@ inlineSVG.init({
     // initClass: 'js-inlinesvg', // class added to <html>
 });
 
-
 async function main() {
-    const viewers = await load_viewers()
+    console.time('main')
+    const viewers = []
+    
+    // Create the drawing interface.
+    const color_scale_img = 'imgs/scale_rdbu_1px.png'
+    const draw_controller = new DrawController(color_scale_img)
+    await draw_controller.initialize()
+
+    // Load the header viewer.
+    const rundata = await fetch_rundata('general_fif_centers', 5)
+    const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
+    viewers.push(new HeaderViewer(draw_cmd, query('#header'), rundata))
+    
+    // Start the draw loop before loading other viewers.
     viewer_update_loop(viewers)
+
+    for (const row of queryAll('.viewer_row')) {
+        let { datapath, stage } = row.dataset
+        const rundata = await fetch_rundata(datapath, +stage)
+        const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
+        const viewer = new ResultViewer(draw_cmd, row, rundata, true, ['rep advantage'])
+        if (row.id == 'varytest') {
+            init_varytest(viewer, draw_controller)
+        }
+        viewers.push(viewer)
+    }
+    // console.timeEnd('main')
 }
+
+    
+
 main()

@@ -31,10 +31,10 @@ html, body {
 }
 
 
-.section:nth-child(odd) .left_col {
+.section:nth-child(even) .left_col {
     @extend .blue2white;
 }
-.section:nth-child(even) .left_col {
+.section:nth-child(odd) .left_col {
     @extend .red2white;
 }
 

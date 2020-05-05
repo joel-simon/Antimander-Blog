@@ -1,11 +1,11 @@
-import { fetch_json, fetch_numpy, fetch_imagedata, inView } from './utils'
+import { fetch_json, fetch_numpy, fetch_imagedata, inView, percentSeen } from './utils'
 import { NdArray, RunData } from './datatypes'
 import ResultViewer from './ResultViewer'
 
 type RunDataResponse = [ any, any, NdArray, NdArray, NdArray ]
 
-export function fetch_all_data(run:string, stage:number): Promise<RunData> {
-    console.time('fetch_all_data')
+export function fetch_rundata(run:string, stage:number): Promise<RunData> {
+    console.time('fetch_rundata:'+run)
     return Promise.all([
         fetch_json(`data/${run}/config.json`),
         fetch_json(`data/${run}/state_${stage}.json`),
@@ -13,7 +13,7 @@ export function fetch_all_data(run:string, stage:number): Promise<RunData> {
         fetch_numpy(`data/${run}/X_${stage}.npy`),
         fetch_numpy(`data/${run}/F_${stage}.npy`)
     ]).then(([ config, state_data, state_image, X, F ]: RunDataResponse) => {
-        console.timeEnd('fetch_all_data')
+        console.timeEnd('fetch_rundata:'+run)
         config.metrics = config.metrics.map(v => v.replace(/_/g, ' '))
         return { config, state_data, state_image, X, F }
     })
@@ -21,26 +21,29 @@ export function fetch_all_data(run:string, stage:number): Promise<RunData> {
 
 export function viewer_update_loop(viewers: ResultViewer[]) {
     let last_scroll = null
+    viewers.sort((a, b) => percentSeen(b.container) - percentSeen(a.container))
     let active_viewer = viewers[0]
     const canvas = document.querySelector('canvas.main_canvas') as HTMLCanvasElement
     function step() {
         if (last_scroll != window.scrollY) {
-            viewers.forEach(v => v?.onScroll())
+            // viewers.forEach(v => v?.onScroll())
             last_scroll = window.scrollY
         }
         if (!active_viewer) {
-            active_viewer = viewers.find(v => inView(v.container))
+            viewers.sort((a, b) => percentSeen(b.container) - percentSeen(a.container))
+            if (inView(viewers[0].container)) {
+                active_viewer = viewers[0]
+            }
             if (active_viewer) {
-                console.log('Setting active viewer:', active_viewer)
+                // console.log('Setting active viewer:', active_viewer)
                 active_viewer.container.querySelector('.canvas_container').append(canvas)
                 active_viewer.needsDraw()
             }
         }
         if (active_viewer) {
             active_viewer.onStep()
-            if (!inView(active_viewer.container)) {
-                console.log('Making inactive', active_viewer);
-                
+            if (percentSeen(active_viewer.container) < 0.5) {
+                // console.log('Making inactive', active_viewer);
                 active_viewer = null
             }
         }

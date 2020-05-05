@@ -8,7 +8,7 @@ export interface RunData {
 
 export interface StateData {
     voters: [ number, number ][];
-    population: number[];
+    population: number;
 }
 
 export interface Config {

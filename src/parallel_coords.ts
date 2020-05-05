@@ -1,20 +1,17 @@
 declare var d3: any;
 declare var window: any;
-export default function(div:HTMLElement, data:any[], on_change:Function ) {
-    const dimensions = {}
-    // Object.keys(data[0]).forEach(name => {
-    //     dimensions[name] = { orient:'right' }
-    // })    
+export default function(div:HTMLElement, data:any[], hidden_axes: string[], on_change:Function ) {
+    // const dimensions = {}
     const parcoords = d3.parcoords()(div)
         .data(data)
         .alpha(.1)
-        .dimensions(dimensions)
+        // .dimensions(dimensions)
         .color("black")
         // .brushedColor('black')
         // .shadows()
         // .alphaOnBrushed(.5)
         // .composite("darker")
-        .hideAxis([ 'index' ])
+        .hideAxis(hidden_axes.concat([ 'index' ]))
         .render()
         .reorderable()
         .brushMode('1D-axes')  // enable brushing

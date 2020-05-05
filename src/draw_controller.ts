@@ -26,7 +26,6 @@ function voter_color_values(statedata:StateData ):number[] {
     const n_tiles = statedata.voters.length
     const dist_colors = statedata.voters.map(voters => {
         const v = (voters[0]-voters[1]) / (voters[0]+voters[1])
-        // return clamp(v+0.5, 0, 1)
         return clamp((v*.5)+0.5, 0, 1)
     })
     return dist_colors
@@ -39,12 +38,16 @@ export class DrawController {
     cscale_image: string
     tile_district_values: Float32Array
     tile_district_colors: Float32Array
+
+    t_district_values: any
+    t_district_colors: any
+
     canvas: HTMLCanvasElement
     draw_cmd: Function
     color_scale: any
-    // constructor(cscale_image:string ='imgs/partisan-gradient-export.png') {
-    constructor(cscale_image:string ='imgs/scale_rdbu_1px.png') {
-        this.buffer_r = 1024
+
+    constructor(cscale_image:string) {
+        this.buffer_r = 512
         this.cscale_image = cscale_image
         this.canvas = document.querySelector('canvas.main_canvas') as HTMLCanvasElement
         this.tile_district_colors = new Float32Array(this.buffer_r*this.buffer_r).fill(0)
@@ -56,6 +59,8 @@ export class DrawController {
             optionalExtensions: [ 'oes_texture_half_float' ],
             attributes: { antialias: false }
         })
+        this.t_district_values = this.regl.texture()
+        this.t_district_colors = this.regl.texture()
         this.draw_cmd = draw_map_shader(this.regl)
     }
     async initialize() { // Async calls go here. Load common data.
@@ -75,39 +80,42 @@ export class DrawController {
         })
         return (nx: number, ny: number, selected_id:number, solutions: NdArray[]) => {
             let idx = 0
-            console.time('draw')
-            // console.log(solutions);
-            
+            // console.time('draw')
+            // console.time('a')
             for (let i = 0; i < solutions.length; i++) {
                 let values = district_color_values(solutions[i], 8, rundata.state_data)
-                // console.log(solutions[i]);
                 this.tile_district_colors.set(values, i*values.length)
                 for (let j = 0; j < solutions[i].shape[0]; j++) {
                     this.tile_district_values[i*values.length + j] = solutions[i].get(j) / 8
                 }
-                // this.tile_district_values.set(solutions[i], i*values.length)
                 idx = (i+1)*values.length
             }
+            // console.timeEnd('a')
+            // console.time('b')
             this.tile_district_values.fill(0, idx)
             this.tile_district_colors.fill(0, idx)
-            
-            const tile_district_values = regl.texture({
+            // console.timeEnd('b')
+            // console.time('c')
+            // Reinitialize textures with data.
+            this.t_district_values({
                 data: this.tile_district_values,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
-            const tile_district_colors = regl.texture({
+            this.t_district_colors({
                 data: this.tile_district_colors,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
+            // console.timeEnd('c')
             this.draw_cmd({
                 nx, ny, selected_id, state, color_scale, mix, voters,
-                tile_district_values, tile_district_colors,
+                tile_district_values: this.t_district_values,
+                tile_district_colors: this.t_district_colors,
                 n_solutions: solutions.length,
                 n_tiles: rundata.state_data.voters.length,
                 color_texture_size: this.buffer_r
             })
             // console.log(regl.read());
-            console.timeEnd('draw')
+            // console.timeEnd('draw')
         }
     }
 }
@@ -130,7 +138,7 @@ export class DrawController {
 
 //     return (nx: number, ny: number, selected_id:number, solutions: number[][]) => {
 //         let idx = 0
-//         console.time('draw')
+        console.time('draw')
 //         for (let i = 0; i < solutions.length; i++) {
 //             let values
 //             if (method == 'districts') {
@@ -153,7 +161,7 @@ export class DrawController {
 //             n_tiles: statedata.voters.length,
 //             color_texture_size: color_size
 //         })
-//         console.timeEnd('draw')
+        console.timeEnd('draw')
 //     }
 // }
 

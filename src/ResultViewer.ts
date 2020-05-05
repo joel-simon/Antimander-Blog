@@ -18,20 +18,19 @@ export default class {
     brushed_indexes: number[]
     hover_idx: number
     use_parcoords: boolean
-    constructor(draw_cmd, container:HTMLElement, rundata: RunData, use_parcoords=true) {
-        this.draw_cmd = draw_cmd
+    constructor(draw_cmd, container:HTMLElement, rundata:RunData, use_parcoords=true, hidden_axes=[]) {
         this.container = container
-        this.rundata = rundata
-        this.draw_cmd
         this.nx_max = 3
         this.ny_max = 3
         this.nx = this.nx_max
         this.ny = this.ny_max
         this.use_parcoords = use_parcoords
-        this.setRunData(rundata)
+        this.setData(draw_cmd, rundata, hidden_axes)
     }
 
-    setRunData(rundata) {
+    setData(draw_cmd, rundata, hidden_axes=[]) {
+        this.draw_cmd = draw_cmd
+        this.rundata = rundata
         this.needs_draw = true
         this.hover_idx = -1
         this.brushed_indexes = range(rundata.X.shape[0])
@@ -45,8 +44,12 @@ export default class {
             return obj
         })        
         if (this.use_parcoords) {
+            this.container.querySelector('.parcoords').innerHTML = ''
+            delete this.parcoords
             this.parcoords = bind_parcoords(
-                this.container.querySelector('.parcoords'), this.values, (idx) => this._onParCoordsUpdate(idx)
+                this.container.querySelector('.parcoords'),
+                this.values, hidden_axes,
+                (idx) => this._onParCoordsUpdate(idx)
             )
         }
     }
