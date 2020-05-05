@@ -5,7 +5,6 @@ import { fetch_imagedata } from './utils'
 import { RunData, DrawCMD } from './datatypes'
 import { fetch_all_data, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
-import './hover_link'
 import './scroll_sections'
 import smoothscroll from 'smoothscroll-polyfill'
 import inlineSVG from './lib/inlineSVG.js'
@@ -38,14 +37,6 @@ async function load_viewers(): Promise<ResultViewer[]> {
         viewers.push(new ResultViewer(draw_cmd, row, rundata))
     })
     return viewers
-}
-
-(document.querySelector('#header .scroll_down') as HTMLElement).onclick = () => {
-    window.scrollTo({
-        top: window.innerHeight,
-        left: 0,
-        behavior: 'smooth'
-    });
 }
 
 inlineSVG.init({

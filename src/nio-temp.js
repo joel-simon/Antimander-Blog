@@ -22,10 +22,7 @@ window.onresize = updateNavY;
 setTimeout(updateNavY, 100);
 
 
-/*
-// Scroll snap workaround
-document.querySelector("body").classList.add("scroll-snap");
-*/
+
 
 
 function toggleViewerSectionEmphasis($sections, isGradual) {    
@@ -57,7 +54,7 @@ function scaleSymbol() {
     const   $header = document.querySelector("header"),
             $symbol = document.querySelector("header a.logo .symbol"),
             progress = Math.max(0, $header.getBoundingClientRect().top / 64);
-
+    console.log("SYMBOL",  document.scrollTop)
     $symbol.style.transform = `scale(${progress + 1})`;// translateY(${progress * 16}px)`;
 }
 
@@ -74,14 +71,35 @@ function isCoverOnScreen() {
     }
 }
 
+
+
 window.onscroll = function() {
-    scaleSymbol();
+    
+    console.log("SCROLLL")
     
     isCoverOnScreen();
+    scaleSymbol();
     
 //  Emphasize and deemphasize viewer text blocks as you scroll
     toggleViewerSectionEmphasis(
         document.querySelectorAll(".scroll-block"),
-        isGradual = true
+        isGradual = false
     );
 }
+
+
+
+// window.dispatchEvent(new CustomEvent('scroll'))
+/*
+    scaleSymbol();
+    isCoverOnScreen();
+*/
+
+
+
+// Scroll snap workaround
+document.querySelector("body").classList.add("scroll-snap");
+
+
+
+
