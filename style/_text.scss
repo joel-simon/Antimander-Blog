@@ -33,8 +33,11 @@ a {
     border-bottom: var(--border); 
     
     &:hover {
-        color: black;
         background-color: var(--yellow-50);
+    }
+    
+    &:active {
+        background-color: var(--yellow-80);
     }
 }
 
