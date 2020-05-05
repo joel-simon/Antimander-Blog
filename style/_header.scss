@@ -15,8 +15,7 @@ header {
     a {
         display: flex;
         grid-column: var(--grid-column-right);
-        border: none;
-        cursor: pointer;
+        border: none;       
         
         @media screen and (min-width: $breakpoint-s) {
             margin-left: calc(var(--symbol-width) * -1);
@@ -29,7 +28,8 @@ header {
         .symbol {
             height: var(--symbol-width);
             width:  var(--symbol-width);
-            background: red;
+            background-image: url(/imgs/symbol-4bit-2fps.gif);
+            background-size: contain;
         }
         
         h1 {
