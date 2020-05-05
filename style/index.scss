@@ -12,7 +12,6 @@
 @import 'includes';
 @import 'section_nav';
 @import 'header';
-@import 'hover_link';
 @import 'line_entry';
 
 * {
@@ -132,16 +131,6 @@ section#header {
     padding-bottom: 20px !important;
 }
 
-.card {
-    width: 500px;
-    padding: 16px !important;
-    @extend .shadow;
-    @extend .background;
-    h3 {
-        margin-top:0px;
-        margin-bottom: 16px;
-    }
-}
 
 // @media only screen and (max-width: 1000px) {
 //     .viewer_row {
