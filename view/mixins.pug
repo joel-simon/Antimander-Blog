@@ -1,13 +1,13 @@
 mixin header()
     header
-        a(href="#cover")
+        a.cursor-pointer(href="#cover")
             .symbol
-            h1 Antimander
+            h1.cursor-pointer Antimander
 
 mixin nav()
     nav
         ol
-            for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
+            for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next steps', 'appendix', 'references']
                 li.navlink.caption(class = name == active ? 'active' : '')
                     a(href='#'+name)!=name
 
