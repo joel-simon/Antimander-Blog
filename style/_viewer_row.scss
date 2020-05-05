@@ -2,17 +2,22 @@
 @import 'colors';
 
 body.scroll-snap {
-    scroll-snap-type: y proximity;
+//     scroll-snap-type: y mandatory;
 //     scroll-snap-points-y: repeat(100vh);
-    scroll-padding-top: 48px;
+//     scroll-padding-top: 48px;
     
-    overflow-y: scroll;
+//     overflow-y: scroll;
+/*
+    scroll-snap-type:   none; 
+    scroll-snap-align:  none;
     
+*/
+/*
     * {
-//         scroll-snap-type: none; 
-//         scroll-snap-align: none;
-        
+        scroll-snap-type:   none !important; 
+        scroll-snap-align:  none !important;
     }
+*/
 }
 
 .viewer-track {
@@ -47,8 +52,8 @@ body.scroll-snap {
 */
     
     section.scroll-block {
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
+        scroll-snap-align: start !important;
+        scroll-snap-stop: always !important;
 //         scroll-margin-top: 64px;
     }
     section.scroll-block {

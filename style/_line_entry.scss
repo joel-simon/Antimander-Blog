@@ -149,7 +149,7 @@ $breakpoint-s: 768px;
     }
     
     >*:first-child { // This should always be an H2
-        margin-top:calc(72px + var(--vertical-offset));
+        padding-top:calc(72px + var(--vertical-offset));
     }
     
     h2 {
