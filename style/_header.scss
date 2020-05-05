@@ -10,12 +10,17 @@ header {
     right: 0;
     height: 0;
     @include grid;
+    @include grid-outer-margins;
     --symbol-width: calc(var(--grid-column-gap) * 2);
     
-    a {
+    a.logo {
         display: flex;
         grid-column: var(--grid-column-right);
-        border: none;       
+        border: none; 
+        grid-row: 1/2;
+        
+//         background-color: var(--gray-10);
+              
         
         @media screen and (min-width: $breakpoint-s) {
             margin-left: calc(var(--symbol-width) * -1);
@@ -28,7 +33,7 @@ header {
         .symbol {
             height: var(--symbol-width);
             width:  var(--symbol-width);
-            background-image: url(/imgs/symbol-4bit-2fps.gif);
+            background-image: url(/imgs/symbol-4bit-staggered-1fps.gif);
             background-size: contain;
         }
         
@@ -37,24 +42,69 @@ header {
         }
     }
     
+    .links {
+        grid-column: 8/10;
+        grid-row: 1/2;
+        text-align: right;
+        
+        a {
+            @include font-metadata;
+            display: inline-block;
+            margin-left: 8px;
+            margin-top: 4px;
+            padding-top: 4px;
+            border: none;
+            line-height: 16px;
+            background: none;
+            position: relative;
+            
+            &:hover {
+                border-bottom: var(--border);
+            }
+            
+            // Arrow icon
+            &:after {
+                content: " ";
+                height: 16px;
+                width:  16px;
+                display: inline-block;
+                position: relative;
+                top: 2px;
+                
+                -webkit-mask-image: url(/icons/arrow-left-up.svg);
+                        mask-image: url(/icons/arrow-left-up.svg);
+                -webkit-mask-repeat: no-repeat;
+                        mask-repeat: no-repeat;
+                -webkit-mask-size: 100% 100%;
+                        mask-size: 100% 100%;
+                -webkit-mask-position: left bottom;
+                        mask-position: left bottom;
+                        
+                background-color: var(--gray-100);
+            }
+        }
+    }
+    
     // border
     &:after {
         content: "";
         display: block;
         position: absolute;
-        left: 0;
-        right: 0;
+        left: calc(-1 * var(--grid-outer-gap-l));
+        right: calc(-1 * var(--grid-outer-gap-r));
         height: calc(var(--symbol-width) / 2);
         border-bottom: var(--border);
         pointer-events: none;
     }
     
+    // White background on right half of header
     &:before {
         content: "";
         display: block;
         position: absolute;
         left: 50vw;
-        right: 0;
+        margin-left: calc(-1 * var(--grid-outer-gap-l));;
+        right: calc(-1 * var(--grid-outer-gap-r));
         height: 32px;
         background-color: var(--gray-10);
         z-index: -1;
@@ -65,25 +115,34 @@ header {
     min-height: 100vh;
     @include grid;
     margin-top: 0;
-//     margin-top: 128px;
-//     overflow: visible;
-//     margin-top: -64px !important; // Compensate for header top margin
     
     &:before {
         display: none;
     }
     
     &:after {
-        top: 0;
+        top: 96px;
         border-top: none;
     }
     
     figure.canvas-container {
         grid-column: var(--grid-column-left);
         grid-row: 1 / 10;
-        border: 1px solid red;
+        border: none;
+//         border: 1px solid red;
         display: block;
         height: 100%;
+
+        // Extra gradient under header
+        &:before {
+            content: "";
+            top: 0;
+            left: calc(var(--grid-column-gap) * -1);
+            height: 96px;
+            width: 50vw;
+            position: absolute;
+            background-image: var(--red-gradient);
+        }
     }
     
     h1, h2, author {

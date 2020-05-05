@@ -19,6 +19,9 @@
     box-sizing: border-box;
 }
 
+html {
+}
+
 html, body {
     @extend .cursor-arrow;
     font-family: redaction;
@@ -27,6 +30,21 @@ html, body {
     background-color: var(--gray-10);
     color: var(--gray-100);
     scroll-behavior: smooth;
+}
+
+.basele {
+    background-image:  url(//basehold.it/i/8);
+    background-repeat: repeat repeat;
+    background-size: contain;
+//     background-color: rgba(255,0,0,.25);
+    background-size: 4px 8px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+//     height: 10000%;
+    z-index: 5000;
 }
 
 .index_nav .navlink {

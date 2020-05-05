@@ -55,10 +55,10 @@ $breakpoint-s: 768px;
             width: 50vw;
         }
     }
-    &:nth-child(even):after {
+    &:nth-child(odd):after {
         background: var(--blue-gradient);
     }
-    &:nth-child(odd):after {
+    &:nth-child(even):after {
         background: var(--red-gradient);
     }
 
@@ -93,7 +93,6 @@ $breakpoint-s: 768px;
         @include grid;
         grid-column: var(--grid-column-all);
         position: relative;
-        border: 1px solid red;
         
         @media screen and (min-width: $breakpoint-s) {
             > img, > .image-set{ // Imgs are bottom aligned by default
@@ -127,13 +126,11 @@ $breakpoint-s: 768px;
             
             @media screen and (min-width: $breakpoint-s) {
                 position: absolute;
-                border: 1px solid blue;
             }
         }
         
         .image-set { // 2x2 grid layout
             grid-column: var(--grid-column-left);
-            border: 1px solid green;
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;

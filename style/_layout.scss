@@ -30,7 +30,10 @@ $breakpoint-s: 768px;
     grid-column-gap: var(--grid-column-gap);
 }
 
-
+@mixin grid-outer-margins {
+    margin-left: var(--grid-outer-gap-l);
+    margin-right: var(--grid-outer-gap-r);
+}
 body {
 /*
     margin-left:  32px; // Simulates gutters on outside of grid
