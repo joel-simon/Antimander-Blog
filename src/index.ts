@@ -1,7 +1,8 @@
+declare let window: any
 import '../style/index.scss'
 import ResultViewer from './ResultViewer'
 import HeaderViewer from './HeaderViewer'
-import { fetch_imagedata, query, queryAll } from './utils'
+import { fetch_imagedata, query, queryAll, fetch_npy_zip } from './utils'
 import { RunData, DrawCMD } from './datatypes'
 import { fetch_rundata, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
@@ -11,8 +12,9 @@ import init_varytest  from './varytest'
 import smoothscroll from 'smoothscroll-polyfill'
 import inlineSVG from './lib/inlineSVG.js'
 import ndarray from 'ndarray'
-declare let window: any
+import JsZip from 'jszip'
 
+window.BigUint64Array = null
 // Bind scroll down button
 smoothscroll.polyfill() // Safari polyfill.
 query('#header .scroll_down').onclick = () => {
@@ -25,11 +27,17 @@ inlineSVG.init({
 });
 
 async function main() {
+    
     console.time('main')
     const viewers = []
+    // await fetch_rundata('general_fif_centers', 5)
+    // await fetch_npy_zip('/data/general_fif_centers/state_5.npy.zip')
+    // await fetch_imagedata('/data/general_fif_centers/state_5.png')
+    // await fetch_npy_zip('/data/general_fif_centers/state_5.npy.zip')
+    // console.log(data);
     
     // Create the drawing interface.
-    const color_scale_img = 'imgs/scale_rdbu_1px.png'
+    const color_scale_img = '/imgs/scale_rdbu_1px.png'
     const draw_controller = new DrawController(color_scale_img)
     await draw_controller.initialize()
 
@@ -51,7 +59,7 @@ async function main() {
         }
         viewers.push(viewer)
     }
-    // console.timeEnd('main')
+    console.timeEnd('main')
 }
 
     

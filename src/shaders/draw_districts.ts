@@ -7,7 +7,6 @@ export default function(regl: any): any {
         uniform sampler2D tile_district_colors;
         uniform sampler2D tile_district_values;
         uniform sampler2D voters;
-        // uniform sampler2D background;
         uniform sampler2D color_scale;
         uniform vec2 u_size;
         varying vec2 uv;
@@ -38,8 +37,9 @@ export default function(regl: any): any {
 
         int get_tile_index(vec2 _uv, vec2 cell) {
             vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
-            vec2 cell_uv = vec2((_uv.x - cell.x*cell_shape.x)/cell_shape.x,
-                                (_uv.y - cell.y*cell_shape.y)/cell_shape.y);
+            //  cell_uv is the relative offset within the cell. 
+            vec2 cell_uv = vec2((_uv.x - (cell.x*cell_shape.x))/cell_shape.x,
+                                (_uv.y - (cell.y*cell_shape.y))/cell_shape.y);
             vec3 value = texture2D(state, cell_uv).rgb;
             int tile_index = int(value.r * 255.0*s16) + (int(value.g * 255.0 *s8)) + int(value.b * 255.0);
             return tile_index;
@@ -62,7 +62,7 @@ export default function(regl: any): any {
             return vec2(floor(_uv.x * nx), floor(_uv.y * ny));
         }
 
-        void main () {
+        void main() {
             // We are drawing a grid of states. First find the cell index.
             vec2 cell = get_cell(uv);
             
@@ -85,47 +85,30 @@ export default function(regl: any): any {
             vec2 uv_bottom = vec2(uv+vec2(0.0, 1.0)*u_size);
             vec2 uv_right  = vec2(uv+vec2(1.0, 0.0)*u_size);
 
-            /*
-            bool eq = (get_tile_index(uv_left, cell) == tile_index) && \
-                      (get_tile_index(uv_right, cell) == tile_index) && \
-                      (get_tile_index(uv_top, cell) == tile_index) && \
-                      (get_tile_index(uv_bottom, cell) == tile_index);
-            */
-            
             int ti_left   = get_tile_index(uv_left, cell);
             int ti_top    = get_tile_index(uv_top, cell);
             int ti_right  = get_tile_index(uv_right, cell);
             int ti_bottom = get_tile_index(uv_bottom, cell);
 
-            /*
-            bool eq = all(equal(dist_color, get_dist_color(ti_top, cell))) && \
-                      all(equal(dist_color, get_dist_color(ti_left, cell))) && \
-                      all(equal(dist_color, get_dist_color(ti_right, cell))) && \
-                      all(equal(dist_color, get_dist_color(ti_bottom, cell)));
-            */
+            bool dist_border = (get_dist_data(ti_top, cell).a != dist_idx) || \
+                               (get_dist_data(ti_right, cell).a != dist_idx) || \
+                               (get_dist_data(ti_bottom, cell).a != dist_idx) || \
+                               (get_dist_data(ti_left, cell).a != dist_idx);
             
-            bool dist_border = (get_dist_data(ti_top, cell).a == dist_idx) && \
-                               (get_dist_data(ti_right, cell).a == dist_idx) && \
-                               (get_dist_data(ti_bottom, cell).a == dist_idx) && \
-                               (get_dist_data(ti_left, cell).a == dist_idx);
-            bool cell_border = \
-                !all(equal(cell, get_cell(uv_top))) || \
-                !all(equal(cell, get_cell(uv_left))) ||
-                !all(equal(cell, get_cell(uv_right))) || \
-                !all(equal(cell, get_cell(uv_bottom)));
-
-            vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
-            vec2 cell_uv = vec2((uv.x - cell.x*cell_shape.x)/cell_shape.x,
-                                (uv.y - cell.y*cell_shape.y)/cell_shape.y);
+            bool cell_border = !all(equal(cell, get_cell(uv_top))) || \
+                               !all(equal(cell, get_cell(uv_left))) ||
+                               !all(equal(cell, get_cell(uv_right))) || \
+                               !all(equal(cell, get_cell(uv_bottom)));
 
             if (cell_border) {
                 gl_FragColor = vec4(BLACK, 1.0);
-            } else if (!dist_border) {
+            } else if (dist_border) {
                 bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
                 gl_FragColor = is_selected ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
             } else {
                 gl_FragColor = vec4(mix(dist_color, voter_color, mix_p), 1.0);
             }
+            
         }`,
         vert: `
         precision highp float;
@@ -148,8 +131,6 @@ export default function(regl: any): any {
             state: regl.prop('state'),
             tile_district_values: regl.prop('tile_district_values'),
             tile_district_colors: regl.prop('tile_district_colors'),
-            // colors: regl.prop('colors'),
-            // background: regl.prop('background'),
             color_scale: regl.prop('color_scale'),
             n_tiles: regl.prop('n_tiles'),
             color_texture_size: regl.prop('color_texture_size'),
@@ -158,18 +139,3 @@ export default function(regl: any): any {
         count: 3
     })
 }
-            
-/*
-vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
-vec2 cell_uv = vec2((uv.x - cell.x*cell_shape.x)/cell_shape.x,
-                    (uv.y - cell.y*cell_shape.y)/cell_shape.y);
-vec3 value = texture2D(state, cell_uv).rgb;
-// float tile_index = float(int(value.r * 255.0*s16) + (int(value.g * 255.0 *s8)) + int(value.b * 255.0));
-// float derp = floor(value.b);
-gl_FragColor = vec4(
-    floor(value.g * 255.0) / 255.0,
-    0.0, 0.0, 1.0
-);
-*/
-// gl_FragColor = vec4((tile_index) / 7000.0, 0.0, 0.0, 1.0);
-

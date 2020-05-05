@@ -74,6 +74,7 @@ export class DrawController {
         */
         const { regl, color_scale } = this
         const state = regl.texture(rundata.state_image)
+        
         const voters = regl.texture({
             data: voter_color_values(rundata.state_data).map(v => v * 255),
             shape: [ rundata.state_data.voters.length, 1, 1 ]
@@ -97,6 +98,8 @@ export class DrawController {
             // console.timeEnd('b')
             // console.time('c')
             // Reinitialize textures with data.
+            // console.log(this.tile_district_values);
+            
             this.t_district_values({
                 data: this.tile_district_values,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
@@ -114,7 +117,10 @@ export class DrawController {
                 n_tiles: rundata.state_data.voters.length,
                 color_texture_size: this.buffer_r
             })
-            // console.log(regl.read());
+            // console.log(regl.read().filter(x => x != 0))
+            // const data = regl.read().filter((x, idx) => idx%4 < 2)//.slice(0, 2044)
+            // console.log(data);
+            // console.log(data.reduce((a, b) => a+b, 0));
             // console.timeEnd('draw')
         }
     }
