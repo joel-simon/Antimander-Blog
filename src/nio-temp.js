@@ -63,7 +63,7 @@ function isCoverOnScreen() {
             $body = document.querySelector("body");   
     
 //  Has the user scrolled past the cover yet
-    if ($overview.getBoundingClientRect().top <= 32) {
+    if ($overview.getBoundingClientRect().top <= 0) {
     //  If overview section has not yet scrolled past top of window
         $body.classList.add("cover-off-screen");
     } else {
@@ -81,8 +81,7 @@ function getCurrentSection() {
         const   y = $section.getBoundingClientRect().top,
                 h = $section.offsetHeight,
                 wh = window.innerHeight;
-//         if ((y <= wh/4) & (Math.abs(y) <= (h-(wh/4)))) {
-        if ((y <= 0) & (Math.abs(y) <= h)) {
+        if ((y <= wh/8) & (Math.abs(y) <= (h-(wh/8)))) {
             $current = $section
 //             console.log("INVIEW", $section.id);
         } else {
