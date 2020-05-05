@@ -77,33 +77,46 @@ function getCurrentSection() {
     let $current = $sections[0]; // Initial value
     
     for ($section of $sections) {
-//         console.log($section.id, $section.getBoundingClientRect().top, $section.offsetHeight);
         const   y = $section.getBoundingClientRect().top,
                 h = $section.offsetHeight,
                 wh = window.innerHeight;
         if ((y <= wh/8) & (Math.abs(y) <= (h-(wh/8)))) {
             $current = $section
-//             console.log("INVIEW", $section.id);
+            $current.classList.add("current");
         } else {
-//             console.log("NOTINVIEW", $section.id);
+            $section.classList.remove("current");
         }
-//         $current = $section;
     }
-//     $nav.querySelector(`li:not(#${$current.id})`).classList.remove("current");
-//     $nav.querySelector(`li#${$current.id}`).classList.add("current");
+    
     if ($current.id && ($current.id != "cover")) {
-        console.log($current.id);
         const $currentNavItem = $nav.querySelector("li#nav-" + $current.id);
         $currentNavItem.classList.add("current");
         
         for ($li of $nav.querySelectorAll("li:not(#nav-" + $current.id)) {
             $li.classList.remove("current");
         }
-//         console.log("wow", $nav.querySelector("li#" + $current.id));
     } else {
         for ($li of $nav.querySelectorAll("li")) {
             $li.classList.remove("current");
         }
+    }
+}
+
+function toggleScrollSnap() {
+    const $current = document.querySelector(".section.current");
+    
+//  Enable scroll-snap class on body if you're in a viewer section
+//  AND if the viewer section has more than 50% viewport height left to be scrolled
+    if ($current.classList.contains("viewer") &&
+            (
+                Math.abs($section.getBoundingClientRect().top) <=
+                ($section.offsetHeight-(window.innerHeight/2))
+            )
+        ) 
+        {
+        document.querySelector("body").classList.add("scroll-snap");
+    } else {
+        document.querySelector("body").classList.remove("scroll-snap");
     }
 }
 
@@ -121,6 +134,8 @@ window.onscroll = function() {
     );
     
     getCurrentSection();
+    
+    toggleScrollSnap();
 }
 
 
@@ -134,7 +149,7 @@ window.onscroll = function() {
 
 
 // Scroll snap workaround
-// document.querySelector("body").classList.add("scroll-snap");
+
 
 
 
