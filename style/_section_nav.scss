@@ -84,7 +84,7 @@ nav {
                 float: left;
             }
             
-            &.active, &.active a {
+            &.current, &.current a {
                 color: var(--gray-10);
                 background-color: var(--gray-100);
             }

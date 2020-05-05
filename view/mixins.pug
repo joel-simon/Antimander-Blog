@@ -10,8 +10,8 @@ mixin header()
 mixin nav()
     nav
         ol
-            for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next steps', 'appendix', 'references']
-                li.navlink.caption(class = name == active ? 'active' : '')
+            for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'next-steps', 'appendix', 'references']
+                li.navlink.caption(id="nav-"+name)
                     a(href='#'+name)!=name
 
 mixin text-container(text)

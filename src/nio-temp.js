@@ -54,7 +54,7 @@ function scaleSymbol() {
     const   $header = document.querySelector("header"),
             $symbol = document.querySelector("header a.logo .symbol"),
             progress = Math.max(0, $header.getBoundingClientRect().top / 64);
-    console.log("SYMBOL",  document.scrollTop)
+//     console.log("SYMBOL",  document.scrollTop)
     $symbol.style.transform = `scale(${progress + 1})`;// translateY(${progress * 16}px)`;
 }
 
@@ -63,19 +63,54 @@ function isCoverOnScreen() {
             $body = document.querySelector("body");   
     
 //  Has the user scrolled past the cover yet
-    if ($overview.getBoundingClientRect().top >= 32) {
+    if ($overview.getBoundingClientRect().top <= 32) {
     //  If overview section has not yet scrolled past top of window
-        $body.classList.add("cover-on-screen");
+        $body.classList.add("cover-off-screen");
     } else {
-        $body.classList.remove("cover-on-screen");
+        $body.classList.remove("cover-off-screen");
     }
 }
 
-
+function getCurrentSection() {
+    const   $sections = document.querySelectorAll(".section"),
+            $nav = document.querySelector("nav");
+    let $current = $sections[0]; // Initial value
+    
+    for ($section of $sections) {
+//         console.log($section.id, $section.getBoundingClientRect().top, $section.offsetHeight);
+        const   y = $section.getBoundingClientRect().top,
+                h = $section.offsetHeight,
+                wh = window.innerHeight;
+//         if ((y <= wh/4) & (Math.abs(y) <= (h-(wh/4)))) {
+        if ((y <= 0) & (Math.abs(y) <= h)) {
+            $current = $section
+//             console.log("INVIEW", $section.id);
+        } else {
+//             console.log("NOTINVIEW", $section.id);
+        }
+//         $current = $section;
+    }
+//     $nav.querySelector(`li:not(#${$current.id})`).classList.remove("current");
+//     $nav.querySelector(`li#${$current.id}`).classList.add("current");
+    if ($current.id && ($current.id != "cover")) {
+        console.log($current.id);
+        const $currentNavItem = $nav.querySelector("li#nav-" + $current.id);
+        $currentNavItem.classList.add("current");
+        
+        for ($li of $nav.querySelectorAll("li:not(#nav-" + $current.id)) {
+            $li.classList.remove("current");
+        }
+//         console.log("wow", $nav.querySelector("li#" + $current.id));
+    } else {
+        for ($li of $nav.querySelectorAll("li")) {
+            $li.classList.remove("current");
+        }
+    }
+}
 
 window.onscroll = function() {
     
-    console.log("SCROLLL")
+//     console.log("SCROLLL")
     
     isCoverOnScreen();
     scaleSymbol();
@@ -85,6 +120,8 @@ window.onscroll = function() {
         document.querySelectorAll(".scroll-block"),
         isGradual = false
     );
+    
+    getCurrentSection();
 }
 
 
@@ -98,7 +135,7 @@ window.onscroll = function() {
 
 
 // Scroll snap workaround
-document.querySelector("body").classList.add("scroll-snap");
+// document.querySelector("body").classList.add("scroll-snap");
 
 
 
