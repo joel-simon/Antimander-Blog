@@ -55,6 +55,7 @@ $breakpoint-s: 768px;
             width: 50vw;
         }
     }
+    
     &:nth-child(odd):after {
         background: var(--blue-gradient);
     }
@@ -128,6 +129,7 @@ $breakpoint-s: 768px;
                 position: absolute;
             }
         }
+
         
         .image-set { // 2x2 grid layout
             grid-column: var(--grid-column-left);
@@ -135,6 +137,12 @@ $breakpoint-s: 768px;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             grid-row: 1 / 5;
+            
+        }
+
+        h2 {
+            margin-top: 78px; // 120px baseline to baseline
+
         }
         
         figcaption {

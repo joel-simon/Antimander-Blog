@@ -1,15 +1,15 @@
 import ResultViewer from './ResultViewer'
 import { fetch_imagedata } from './utils'
 import { RunData, DrawCMD } from './datatypes'
-import { fetch_all_data, viewer_update_loop } from './viewer_utils'
+import { fetch_rundata, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
 declare let window: any
 import '../style/index.scss'
 
 async function main(run, stage) {
-    const draw_controller = new DrawController()
+    const draw_controller = new DrawController('imgs/scale_rdbu_1px.png')
     await draw_controller.initialize()
-    const rundata: RunData = await fetch_all_data(run, stage)
+    const rundata: RunData = await fetch_rundata(run, stage)
     if (!rundata ) { 
         return console.log('Data not found.')
     }

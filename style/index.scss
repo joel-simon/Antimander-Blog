@@ -10,8 +10,11 @@
 @import 'slider';
 @import 'viewer_row';
 @import 'includes';
-@import 'section_nav';
 @import 'header';
+@import 'nav';
+@import 'text';
+@import 'cursors';
+@import 'hover_link';
 @import 'line_entry';
 
 * {
@@ -113,7 +116,6 @@ section#header {
         }
     }
 }
-
 
 .github_row {
     // display: flex;

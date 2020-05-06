@@ -2,18 +2,24 @@ include mixins
 
 mixin cover()
     .section#cover
-        h1 Fighting gerrymandering with generative algorithms. 
+        h1 An open source software to generate congressional districts. 
         //- h2 Open-source research #[br] and software to fight Gerrymandering.
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
         
-        p Adjust to see alternatives. Read more to see why gerrymandering is so complex.
-        
+        p Adjust to see alternatives to Wisconsin's districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
+                
         section.controls
-            label.metadata Better shapes
-            input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='polsby popper')
-            label.metadata More Fair
-            input.slider(type='range', min='0', max='.99', value='.5', step='any', data-metric='efficiency gap')
-                        
+            label.metadata Compactness
+            input.slider( type='range', min='0', max='.99', value='.5', step='any',
+                                   data-metric='polsby popper' )
+            label.metadata Fairness
+            input.slider( type='range', min='0', max='.99', value='.5', step='any', 
+                                   data-metric='efficiency gap' )
+            label.metadata Competitiveness
+            input.slider( type='range', min='0', max='.99', value='.5', step='any', 
+                                              data-metric='competitiveness' )
+
+            a.metadata.set_current See the current map
         // img.scroll_down(src='/icons/arrow-down.svg')
         figure.canvas-container
             .inner
