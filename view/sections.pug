@@ -2,7 +2,7 @@ include mixins
 
 mixin cover()
     .section#cover
-        h1 An open source software to generate congressional districts. 
+        h1 Antimander is open source software to generate congressional districts. 
         //- h2 Open-source research #[br] and software to fight Gerrymandering.
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
         
@@ -29,7 +29,7 @@ mixin cover()
         //- (style='justify-content: flex-start;')
         
         author
-            p.metadata.authors By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions #[br] from #[a(href='http://joellehman.com/') Joel Lehman] and design by #[a(href='http://nioono.com/') Nio Ono].
+            p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and design by #[a(href='http://nioono.com/') Nio Ono].
         
 mixin overview()
     .section#overview
@@ -79,7 +79,7 @@ mixin viewer()
     .section.viewer.viewer_row#viewer(data-datapath='general_fif_centers', data-stage='5')
         .viewer-track
             .viewer-container
-                h2 Insert viewer here
+                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
                 // +district_viewer("Interactive Viewer")
         section.scroll-block
             h2 Viewer
@@ -149,10 +149,10 @@ mixin all_compactness_viewer()
         data-datapath='all_compactness',
         data-stage='5'
     )
-        // +district_viewer("Multiple compactness")
         .viewer-track
             .viewer-container
-                h2 Insert viewer here
+                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
+                // +district_viewer("Multiple compactness")
         section.scroll-block
             h2 Some title here
             p As you can see above, there are many many things we want in districts and being good in one regard may result in being be bad in another.
@@ -252,7 +252,7 @@ mixin results()
                 p The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. Feas-Infeas with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline. 
 
 mixin next-steps()
-    .section#next-steps
+    .section#conclusion
         h2 Conclusion & Next Steps
         p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will exposed gerrymandered districts as statistical outliers.
         p Antimander an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statistician, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
@@ -289,7 +289,7 @@ mixin derp()
     )
         .viewer-track
             .viewer-container
-                h2 Insert viewer here
+                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
         section.scroll-block
             h2 Varying Cities and Districts
             p Another benefit of a generative tool the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
