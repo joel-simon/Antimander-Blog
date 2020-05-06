@@ -93,7 +93,8 @@
         
         &.defocused:not(:nth-child(2))/* , &.defocused * */ {
             opacity: .125;
-            filter: saturate(.25);
+            filter: saturate(0);
+            font-family: redaction-100;
 //             color: var(--gray-40);
 //             border-color: var(--gray-40);
             
