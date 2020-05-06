@@ -1,65 +1,106 @@
 @import 'colors';
 
 nav {
-    margin-left: 50vw;
+    --nav-margin-top: calc(var(--overview-offset-top) - 8px);
+//     @include grid;
     width: 50vw;
+    left: 50vw;
     position: sticky;
     top: -1px; // So that browser can tell when nav is at top of view
     height: 0;
-    margin-top: 100vh;
-    margin-bottom: -100vh;
-    z-index: 2;
+//     margin-top: 100vh;
+    margin-top: var(--nav-margin-top);
+    margin-bottom: calc(var(--nav-margin-top) * -1);
+    z-index: 3;
     --nav-box-shadow-size: 0;
+//     --nav-background-color: transparent;
+//     --nav-background-color: var(--gray-10);
+    
     
     &.atTop {
-        --nav-box-shadow-size: 8px
+        --nav-box-shadow-size: 4px;
     }
     
     ol {
+        padding-right:  var(--grid-outer-gap-l); // Simulates gutters on outside of grid
+        
+/*
+        padding-left:  var(--grid-outer-gap-l); // Simulates gutters on outside of grid
+        padding-right: var(--grid-outer-gap-r);
+*/
+        
+//         grid-column: var(--grid-column-right);
+/*
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-auto-flow: column;
+*/
+        
         position: relative;
         overflow: hidden; // Hide excess shadow
         z-index: 2; // Keep above main text
         padding-bottom: 32px; // Ensure that shadow is visible
+        padding-top: 8px;
         
-        column-count: 4;
-        column-rule: 1px solid var(--gray-100);
-        column-gap: 0;
+        column-count: 2;
+        column-rule: 1px solid var(--gray-50);
+        column-gap:0px;
+        
+        @media screen and (min-width: $breakpoint-m) {
+            column-count: 4;
+        }
+        
+        top: 34px;
+//         border-top: var(--border);
         
         &:after {
             content: "";
             position: absolute;
             top: 0;
             left: -32px;
-            bottom: 32px;
+            bottom: 24px;
             right: -64px;
             background-color: var(--gray-10);
             z-index: -1;
-            border-bottom: 1px solid var(--gray-100);
-            box-shadow: 0px var(--nav-box-shadow-size) var(--nav-box-shadow-size) var(--gray-100);
+            border-bottom: var(--border);
+            box-shadow: 0px var(--nav-box-shadow-size) calc(2 * var(--nav-box-shadow-size)) var(--gray-100);
             transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
         li.navlink {
-            text-indent: 32px;
+//             border: 1px solid blue;
+//             overflow: visible !important;
+//             text-indent: 32px;
             mix-blend-mode: multiply;
+/*             border-right: var(--border); */
+//             position: relative;
+/*             margin-left: calc(var(--grid-column-gap) * -1); */
+
+            &:before {
+                // Override some of the standard ol behavior
+                position: relative;
+                left: 8px;
+                float: left;
+            }
             
-            &.active, &.active a {
-                color: var(--gray-10);
-                background-color: var(--gray-100);
+            &.current a {
+/*                 color: var(--gray-10); */
+/*                 background-color: var(--gray-100); */
+                background-color: var(--yellow-70);
+                border-bottom-color: var(--gray-100);
             }
             
             a {
-                // Hide 1px gap on top row of links
-                // due to the -1px offset of the nav.
-                padding-top: 1px;
-                top: -1px;
-                
                 display: block;
                 position: relative;
                 text-transform: capitalize;
                 border-bottom-color: transparent;
+                padding: 0 32px;
+                white-space: nowrap;
                 
                 &:hover {
+//                     border-top-color: var(--gray-100);
                     border-bottom-color: var(--gray-100);
                 }
             }
