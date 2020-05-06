@@ -52,9 +52,8 @@ export class DrawController {
         this.canvas = document.querySelector('canvas.main_canvas') as HTMLCanvasElement
         this.tile_district_colors = new Float32Array(this.buffer_r*this.buffer_r).fill(0)
         this.tile_district_values = new Float32Array(this.buffer_r*this.buffer_r).fill(0)
-        const gl = this.canvas.getContext("webgl", { preserveDrawingBuffer: false })
         this.regl = Regl({
-            gl,
+            gl: this.canvas.getContext("webgl", { preserveDrawingBuffer: false }),
             extensions: [ 'oes_texture_float' ],
             optionalExtensions: [ 'oes_texture_half_float' ],
             attributes: { antialias: false }
@@ -74,14 +73,13 @@ export class DrawController {
         */
         const { regl, color_scale } = this
         const state = regl.texture(rundata.state_image)
-        
         const voters = regl.texture({
             data: voter_color_values(rundata.state_data).map(v => v * 255),
             shape: [ rundata.state_data.voters.length, 1, 1 ]
         })
         return (nx: number, ny: number, selected_id:number, solutions: NdArray[]) => {
             let idx = 0
-            // console.time('draw')
+            console.time('draw')
             // console.time('a')
             for (let i = 0; i < solutions.length; i++) {
                 let values = district_color_values(solutions[i], 8, rundata.state_data)
@@ -97,9 +95,8 @@ export class DrawController {
             this.tile_district_colors.fill(0, idx)
             // console.timeEnd('b')
             // console.time('c')
-            // Reinitialize textures with data.
-            // console.log(this.tile_district_values);
             
+            // Reinitialize textures with data.
             this.t_district_values({
                 data: this.tile_district_values,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
@@ -121,53 +118,7 @@ export class DrawController {
             // const data = regl.read().filter((x, idx) => idx%4 < 2)//.slice(0, 2044)
             // console.log(data);
             // console.log(data.reduce((a, b) => a+b, 0));
-            // console.timeEnd('draw')
+            console.timeEnd('draw')
         }
     }
 }
-
-
-// export function draw_districts(
-//     regl: any,
-//     draw_shader: any,
-//     map_data: any,
-//     statedata: StateData,
-//     color_scale: any,
-//     background: any,
-//     method: "districts" | "tiles"
-// ) {
-//     const color_size = 1024
-//     const map_texture = regl.texture(map_data)
-//     let color_values = new Float32Array(color_size*color_size).fill(0)
-//     const all_colors = regl.texture(color_scale)
-//     background = regl.texture(background)
-
-//     return (nx: number, ny: number, selected_id:number, solutions: number[][]) => {
-//         let idx = 0
-        console.time('draw')
-//         for (let i = 0; i < solutions.length; i++) {
-//             let values
-//             if (method == 'districts') {
-//                 values = district_color_values(solutions[i], 8, statedata)
-//             } else {
-//                 values = voter_color_values(solutions[i], 8, statedata)
-//             }
-//             for (let j = 0; j < solutions[0].length; j++) {
-//                 color_values[idx++] = values[j]
-//             }
-//         }
-//         color_values.fill(255, idx)
-//         const colors = regl.texture({
-//             data: color_values,
-//             shape: [ color_size, color_size, 1 ]
-//         })
-//         draw_shader({
-//             colors, nx, ny, all_colors, selected_id, background,
-//             map: map_texture,
-//             n_tiles: statedata.voters.length,
-//             color_texture_size: color_size
-//         })
-        console.timeEnd('draw')
-//     }
-// }
-

@@ -19,15 +19,15 @@ export default function(regl: any): any {
         uniform float n_tiles;
         uniform float selected_id;
 
-        const float s16 = 65535.0;
-        const float s8  = 256.0;
-        const vec3 RED   = vec3(1.0, 0.0, 0.0);
-        const vec3 BLUE  = vec3(0.0, 0.0, 1.0);
-        const vec3 WHITE = vec3(1.0, 1.0, 1.0);
         const vec3 BLACK = vec3(0.0, 0.0, 0.0);
         const vec3 YELLOW = vec3(243./255., 232./255., 65./255.);
 
-        vec2 tileIdx2colorPos(int tile_index, vec2 cell) {
+        int roundp(float x) { 
+            // Round to nearest whole number for positive values.
+            return int(x + 0.5);
+        }
+
+        vec2 idx_to_xy(int tile_index, vec2 cell) {
             float global_index = float(tile_index) + ((cell.y * nx)+cell.x) * n_tiles;
             return vec2(
                 (mod( global_index, color_texture_size )) / color_texture_size,
@@ -37,24 +37,24 @@ export default function(regl: any): any {
 
         int get_tile_index(vec2 _uv, vec2 cell) {
             vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
-            //  cell_uv is the relative offset within the cell. 
+            /*  cell_uv is the relative offset within the cell.  */
             vec2 cell_uv = vec2((_uv.x - (cell.x*cell_shape.x))/cell_shape.x,
                                 (_uv.y - (cell.y*cell_shape.y))/cell_shape.y);
-            vec3 value = texture2D(state, cell_uv).rgb;
-            int tile_index = int(value.r * 255.0*s16) + (int(value.g * 255.0 *s8)) + int(value.b * 255.0);
+            
+            int tile_index = roundp(texture2D(state, cell_uv).r * n_tiles) - 1;
             return tile_index;
         }
 
         vec4 get_dist_data(int tile_index, vec2 cell) {
-            vec2 colorPos = tileIdx2colorPos(tile_index - 1, cell);
+            vec2 colorPos = idx_to_xy(tile_index, cell);
             float color_value = texture2D(tile_district_colors, colorPos).x;
-            float dist_idx   =  texture2D(tile_district_values, colorPos).x;
+            float dist_idx = texture2D(tile_district_values, colorPos).x;
             vec3 color = texture2D(color_scale, vec2(color_value, 0.0)).rgb;
             return vec4(color, dist_idx);
         }
 
         vec3 get_voter_color(int tile_index) {
-            float color_value = texture2D(voters, vec2(float(tile_index) / n_tiles, 0.0)).x;
+            float color_value = texture2D(voters, vec2(float(tile_index) / (n_tiles - 1.0), 0.0)).x;
             return texture2D(color_scale, vec2(color_value, 0.0)).rgb;
         }
 
@@ -71,7 +71,7 @@ export default function(regl: any): any {
             }
             
             int tile_index = get_tile_index(uv, cell);
-            if (tile_index == 0) {
+            if (tile_index == -1) {
                 discard;
             }
             
@@ -108,7 +108,6 @@ export default function(regl: any): any {
             } else {
                 gl_FragColor = vec4(mix(dist_color, voter_color, mix_p), 1.0);
             }
-            
         }`,
         vert: `
         precision highp float;
