@@ -59,15 +59,16 @@ function scaleSymbol() {
 }
 
 function isCoverOnScreen() {   
-    const   $overview = document.querySelector("#overview"),
-            $body = document.querySelector("body");   
+    const   $overview = document.querySelector("#overview");
     
 //  Has the user scrolled past the cover yet
     if ($overview.getBoundingClientRect().top <= 0) {
     //  If overview section has not yet scrolled past top of window
-        $body.classList.add("cover-off-screen");
+        document.querySelector("body").classList.add("cover-off-screen");
+//         document.documentElement.classList.add("cover-off-screen");
     } else {
-        $body.classList.remove("cover-off-screen");
+        document.querySelector("body").classList.remove("cover-off-screen");
+//         document.documentElement.classList.remove("cover-off-screen");
     }
 }
 
@@ -107,16 +108,19 @@ function toggleScrollSnap() {
     
 //  Enable scroll-snap class on body if you're in a viewer section
 //  AND if the viewer section has more than 50% viewport height left to be scrolled
-    if ($current.classList.contains("viewer") &&
+    if ($current.classList?.contains("viewer") &&
             (
-                Math.abs($section.getBoundingClientRect().top) <=
-                ($section.offsetHeight-(window.innerHeight/2))
+                Math.abs($current.getBoundingClientRect().top + 4000) <=
+                ($current.offsetHeight-(window.innerHeight))
             )
         ) 
         {
-        document.querySelector("body").classList.add("scroll-snap");
+            document.querySelector("body").classList.add("scroll-snap");
+//         document.documentElement.classList.add("scroll-snap");
     } else {
         document.querySelector("body").classList.remove("scroll-snap");
+//         document.documentElement.classList.remove("scroll-snap");
+        
     }
 }
 

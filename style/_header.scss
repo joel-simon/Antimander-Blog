@@ -140,7 +140,7 @@ header {
     }
 }
 
-body.cover-off-screen header {
+.cover-off-screen header {
     h1, .links {
         opacity: 1;
         transform: translateY(0px);

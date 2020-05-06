@@ -1,22 +1,42 @@
 @import 'cursors';
 @import 'colors';
 
-body{
-    scroll-padding-top: 48px;
-    overflow-y: scroll;
-    
-    &.cover-off-screen {
+
+// Chrome requires that scroll snapping be applied to <html>
+// @media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    html {
         scroll-snap-type: y proximity;
+//         scroll-padding-top: 128px;
         
-        &.scroll-snap {
-            scroll-snap-type: y mandatory;
+        * {
+            scroll-snap-type:   none; 
+            scroll-snap-align:  none;
         }
+    }
+// }
+
+// Safari requires that scroll snapping be applied to <body>
+@media not all and (min-resolution:.001dpcm) { 
+    body {
+        scroll-padding-top: 48px;
+//         overflow-y: scroll;
+        
+        
+        &.cover-off-screen {
+//             scroll-snap-type: y proximity;
+            &.scroll-snap {
+                scroll-snap-type: y proximity;
+            }
+        }
+        
         * {
             scroll-snap-type:   none; 
             scroll-snap-align:  none;
         }
     }
 }
+
+
 
 .viewer-track {
 //     height: 100vh;
@@ -52,7 +72,7 @@ body{
     section.scroll-block {
         scroll-snap-align: start !important;
         scroll-snap-stop: always !important;
-//         scroll-margin-top: 64px;
+        scroll-margin-top: 112px;
     }
     section.scroll-block {
 //         margin-top: -48px;
