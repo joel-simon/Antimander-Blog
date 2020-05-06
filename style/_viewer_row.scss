@@ -19,15 +19,18 @@
 @media not all and (min-resolution:.001dpcm) { 
     body {
         scroll-padding-top: 48px;
+//         scroll-snap-stop: never;
+//         scroll-snap-align:  none;
+        
 //         overflow-y: scroll;
         
         
-        &.cover-off-screen {
+//         &.cover-off-screen {
 //             scroll-snap-type: y proximity;
-            &.scroll-snap {
+//             &.scroll-snap {
                 scroll-snap-type: y proximity;
-            }
-        }
+//             }
+//         }
         
         * {
             scroll-snap-type:   none; 

@@ -108,7 +108,7 @@ function toggleScrollSnap() {
     
 //  Enable scroll-snap class on body if you're in a viewer section
 //  AND if the viewer section has more than 50% viewport height left to be scrolled
-    if ($current.classList?.contains("viewer") &&
+    if ($current.classList.contains("viewer") &&
             (
                 Math.abs($current.getBoundingClientRect().top + 4000) <=
                 ($current.offsetHeight-(window.innerHeight))
@@ -139,7 +139,7 @@ window.onscroll = function() {
     
     getCurrentSection();
     
-    toggleScrollSnap();
+//     toggleScrollSnap();
 }
 
 
