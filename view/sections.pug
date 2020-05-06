@@ -143,7 +143,6 @@ mixin metrics()
         p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
 
-
 mixin all_compactness_viewer()
     .section.viewer(
         data-datapath='all_compactness',
@@ -281,8 +280,8 @@ mixin appendix()
         h3 Popular Vote Interstate Compact:
         p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
 
-mixin derp()
-    .section.viewer(
+mixin vary_tests()
+    #varytest.section.viewer_row(
         data-datapath='vary_test_2k/d7-c2',
         data-viewertype='single',
         data-stage='3',

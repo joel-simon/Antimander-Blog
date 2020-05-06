@@ -7,7 +7,6 @@ interface sdata {
     scroll_blocks:  NodeListOf<HTMLElement>;
 }
 
-/*
 function updatePositions({ section, scroll_blocks }: sdata) {
     const viewer = section.querySelector('.district-viewer') as HTMLElement
     const { top, bottom, height } = section.getBoundingClientRect()
@@ -21,7 +20,6 @@ function updatePositions({ section, scroll_blocks }: sdata) {
         viewer.style.top = top + 'px' // Scroll normally when below.
     }
 }
-*/
 
 function updateScrollBlocks({ section, scroll_blocks }: sdata) {
     let most_middle = null
@@ -43,17 +41,20 @@ function updateScrollBlocks({ section, scroll_blocks }: sdata) {
 
 let last_scroll = null
 const section_divs: sdata[] = []
-document.querySelectorAll('section.viewer_row').forEach((section: HTMLElement) => {
+document.querySelectorAll('.section.viewer_row').forEach((section: HTMLElement) => {
     const scroll_blocks = section.querySelectorAll('.scroll_block') as NodeListOf<HTMLElement>
     section_divs.push({ section, scroll_blocks })
 })
 function update() {
     if (last_scroll != window.scrollY) {
-//         section_divs.forEach(updatePositions)
-        section_divs.forEach(updateScrollBlocks)
+        section_divs.forEach(({ section, scroll_blocks }) => {
+            // if (inView(section)) {
+            updatePositions({ section, scroll_blocks })
+            updateScrollBlocks({ section, scroll_blocks })
+            // }
+        })
         last_scroll = window.scrollY
     }
     window.requestAnimationFrame(update)
 }
 update()
-
