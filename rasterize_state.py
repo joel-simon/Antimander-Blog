@@ -26,7 +26,8 @@ if __name__ == '__main__':
     out = os.path.splitext(sys.argv[1])[0]
     with open(sys.argv[1], 'r') as f:
         state = json.load(f)
-        img = state2img(state).astype('i')
-        data = (img[:, :, 0] << 16) + (img[:, :, 1] << 8) + (img[:, :, 2])
-        np.save(out, data.astype('f') / data.max())
-        cv2.imwrite(out +'.png', img[:,:,::-1]) # For debugging.
+        img = state2img(state)#.astype('i')
+        # data = (img[:, :, 0] << 16) + (img[:, :, 1] << 8) + (img[:, :, 2])
+        # print(data.shape, data.dtype)
+        np.save(out, img)
+        # cv2.imwrite(out +'.png', img[:,:,::-1]) # For debugging.
