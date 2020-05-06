@@ -173,6 +173,7 @@ $breakpoint-s: 768px;
     
     figcaption {
         position: relative;
+        margin-bottom: 16px;;
         
         @media screen and (min-width: $breakpoint-s) {
             // Arrow
