@@ -7,27 +7,24 @@ mixin cover()
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
         
         p Adjust to see alternatives to Wisconsin's districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
-                
-        section.controls
-            label.metadata Compactness
-            input.slider( type='range', min='0', max='.99', value='.5', step='any',
-                                   data-metric='polsby popper' )
-            label.metadata Fairness
-            input.slider( type='range', min='0', max='.99', value='.5', step='any', 
-                                   data-metric='efficiency gap' )
-            label.metadata Competitiveness
-            input.slider( type='range', min='0', max='.99', value='.5', step='any', 
-                                              data-metric='competitiveness' )
 
+        section.controls
+            label.metadata Compact districts
+            input.slider(type='range', min='0', max='.99', value='.5', step='any',
+                         data-metric='polsby popper' )
+            label.metadata Fair ratios of representatives to voters
+            input.slider(type='range', min='0', max='.99', value='.5', step='any', 
+                         data-metric='efficiency gap' )
+            label.metadata Competitive elections
+            input.slider(type='range', min='0', max='.99', value='.5', step='any', 
+                         data-metric='competitiveness' )
             a.metadata.set_current See the current map
         // img.scroll_down(src='/icons/arrow-down.svg')
         figure.canvas-container
             .inner
-                canvas.main_canvas
-                .counts.metadata
-        //- h4 Adjust slider to view computer generated gerrymandering in Wisconsin            
-        //- (style='justify-content: flex-start;')
-        
+                canvas.main_canvas(width=512, height=512)
+                p.counts.metadata     
+
         author
             p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman] and design by #[a(href='http://nioono.com/') Nio Ono].
         
@@ -79,8 +76,7 @@ mixin viewer()
     .section.viewer.viewer_row#viewer(data-datapath='general_fif_centers', data-stage='5')
         .viewer-track
             .viewer-container
-                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
-                // +district_viewer("Interactive Viewer")
+                +district_viewer()
         section.scroll-block
             h2 Viewer
             p An interactive browser of one run of Antimander for Wisconsin. Each districting is 'optimal' for a slightly different weighing of the three objectives.
@@ -96,12 +92,6 @@ mixin viewer()
             img.inline.wide(src='imgs/figure_legend.png')
         section.scroll-block
             p Exploring the results allows us to build intuition about the tradeoffs.
-
-            //- for _ in [1,2,3]
-            //-     .scroll-block
-            //-         p Test
-            //- p Test2
-            //- .padding(style='height:30vh;')
 
 mixin metrics()
     .section#metrics
@@ -142,17 +132,14 @@ mixin metrics()
         h3 5. Areas of interest.
         p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
-
-
 mixin all_compactness_viewer()
-    .section.viewer(
+    .section.viewer.viewer_row(
         data-datapath='all_compactness',
         data-stage='5'
     )
         .viewer-track
             .viewer-container
-                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
-                // +district_viewer("Multiple compactness")
+                +district_viewer()
         section.scroll-block
             h2 Some title here
             p As you can see above, there are many many things we want in districts and being good in one regard may result in being be bad in another.
@@ -281,20 +268,29 @@ mixin appendix()
         h3 Popular Vote Interstate Compact:
         p TODO: discuss #[a(href='https://en.wikipedia.org/wiki/National_Popular_Vote_Interstate_Compact') Popular Vote Interstate Compact]
 
-mixin derp()
-    .section.viewer(
+mixin vary_tests()
+    #varytest.section.viewer_row(
         data-datapath='vary_test_2k/d7-c2',
         data-viewertype='single',
         data-stage='3',
-    )
+    )   
         .viewer-track
             .viewer-container
-                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
+                +district_viewer()
         section.scroll-block
-            h2 Varying Cities and Districts
+            h3 Varying Cities and Districts:
             p Another benefit of a generative tool the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
+        
         section.scroll-block
             p In these experiments Antimander optimizes for compactness as well as partisan bias for varying numbers of districts and cities. These states were artificially constructed and have equal voters of each party.
+        
+        section.scroll-block.map_opts
+            p Click a map to view
+            img(src='imgs/varytest/c1_small.jpg', data-datapath='vary_test_2k/d7-c1', data-stage='3')
+            img(src='imgs/varytest/c2_small.jpg', data-datapath='vary_test_2k/d7-c2', data-stage='3')
+            img(src='imgs/varytest/c3_small.jpg', data-datapath='vary_test_2k/d7-c3', data-stage='3')
+            img(src='imgs/varytest/WI.png', data-datapath='bias', data-stage='5')
+
         section.scroll-block
             p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.
 

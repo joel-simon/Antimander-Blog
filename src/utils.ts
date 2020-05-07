@@ -6,23 +6,14 @@ import { NdArray } from './datatypes'
 
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext('2d')
-
 export async function fetch_imagedata(src:string): Promise<NdArray> {
     /* Fetch an image data as a RGBA ndarray. */
     console.time('fetch_imagedata')
     const img = await image_promise(src)
-    img.crossOrigin = 'Anonymous'
-    
-    // console.log(img.naturalWidth, img.naturalHeight, img.width, img.height, canvas.width, canvas.height);
     canvas.width = img.naturalWidth
     canvas.height = img.naturalHeight
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0)
     const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data
-    for (let i = 3; i < data.length; i+=4) {
-        data[i] = 255;
-    }
-    // console.log(src, data.length, Array.from(data).reduce((a, b) => a+b, 0));
     console.timeEnd('fetch_imagedata')
     return ndarray(data, [ canvas.width, canvas.height, 4 ])
 }
@@ -98,6 +89,10 @@ export function queryAll(q:string, parent:HTMLElement|Document = document):HTMLE
 export function query(q:string, parent:HTMLElement|Document = document):HTMLElement {
     return parent.querySelector<HTMLElement>(q)
 }
-// export function max(arr: any[], cmp: Function) {
-//     return arr.sort(a, bcmp)[0]
-// }
+
+export function nextPowerOf2(n: number): number { 
+    let p = 1
+    if (n && !(n & (n - 1))) { return n }
+    while (p < n) { p <<= 1 }
+    return p
+}

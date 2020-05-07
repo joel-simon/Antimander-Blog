@@ -8,6 +8,10 @@ module.exports = (env, { mode }) => {
       'viewer': './src/viewer.ts',
     },
     devtool: (mode == 'production') ? 'source-map' : 'inline-source-map',
+    devServer: {
+      host: '0.0.0.0',
+      disableHostCheck: true,   // That solved it
+    },
     output: {
       filename: '[name].js',
       // path: path.resolve(__dirname, 'build')

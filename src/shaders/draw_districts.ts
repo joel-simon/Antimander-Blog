@@ -11,23 +11,26 @@ export default function(regl: any): any {
         uniform vec2 u_size;
         varying vec2 uv;
 
+        const float s16 = 65535.0;
+        const float s8  = 256.0;
         uniform float nx;
         uniform float ny;
         uniform float mix_p;
         uniform float n_solutions;
         uniform float color_texture_size;
+        uniform float voters_texture_size;
         uniform float n_tiles;
         uniform float selected_id;
 
-        const float s16 = 65535.0;
-        const float s8  = 256.0;
-        const vec3 RED   = vec3(1.0, 0.0, 0.0);
-        const vec3 BLUE  = vec3(0.0, 0.0, 1.0);
-        const vec3 WHITE = vec3(1.0, 1.0, 1.0);
         const vec3 BLACK = vec3(0.0, 0.0, 0.0);
         const vec3 YELLOW = vec3(243./255., 232./255., 65./255.);
 
-        vec2 tileIdx2colorPos(int tile_index, vec2 cell) {
+        int roundp(float x) { 
+            // Round to nearest whole number for positive values.
+            return int(x + 0.5);
+        }
+
+        vec2 idx_to_xy(int tile_index, vec2 cell) {
             float global_index = float(tile_index) + ((cell.y * nx)+cell.x) * n_tiles;
             return vec2(
                 (mod( global_index, color_texture_size )) / color_texture_size,
@@ -37,24 +40,28 @@ export default function(regl: any): any {
 
         int get_tile_index(vec2 _uv, vec2 cell) {
             vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
-            //  cell_uv is the relative offset within the cell. 
-            vec2 cell_uv = vec2((_uv.x - (cell.x*cell_shape.x))/cell_shape.x,
-                                (_uv.y - (cell.y*cell_shape.y))/cell_shape.y);
-            vec3 value = texture2D(state, cell_uv).rgb;
-            int tile_index = int(value.r * 255.0*s16) + (int(value.g * 255.0 *s8)) + int(value.b * 255.0);
+            /*  cell_uv is the relative offset within the cell.  */
+            vec2 cell_uv = vec2(mod(_uv.x, cell_shape.x) / cell_shape.x,
+                                mod(_uv.y, cell_shape.y) / cell_shape.y);
+            vec3 value = texture2D(state, cell_uv).xyz;
+            int tile_index = roundp(value.g * 255.0) * 256 + roundp(value.b * 255.0) - 1;
             return tile_index;
         }
 
         vec4 get_dist_data(int tile_index, vec2 cell) {
-            vec2 colorPos = tileIdx2colorPos(tile_index - 1, cell);
+            vec2 colorPos = idx_to_xy(tile_index, cell);
             float color_value = texture2D(tile_district_colors, colorPos).x;
-            float dist_idx   =  texture2D(tile_district_values, colorPos).x;
+            float dist_idx = texture2D(tile_district_values, colorPos).x;
             vec3 color = texture2D(color_scale, vec2(color_value, 0.0)).rgb;
             return vec4(color, dist_idx);
         }
 
         vec3 get_voter_color(int tile_index) {
-            float color_value = texture2D(voters, vec2(float(tile_index) / n_tiles, 0.0)).x;
+            vec2 xy = vec2(
+                floor( float(tile_index) / voters_texture_size ) / voters_texture_size,
+                (mod( float(tile_index), voters_texture_size )) / voters_texture_size
+            );
+            float color_value = texture2D(voters, xy).x;
             return texture2D(color_scale, vec2(color_value, 0.0)).rgb;
         }
 
@@ -65,16 +72,16 @@ export default function(regl: any): any {
         void main() {
             // We are drawing a grid of states. First find the cell index.
             vec2 cell = get_cell(uv);
-            
+                        
             if (cell.x + cell.y*nx >= n_solutions) {
                 discard;
             }
             
             int tile_index = get_tile_index(uv, cell);
-            if (tile_index == 0) {
+            if (tile_index == -1) {
                 discard;
             }
-            
+
             vec4 dist_data = get_dist_data(tile_index, cell);
             vec3 dist_color = dist_data.rgb;
             float dist_idx  = dist_data.a;
@@ -107,8 +114,7 @@ export default function(regl: any): any {
                 gl_FragColor = is_selected ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
             } else {
                 gl_FragColor = vec4(mix(dist_color, voter_color, mix_p), 1.0);
-            }
-            
+            }            
         }`,
         vert: `
         precision highp float;
@@ -134,6 +140,7 @@ export default function(regl: any): any {
             color_scale: regl.prop('color_scale'),
             n_tiles: regl.prop('n_tiles'),
             color_texture_size: regl.prop('color_texture_size'),
+            voters_texture_size: regl.prop('voters_texture_size'),
             u_size: ctx => [1 / ctx.framebufferWidth, 1 / ctx.framebufferHeight],
         },
         count: 3

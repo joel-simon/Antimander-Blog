@@ -62,7 +62,7 @@ export function viewer_update_loop(viewers: ResultViewer[]) {
             }
             if (active_viewer) {
                 // console.log('Setting active viewer:', active_viewer)
-                active_viewer.container.querySelector('.canvas_container').append(canvas)
+                active_viewer.container.querySelector('.canvas-container').append(canvas)
                 active_viewer.needsDraw()
             }
         }

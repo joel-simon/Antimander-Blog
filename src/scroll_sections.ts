@@ -51,8 +51,8 @@ function update() {
     if (last_scroll != window.scrollY) {
         section_divs.forEach(({ section, scroll_blocks }) => {
             // if (inView(section)) {
-            updatePositions({ section, scroll_blocks })
-            updateScrollBlocks({ section, scroll_blocks })
+            // updatePositions({ section, scroll_blocks })
+            // updateScrollBlocks({ section, scroll_blocks })
             // }
         })
         last_scroll = window.scrollY
