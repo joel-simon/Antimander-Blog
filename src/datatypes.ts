@@ -1,7 +1,7 @@
 export interface RunData {
     config: Config;
     state_data: StateData;
-    state_image: HTMLImageElement;
+    state_image: NdArray;
     X: NdArray;
     F: NdArray;
 }

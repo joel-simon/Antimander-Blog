@@ -7,34 +7,25 @@ import { RunData, DrawCMD } from './datatypes'
 import { fetch_rundata, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
 // import './hover_link'
-import './scroll_sections'
+// import './scroll_sections'
 import init_varytest  from './varytest'
-import smoothscroll from 'smoothscroll-polyfill'
+// import smoothscroll from 'smoothscroll-polyfill'
 import inlineSVG from './lib/inlineSVG.js'
-import ndarray from 'ndarray'
-import JsZip from 'jszip'
 
-window.BigUint64Array = null
 // Bind scroll down button
-smoothscroll.polyfill() // Safari polyfill.
-query('#header .scroll_down').onclick = () => {
-    window.scrollTo({ top: window.innerHeight, left: 0, behavior: 'smooth' })
-}
+// smoothscroll.polyfill() // Safari polyfill.
+// query('#header .scroll_down').onclick = () => {
+//     window.scrollTo({ top: window.innerHeight, left: 0, behavior: 'smooth' })
+// }
 
-inlineSVG.init({
-    svgSelector: '.inline', // the class attached to all images that should be inlined
-    // initClass: 'js-inlinesvg', // class added to <html>
-});
+// inlineSVG.init({
+//     svgSelector: '.inline', // the class attached to all images that should be inlined
+//     // initClass: 'js-inlinesvg', // class added to <html>
+// });
 
 async function main() {
-    
     console.time('main')
     const viewers = []
-    // await fetch_rundata('general_fif_centers', 5)
-    // await fetch_npy_zip('/data/general_fif_centers/state_5.npy.zip')
-    // await fetch_imagedata('/data/general_fif_centers/state_5.png')
-    // await fetch_npy_zip('/data/general_fif_centers/state_5.npy.zip')
-    // console.log(data);
     
     // Create the drawing interface.
     const color_scale_img = '/imgs/scale_rdbu_1px.png'
@@ -44,7 +35,7 @@ async function main() {
     // Load the header viewer.
     const rundata = await fetch_rundata('general_fif_centers', 5)
     const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
-    viewers.push(new HeaderViewer(draw_cmd, query('#header'), rundata))
+    viewers.push(new HeaderViewer(draw_cmd, query('#cover'), rundata))
     
     // Start the draw loop before loading other viewers.
     viewer_update_loop(viewers)
