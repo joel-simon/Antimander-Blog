@@ -1,19 +1,22 @@
 mixin header()
     header
-        a.logo.cursor-pointer(href="#cover")
-            .symbol
-            h1.cursor-pointer Antimander
-        .links
-            a(href="https://github.com/joel-simon/antimander/") Github
-            a(href="#") Discord
+        .menu-inner
+            a.logo.cursor-pointer(href="#cover")
+                .symbol
+                h1.cursor-pointer Antimander
+            .links
+                a(href="https://github.com/joel-simon/antimander/") Github
+                a(href="#") Discord
 
 mixin nav()
     nav
-        ol
-            for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'conclusion', 'appendix', 'references']
-                li.navlink.caption(id="nav-"+name)
-                    a(href='#'+name)!=name
-
+        .menu-inner
+            ol
+                for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'conclusion', 'appendix', 'references']
+                    li.navlink.caption(id="nav-"+name)
+                        a(href='#'+name)!=name
+    input#toggle-menu(type="button", value="Toggle Menu")
+    
 mixin text-container(text)
     div.outer-text-container
         div.inner-text-container

@@ -1,26 +1,54 @@
-// Add class to nav when it's sticky
-const $nav = document.querySelector("nav");
+function detectWhenSticky($elements) {
+/*
+    const observer = new IntersectionObserver( 
+        ([e]) =>
+            e.target.classList.toggle("at-top", e.intersectionRatio < 1),
+        {
+            threshold: [1]
+        }
+    );
+*/
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            entry.target.classList.toggle("at-top");
+/*
+            if (entry.isIntersecting) {
+                isLeaving = true;
+                entry.target.startCarousel();
+            } else if (isLeaving) {
+                isLeaving = false;
+                entry.target.stopCarousel();
+            }
+*/
+        }, {
+            threshhold: 1
+        });
+    });
 
-const observer = new IntersectionObserver( 
-    ([e]) => e.target.classList.toggle("atTop", e.intersectionRatio < 1),
-    { threshold: [1] }
-);
 
-observer.observe($nav);
-
-
-// Place sticky nav at correct height
-const $cover = document.querySelector("#cover");
-const $navOl = $nav.querySelector("ol");
-
-function updateNavY() {
-    const y = ($cover.offsetTop + $cover.offsetHeight) - ($navOl.offsetHeight);
-//     console.log(y);
-    $nav.style.setProperty("--overview-offset-top", `${y}px`);
+    $elements.forEach($element => {
+        console.log("wooo", $element)
+        observer.observe($element);
+    })
 }
-window.onresize = updateNavY;
-setTimeout(updateNavY, 100);
 
+
+
+function setNavToCorrectHeight() {
+    // Place sticky nav at correct height
+    const $nav = document.querySelector("nav"),
+          $cover = document.querySelector("#cover"),
+          $navOl = $nav.querySelector("ol");
+    
+    function updateNavY() {
+        const y = ($cover.offsetTop + $cover.offsetHeight) - ($navOl.offsetHeight);
+    //     console.log(y);
+        $nav.style.setProperty("--overview-offset-top", `${y}px`);
+    }
+    window.onresize = updateNavY;
+    setTimeout(updateNavY, 100);
+}
 
 
 
@@ -124,10 +152,7 @@ function toggleScrollSnap() {
     }
 }
 
-window.onscroll = function() {
-    
-//     console.log("SCROLLL")
-    
+window.onscroll = function() {    
     isCoverOnScreen();
     scaleSymbol();
     
@@ -138,10 +163,28 @@ window.onscroll = function() {
     );
     
     getCurrentSection();
-    
-//     toggleScrollSnap();
 }
 
+function setupNavMenuButton() {
+    const   $button = document.querySelector("input#toggle-menu"),
+            $menuInners = document.querySelectorAll(".menu-inner");
+    
+    $button.onclick = () => {
+        $menuInners.forEach($menuInner =>
+            $menuInner.classList.toggle("open")
+        );
+        console.log($menuInners)
+    };
+}
+
+setNavToCorrectHeight();
+
+setupNavMenuButton();
+
+detectWhenSticky([
+    document.querySelector("header"),
+    document.querySelector("nav")
+]);
 
 
 // window.dispatchEvent(new CustomEvent('scroll'))

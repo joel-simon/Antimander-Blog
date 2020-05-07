@@ -5,19 +5,20 @@ header {
     z-index: 2;
     margin-top: 64px;
     margin-bottom: -64px;
-    top: 0;
     left: 0;
     right: 0;
     height: 0;
     @include grid;
     @include grid-outer-margins;
     --symbol-width: calc(var(--grid-column-gap) * 2);
-//     transform: translateY(0);
-//     transition: transform var(--motion-duration-fast) var(--motion-easing);
-    
+
+    @media screen and (min-width: $breakpoint-s) {
+        top: 0; // Pin to top on desktop
+    }
+
     // States
     &.not-sticky {
-//         transform: translateY(32px);
+//         transform: translateY(32px/);
 //         opacity: .1;
         
         a.logo .symbol {
@@ -111,32 +112,38 @@ header {
         }
     }
     
-    // border
-    &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        left: calc(-1 * var(--grid-outer-gap-l));
-        right: calc(-1 * var(--grid-outer-gap-r));
-        height: calc(var(--symbol-width) / 2);
-        border-bottom: var(--border);
-        pointer-events: none;
-    }
-    
-    // White background on right half of header
-    &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        left: 50vw;
-        margin-left: calc(-1 * var(--grid-outer-gap-l));;
-        top: -50vh;
-        margin-top: 32px;
-        bottom: 0;
-        right: calc(-1 * var(--grid-outer-gap-r));
-        height: 50vh;
-        background-color: var(--gray-10);
-        z-index: -1;
+    .menu-inner {
+        // border
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: calc(-1 * var(--grid-outer-gap-l));
+            right: calc(-1 * var(--grid-outer-gap-r));
+            height: calc(var(--symbol-width) / 2);
+            border-bottom: var(--border);
+            pointer-events: none;
+        }
+        
+        // White background on right half of header
+        &:before {
+            content: "";
+            display: block;
+            position: absolute;
+            margin-left: calc(-1 * var(--grid-outer-gap-l));;
+            top: -50vh;
+            left: 0;
+            margin-top: 32px;
+            bottom: 0;
+            right: calc(-1 * var(--grid-outer-gap-r));
+            height: 50vh;
+            background-color: var(--gray-10);
+            z-index: -1;
+            
+            @media screen and (min-width: $breakpoint-s) {
+                left: 50vw;
+            }
+        }
     }
 }
 

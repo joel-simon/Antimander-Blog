@@ -57,6 +57,8 @@ html {
         position: sticky;
         top: 0;
         box-shadow: var(--box-shadow);
+        
+        overflow: hidden;
     }
     
     @media screen and (min-width: $breakpoint-s) {
