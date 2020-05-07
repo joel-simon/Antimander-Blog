@@ -81,24 +81,24 @@ mixin viewer()
             .viewer-container
                 img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
                 // +district_viewer("Interactive Viewer")
-        section.scroll-block
+        section.snap
             h2 Viewer
             p An interactive browser of one run of Antimander for Wisconsin. Each districting is 'optimal' for a slightly different weighing of the three objectives.
-        section.scroll-block
+        section.snap
             p  On the top-left is a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot] which has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
-        section.scroll-block
+        section.snap
             p You can drag (brush) on an axis to filter values. This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one objective and also how those solutions rank in other objectives.
             img.inline.narrow(src='imgs/filter.png')
-        section.scroll-block
+        section.snap
             p You may also click on any district to enlarge it.
-        section.scroll-block
+        section.snap
             p Wisconsin is divided into eight districts. The color represents what party that district is leaning towards.
             img.inline.wide(src='imgs/figure_legend.png')
-        section.scroll-block
+        section.snap
             p Exploring the results allows us to build intuition about the tradeoffs.
 
             //- for _ in [1,2,3]
-            //-     .scroll-block
+            //-     .snap
             //-         p Test
             //- p Test2
             //- .padding(style='height:30vh;')
@@ -153,20 +153,20 @@ mixin all_compactness_viewer()
             .viewer-container
                 img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
                 // +district_viewer("Multiple compactness")
-        section.scroll-block
+        section.snap
             h2 Some title here
             p As you can see above, there are many many things we want in districts and being good in one regard may result in being be bad in another.
-        section.scroll-block
+        section.snap
             p Generative algorithms can also be used here to help explore the space of tradeoffs.
-        section.scroll-block
+        section.snap
             p On the left are districts optimized for all of the compactness metrics above. They still had to be contiguous and have equal population.
-        section.scroll-block
+        section.snap
             p We can see which metrics corelate and which do not, or what it means to be compact for one but not the other.
-        section.scroll-block
+        section.snap
             p The dark colors mean these districts are not competitive, which is not surprising since that was not something optimized for.
-        section.scroll-block
+        section.snap
             p Metrics like Polsby-Popper that are based on surface area more inverse (more lines cross) to metrics that are based on general shape (like center dist).
-        section.scroll-block
+        section.snap
             p Which metrics (or pairs of) best correspond do your idea of 'compactness?'
              
 mixin methods()
@@ -290,12 +290,12 @@ mixin derp()
         .viewer-track
             .viewer-container
                 img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
-        section.scroll-block
+        section.snap
             h2 Varying Cities and Districts
             p Another benefit of a generative tool the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
-        section.scroll-block
+        section.snap
             p In these experiments Antimander optimizes for compactness as well as partisan bias for varying numbers of districts and cities. These states were artificially constructed and have equal voters of each party.
-        section.scroll-block
+        section.snap
             p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.
 
 mixin references()

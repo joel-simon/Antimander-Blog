@@ -4,37 +4,35 @@
 
 // Chrome requires that scroll snapping be applied to <html>
 // @media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
-    html {
+html {
+    scroll-snap-type: y proximity;
+//  Weird hacks to make vertical spacing same on Safari and Chrome
+    --snap-section-padding-top: 112px;
+    --snap-section-padding-top-mobile-offset: 16px;
+
+    * {
+        scroll-snap-type:   none; 
+        scroll-snap-align:  none;
+    }
+}
+
+// Safari requires that scroll snapping be applied to <body>
+@media not all and (min-resolution:.001dpcm) { 
+    body {
         scroll-snap-type: y proximity;
-//         scroll-padding-top: 128px;
+    //  Weird hacks to make vertical spacing same on Safari and Chrome
+        --snap-section-padding-top: 48px;
+        --snap-section-padding-top-mobile-offset:
+            calc(var(--snap-section-padding-top) * -1);
         
         * {
             scroll-snap-type:   none; 
             scroll-snap-align:  none;
         }
-    }
-// }
-
-// Safari requires that scroll snapping be applied to <body>
-@media not all and (min-resolution:.001dpcm) { 
-    body {
-        scroll-padding-top: 48px;
-//         scroll-snap-stop: never;
-//         scroll-snap-align:  none;
         
-//         overflow-y: scroll;
-        
-        
-//         &.cover-off-screen {
-//             scroll-snap-type: y proximity;
-//             &.scroll-snap {
-                scroll-snap-type: y proximity;
-//             }
-//         }
-        
-        * {
-            scroll-snap-type:   none; 
-            scroll-snap-align:  none;
+    //  On Safari, the first snap section needs more top padding 
+        .section.viewer section.snap:nth-of-type(1) {
+            --snap-section-padding-top: 112px;
         }
     }
 }
@@ -42,49 +40,66 @@
 
 
 .viewer-track {
-//     height: 100vh;
     grid-column: var(--grid-column-left);
     border: 1px solid lime;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top:-64px;
+    left:   calc(var(--grid-outer-gap-l) * -1);
+    right:  calc(var(--grid-outer-gap-r) * -1);
     bottom: 64px;
-//     @include grid;
+    z-index: 2;
+    pointer-events: none;
     
     .viewer-container {
-        height: 500px;
-        width: 100%;
         background: magenta;
+        height: 50vh;
+        width: 100%;
         position: sticky;
-        top: 128px;
-/*         grid-column: var(--grid-column-left); */
-        
+        top: 0;
+        box-shadow: var(--box-shadow);
+    }
+    
+    @media screen and (min-width: $breakpoint-s) {
+        top: 0;
+        left: 0;
+        right: 0;
+//         top: 24px;
+        //     height: 100vh;
+        //     @include grid;
+            
+            .viewer-container {
+                top: 128px;
+                box-shadow: none;
+                
+        /*         grid-column: var(--grid-column-left); */
+            }
     }
 }
 
 .section.viewer {
     padding-bottom: 512px; // Extra space so sticky viewer stays on screen
-/*
-    scroll-snap-type: y mandatory;
-    scroll-snap-points-y: repeat(100vh);
-    scroll-padding-top: 64px;
-    overflow: scroll;
-*/
     
-    section.scroll-block {
+    section.snap {
         scroll-snap-align: start !important;
         scroll-snap-stop: always !important;
-        scroll-margin-top: 112px;
     }
-    section.scroll-block {
-//         margin-top: -48px;
-        margin-bottom: 128px;
+    
+    section.snap {
         transition: var(--motion-duration-med) var(--motion-easing);
         transition-property: filter opacity;
         
+        padding-top: calc(
+            50vh + var(--snap-section-padding-top-mobile-offset)
+        );
+        
+        @media screen and (min-width: $breakpoint-s) {
+            padding-top: var(--snap-section-padding-top);
+            margin-bottom: 64px;
+        }
+        
         p {
             position: relative;
+            z-index: 1;
         }
         
         &.focused {
@@ -106,10 +121,6 @@
                 opacity: 0;
             }
             
-        }
-        
-        &:nth-child(2) {
-            margin-top: 112px;
         }
         
         p:first-of-type:before {

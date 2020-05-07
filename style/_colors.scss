@@ -60,4 +60,7 @@
                 hsl(39.42, 48.57%, 96.94%) 85.8%,
                 hsl(45, 40%, 98.04%) 100%
             );
+            
+    --box-shadow-size: 4px;
+    --box-shadow: 0px var(--box-shadow-size) calc(2 * var(--box-shadow-size)) var(--gray-100);
 }

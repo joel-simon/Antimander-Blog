@@ -133,7 +133,7 @@ window.onscroll = function() {
     
 //  Emphasize and deemphasize viewer text blocks as you scroll
     toggleViewerSectionEmphasis(
-        document.querySelectorAll(".scroll-block"),
+        document.querySelectorAll("section.snap"),
         isGradual = false
     );
     

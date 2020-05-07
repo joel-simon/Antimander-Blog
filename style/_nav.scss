@@ -1,5 +1,3 @@
-@import 'colors';
-
 nav {
     --nav-margin-top: calc(var(--overview-offset-top) - 8px);
 //     @include grid;
@@ -12,13 +10,13 @@ nav {
     margin-top: var(--nav-margin-top);
     margin-bottom: calc(var(--nav-margin-top) * -1);
     z-index: 3;
-    --nav-box-shadow-size: 0;
+    --box-shadow-size: 0;
 //     --nav-background-color: transparent;
 //     --nav-background-color: var(--gray-10);
     
     
     &.atTop {
-        --nav-box-shadow-size: 4px;
+        --box-shadow-size: 4px;
     }
     
     ol {
@@ -64,7 +62,7 @@ nav {
             background-color: var(--gray-10);
             z-index: -1;
             border-bottom: var(--border);
-            box-shadow: 0px var(--nav-box-shadow-size) calc(2 * var(--nav-box-shadow-size)) var(--gray-100);
+            box-shadow: var(--box-shadow);
             transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
