@@ -85,6 +85,9 @@ function scaleSymbol() {
 //  Only execute transform if this CSS variable is set to true
     if (JSON.parse(getComputedStyle($symbol).getPropertyValue("--can-scale"))) {
         $symbol.style.transform = `scale(${progress + 1})`;
+//  Reset property in case viewport changes
+    } else {
+        $symbol.style.transform = "scale(1)";
     }
 }
 
@@ -200,6 +203,7 @@ window.addEventListener("load",     () => {
 });
 
 window.addEventListener("resize",   updateNavY);
+window.addEventListener("resize",   scaleSymbol);
 
 window.addEventListener("scroll",   isCoverOnScreen);
 window.addEventListener("scroll",   scaleSymbol);

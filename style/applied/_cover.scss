@@ -1,3 +1,19 @@
+article {
+    // Extra gradient under header
+    &:before {
+        content: "";
+        top: 0;
+/*         left: calc(var(--grid-column-gap) * -1); */
+        width: 100vw;
+        height: 96px;
+        position: absolute;
+        background-image: var(--red-gradient);
+        
+        @media screen and (min-width: $bp-single-col) {
+            width: 50vw;
+        }
+    }
+}
 .section#cover {
     min-height: 100vh;
     @include grid;
@@ -15,21 +31,12 @@
     
     figure.canvas-container {
         grid-column: var(--grid-column-left);
-        grid-row: 1 / 10;
         border: none;
-//         border: 1px solid red;
         display: block;
         height: 100%;
-
-        // Extra gradient under header
-        &:before {
-            content: "";
-            top: 0;
-            left: calc(var(--grid-column-gap) * -1);
-            height: 96px;
-            width: 50vw;
-            position: absolute;
-            background-image: var(--red-gradient);
+        
+        @media screen and (min-width: $bp-single-col) {
+            grid-row: 2 / 10;
         }
     }
     

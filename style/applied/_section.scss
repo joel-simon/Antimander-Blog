@@ -30,7 +30,7 @@
         content: " ";
         grid-column: var(--grid-column-left);
         width: 100vw;
-        height: calc(var(--vertical-offset) * 4);
+        height: 256px;
         top: calc(var(--vertical-offset) + 8px);
         margin-left:  calc(-1 * var(--grid-outer-gap-l));
         position: absolute;

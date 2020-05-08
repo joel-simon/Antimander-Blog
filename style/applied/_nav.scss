@@ -160,6 +160,11 @@ header {
         @include grid;
         @include grid-outer-margins;
         
+        &.open:before {
+            margin-top: var(--header-height);
+            background-color: var(--gray-10);
+        }
+        
     //  Border
         &:after {
             content: "";
@@ -180,16 +185,17 @@ header {
             top: calc(-2 * var(--header-height));
             left: calc(-1 * var(--grid-outer-gap-l));
             right: calc(-1 * var(--grid-outer-gap-r));
-            margin-top: var(--header-height);
+
             bottom: 0;
             height: calc(var(--header-height) * 3);
-            background-color: var(--gray-10);
             z-index: -1;
             
             @media screen and (min-width: $bp-single-col) {
                 left: calc(50vw - var(--grid-column-gap));
                 right: calc(-1 * var(--grid-outer-gap-r));
                 height: calc(var(--header-height) * 2);
+                margin-top: var(--header-height);
+                background-color: var(--gray-10);
             }
         }
         
