@@ -65,12 +65,12 @@ Safari requires that scroll snapping be applied to <body>
         
         background: var(--gray-10);
         
-        @media screen and (min-width: $bp-1-col) {
+        @media screen and (min-width: $bp-single-col) {
             background: none;
         }
     }
     
-    @media screen and (min-width: $bp-1-col) {
+    @media screen and (min-width: $bp-single-col) {
         top: 0;
         left: 0;
         right: 0;
@@ -103,7 +103,7 @@ Safari requires that scroll snapping be applied to <body>
             50vh + var(--snap-section-padding-top-mobile-offset)
         );
         
-        @media screen and (min-width: $bp-1-col) {
+        @media screen and (min-width: $bp-single-col) {
             padding-top: var(--snap-section-padding-top);
             margin-bottom: 64px;
         }

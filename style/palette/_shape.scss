@@ -4,17 +4,17 @@
 
 // Vertical divider
 body:after {
-    content: " ";
-    height: 100vh;
-    width: var(--grid-outer-gap-l);
-    border-right: var(--border);
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    z-index: 1000;
-    pointer-events: none;
-    
-    @media screen and (min-width: $bp-1-col) {
+//     width: var(--grid-outer-gap-l);
+
+    @media screen and (min-width: $bp-single-col) {
         width: 50vw;
+        content: " ";
+        height: 100vh;
+        border-right: var(--border);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 1000;
+        pointer-events: none;
     }
 }

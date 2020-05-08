@@ -21,7 +21,6 @@ function detectWhenSticky($elements) {
         });
     });
 
-
     $elements.forEach($element => {
         observer.observe($element);
     })
@@ -51,7 +50,9 @@ function toggleViewerSectionEmphasis($sections, isGradual) {
         if (isGradual) { 
         //  Fades in as you scroll
             const   threshhold  = 160,
-                    progress    = Math.max(0, (y - threshhold)/(window.innerHeight-250)),
+                    progress    = Math.max(0,
+                            (y - threshhold)/(window.innerHeight-250)
+                        ),
                     opacity     = Math.max(.125, 1 - progress);
                     
             $section.style.opacity = opacity;
@@ -80,8 +81,11 @@ function scaleSymbol() {
     const   $header     = document.querySelector("header"),
             $symbol     = document.querySelector("header a.logo .symbol"),
             progress    = Math.max(0, $header.getBoundingClientRect().top / 64);
-            
-    $symbol.style.transform = `scale(${progress + 1})`;
+    
+//  Only execute transform if this CSS variable is set to true
+    if (JSON.parse(getComputedStyle($symbol).getPropertyValue("--can-scale"))) {
+        $symbol.style.transform = `scale(${progress + 1})`;
+    }
 }
 
 

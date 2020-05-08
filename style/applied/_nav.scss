@@ -5,7 +5,7 @@
 
 body.cover-off-screen {
     header, nav {
-        @media screen and (max-width: $bp-1-col) {
+        @media screen and (max-width: $bp-single-col) {
             --menu-hide-offset: -320px;
             top: var(--menu-hide-offset); // Hide on scroll
             
@@ -30,7 +30,7 @@ body.cover-off-screen {
 }
 
 header, nav {
-    @media screen and (min-width: $bp-1-col) {
+    @media screen and (min-width: $bp-single-col) {
         top: -1px;
         
         .menu-inner, .menu-inner.open {
@@ -55,7 +55,7 @@ nav {
     transition: transform var(--motion-duration-fast) var(--motion-easing);
     
     
-    @media screen and (min-width: $bp-1-col) {
+    @media screen and (min-width: $bp-single-col) {
         width: 50vw;
         left: 50vw;        
     }
@@ -79,12 +79,12 @@ nav {
         
         top: calc((var(--header-height) * 2) + 0px);
         
-        @media screen and (min-width: $bp-1-col) {
+        @media screen and (min-width: $bp-single-col) {
             column-count: 2;
             top: calc(var(--header-height) + 1px);
         }
         
-        @media screen and (min-width: $bp-2-col) {
+        @media screen and (min-width: $bp-wide) {
             column-count: 4;
         }
         
@@ -148,30 +148,19 @@ header {
     z-index: 4;
     margin-top: 64px;
     margin-bottom: -64px;
-//     width: 100vw;
     left: 0;
     right: 0;
     height: 0;
 
-    @media screen and (min-width: $bp-1-col) {
+    @media screen and (min-width: $bp-single-col) {
         top: 0; // Pin to top on desktop
     }
 
-    // States
-    &.not-sticky {
-//         transform: translateY(32px/);
-//         opacity: .1;
-        
-        a.logo .symbol {
-//             transform: scale(2);
-        }
-    }
-    
     .menu-inner {
         @include grid;
         @include grid-outer-margins;
         
-        // border
+    //  Border
         &:after {
             content: "";
             display: block;
@@ -183,7 +172,7 @@ header {
             pointer-events: none;
         }
         
-        // White background on right half of header
+    //  White background on right half of header
         &:before {
             content: "";
             display: block;
@@ -197,7 +186,7 @@ header {
             background-color: var(--gray-10);
             z-index: -1;
             
-            @media screen and (min-width: $bp-1-col) {
+            @media screen and (min-width: $bp-single-col) {
                 left: calc(50vw - var(--grid-column-gap));
                 right: calc(-1 * var(--grid-outer-gap-r));
                 height: calc(var(--header-height) * 2);
@@ -218,7 +207,7 @@ header {
             grid-row: 1/2;
             height: var(--header-height);
                   
-            @media screen and (min-width: $bp-1-col) {
+            @media screen and (min-width: $bp-single-col) {
                 margin-left: calc(var(--symbol-width) / -2);
                 
             }
@@ -228,18 +217,18 @@ header {
             }
             
             .symbol {
+                --can-scale: false;  // Prevent from scaling on mobile
                 height: var(--symbol-width);
                 width:  var(--symbol-width);
                 background-image: url(/imgs/symbol-4bit-staggered-1fps.gif);
                 background-size: contain;
                 margin-left: calc(var(--grid-column-gap) * -1);
-                transform: scale(2);
-        //             transform-origin: bottom center;
-        /*
-                transform: scale(1);
-                transition: transform var(--motion-duration-fast) var(--motion-easing);
-        */
                 
+                @media screen and (min-width: $bp-single-col) {
+                    --can-scale: true;
+                    transform: scale(2);// Set inital value so there isn't
+                                        // a sudden jump after JS gets applied
+                }
             }
             
             h1 {
@@ -308,7 +297,7 @@ input#toggle-menu {
     right: 0;
     z-index: 9999;
     
-    @media screen and (min-width: $bp-1-col) {
+    @media screen and (min-width: $bp-single-col) {
         display: none;        
     }  
 }

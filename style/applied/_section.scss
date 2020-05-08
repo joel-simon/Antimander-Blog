@@ -16,37 +16,30 @@
     // Divider
     &:before {
         content: " ";
-        grid-column: var(--grid-column-left);
-        width: calc(100vw - var(--grid-outer-gap-l));
-        margin-left: -8px;
+        grid-column: var(--grid-column-right);
         height: 8px;
+        margin-left:  calc(-1 * var(--grid-outer-gap-l));
+        margin-right: calc(-1 * var(--grid-outer-gap-r));
         margin-top: var(--vertical-offset);
         top: 0;
-//         margin-top: -8px;
         background-color: var(--gray-100);
-        position: relative;
-        
-        @media screen and (min-width: $bp-1-col) {
-            width: 50vw;;
-            margin-left: 50vw;
-            left: calc(-1 * var(--grid-outer-gap-l));
-        }
     }
     
     // Gradient
     &:after {
         content: " ";
-        grid-column: var(--grid-column-all);
-        width: calc(var(--grid-outer-gap-l) - 8px);
-        height: 100%; //256px;
+        grid-column: var(--grid-column-left);
+        width: 100vw;
+        height: calc(var(--vertical-offset) * 4);
         top: calc(var(--vertical-offset) + 8px);
-        left: calc(-1 * var(--grid-outer-gap-l));
+        margin-left:  calc(-1 * var(--grid-outer-gap-l));
         position: absolute;
         z-index: -1;
-        border-top: var(--border);
         
-        @media screen and (min-width: $bp-1-col) {
+        @media screen and (min-width: $bp-single-col) {
             width: 50vw;
+            height: 100%; 
+            border-top: var(--border);
         }
     }
     
@@ -88,8 +81,11 @@
         @include grid;
         grid-column: var(--grid-column-all);
         position: relative;
+        margin-top: 64px;
         
-        @media screen and (min-width: $bp-1-col) {
+        @media screen and (min-width: $bp-single-col) {
+            margin-top: 0;
+            
             > img, > .image-set{ // Imgs are bottom aligned by default
                 bottom: 0;
             }
@@ -115,11 +111,11 @@
         > img, .image-set {
             grid-column: var(--grid-column-left);
             
-            @media screen and (min-width: $bp-2-col) {
+            @media screen and (min-width: $bp-wide) {
                 grid-column: 1 / 4;
             }
             
-            @media screen and (min-width: $bp-1-col) {
+            @media screen and (min-width: $bp-single-col) {
                 position: absolute;
             }
         }
@@ -169,7 +165,7 @@
         position: relative;
         margin-bottom: 16px;;
         
-        @media screen and (min-width: $bp-1-col) {
+        @media screen and (min-width: $bp-single-col) {
             // Arrow
             &:before {
                 content: " ";
