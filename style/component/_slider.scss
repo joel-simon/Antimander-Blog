@@ -1,5 +1,3 @@
-@import 'cursors';
-@import 'colors';
 input[type='range'] {
   border: var(--border);
   @extend .cursor-pointer;

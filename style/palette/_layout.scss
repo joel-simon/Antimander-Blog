@@ -1,6 +1,6 @@
-$breakpoint-m: 1024px;
-$breakpoint-s: 768px;
-
+// Breakpoints
+$bp-2-col: 1024px;  // Everything above this is double column
+$bp-1-col: 768px;   // Everything below this is single column
 
 :root {
     --grid-template-columns: repeat(4, 1fr) 0px repeat(4, 1fr);
@@ -12,7 +12,7 @@ $breakpoint-s: 768px;
     --grid-outer-gap-l: 32px;
     --grid-outer-gap-r: 16px;
         
-    @media screen and (min-width: $breakpoint-s) {      
+    @media screen and (min-width: $bp-1-col) {      
         --grid-column-left: 1 / 5;
         --grid-column-right: 6 / 10;
         --grid-column-all: 1 / 10;
@@ -31,15 +31,4 @@ $breakpoint-s: 768px;
 @mixin grid-outer-margins {
     margin-left: var(--grid-outer-gap-l);
     margin-right: var(--grid-outer-gap-r);
-}
-body {
-/*
-    margin-left:  32px; // Simulates gutters on outside of grid
-    margin-right: 16px;
-    
-    @media screen and (min-width: $breakpoint-s) {
-        margin-left: 24px;
-        margin-right: 24px;
-    }
-*/
 }

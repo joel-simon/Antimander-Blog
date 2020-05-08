@@ -14,7 +14,7 @@ body:after {
     z-index: 1000;
     pointer-events: none;
     
-    @media screen and (min-width: $breakpoint-s) {
+    @media screen and (min-width: $bp-1-col) {
         width: 50vw;
     }
 }

@@ -1,22 +1,29 @@
-@import "reset";
-@import "layout";
-@import 'colors';
-@import 'shape';
-@import 'text';
-@import 'motion';
-@import 'components';
-@import 'cursors';
+@import "lib/_reset";
 
-@import 'sections';
-@import 'slider';
-@import 'viewer_row';
-@import 'includes';
-@import 'header';
-@import 'nav';
-@import 'text';
-@import 'cursors';
-@import 'hover_link';
-@import 'line_entry';
+/*
+Core styles
+*/
+@import "palette/_includes";
+@import "palette/_layout";
+@import "palette/_color";
+@import "palette/_shape";
+@import "palette/_text";
+@import "palette/_motion";
+
+/*
+Small, reusable components
+*/
+@import "component/_button";
+@import "component/_slider";
+@import "component/_cursors";
+
+/*
+Application of styles
+*/
+@import "applied/_nav";
+@import "applied/_cover";
+@import "applied/_section";
+@import "applied/_viewer";
 
 * {
     box-sizing: border-box;

@@ -3,6 +3,146 @@
     --header-height: var(--grid-column-gap);
 }
 
+body.cover-off-screen {
+    header, nav {
+        @media screen and (max-width: $bp-1-col) {
+            --menu-hide-offset: -320px;
+            top: var(--menu-hide-offset); // Hide on scroll
+            
+            .menu-inner {
+                transition: transform var(--motion-duration-med) var(--motion-easing);
+                
+                &.open {
+                    transform: translateY(calc(var(--menu-hide-offset) * -1));
+                }
+            }
+            
+/*
+            &.not-sticky {
+                .menu-inner.open {
+                    transform: translateY(0);
+                }
+            }
+*/
+        }
+
+    }
+}
+
+header, nav {
+    @media screen and (min-width: $bp-1-col) {
+        top: -1px;
+        
+        .menu-inner, .menu-inner.open {
+            transform: translateY(0);
+        }
+    }
+}
+
+nav {
+    --nav-margin-top: calc(var(--overview-offset-top) - 8px);
+    position: sticky;
+    height: 0;
+    left: 0;
+    right: 0;
+    margin-top: var(--nav-margin-top);
+    margin-bottom: calc(var(--nav-margin-top) * -1);
+    z-index: 3;
+    display: block;
+    --box-shadow-size: 0;
+    
+    transform: translateY(0);
+    transition: transform var(--motion-duration-fast) var(--motion-easing);
+    
+    
+    @media screen and (min-width: $bp-1-col) {
+        width: 50vw;
+        left: 50vw;        
+    }
+    
+    &.sticky {
+        --box-shadow-size: 4px;
+    }
+        
+    ol {
+        padding-right:  var(--grid-outer-gap-l); // Simulates gutters on outside of grid
+        
+        position: relative;
+        overflow: hidden; // Hide excess shadow
+        z-index: 2; // Keep above main text
+        padding-bottom: 32px; // Ensure that shadow is visible
+        padding-top: 8px;
+        
+        column-count: 1;
+        column-rule: 1px solid var(--gray-50);
+        column-gap:0px;
+        
+        top: calc((var(--header-height) * 2) + 0px);
+        
+        @media screen and (min-width: $bp-1-col) {
+            column-count: 2;
+            top: calc(var(--header-height) + 1px);
+        }
+        
+        @media screen and (min-width: $bp-2-col) {
+            column-count: 4;
+        }
+        
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -32px;
+            bottom: 24px;
+            right: -64px;
+            background-color: var(--gray-10);
+            z-index: -1;
+            border-bottom: var(--border);
+            box-shadow: var(--box-shadow);
+            box-shadow: 0px var(--box-shadow-size) calc(2 * var(--box-shadow-size)) var(--gray-100);
+            transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        li.navlink {
+//             border: 1px solid blue;
+//             overflow: visible !important;
+//             text-indent: 32px;
+            mix-blend-mode: multiply;
+/*             border-right: var(--border); */
+//             position: relative;
+/*             margin-left: calc(var(--grid-column-gap) * -1); */
+
+            &:before {
+                // Override some of the standard ol behavior
+                position: relative;
+                left: 8px;
+                float: left;
+            }
+            
+            &.current a {
+/*                 color: var(--gray-10); */
+/*                 background-color: var(--gray-100); */
+                background-color: var(--yellow-70);
+                border-bottom-color: var(--gray-100);
+            }
+            
+            a {
+                display: block;
+                position: relative;
+                text-transform: capitalize;
+                border-bottom-color: transparent;
+                padding: 0 32px;
+                white-space: nowrap;
+                
+                &:hover {
+//                     border-top-color: var(--gray-100);
+                    border-bottom-color: var(--gray-100);
+                }
+            }
+        }
+    }
+}
+
 header {
     position: sticky;
     z-index: 4;
@@ -13,7 +153,7 @@ header {
     right: 0;
     height: 0;
 
-    @media screen and (min-width: $breakpoint-s) {
+    @media screen and (min-width: $bp-1-col) {
         top: 0; // Pin to top on desktop
     }
 
@@ -57,7 +197,7 @@ header {
             background-color: var(--gray-10);
             z-index: -1;
             
-            @media screen and (min-width: $breakpoint-s) {
+            @media screen and (min-width: $bp-1-col) {
                 left: calc(50vw - var(--grid-column-gap));
                 right: calc(-1 * var(--grid-outer-gap-r));
                 height: calc(var(--header-height) * 2);
@@ -78,7 +218,7 @@ header {
             grid-row: 1/2;
             height: var(--header-height);
                   
-            @media screen and (min-width: $breakpoint-s) {
+            @media screen and (min-width: $bp-1-col) {
                 margin-left: calc(var(--symbol-width) / -2);
                 
             }
@@ -159,51 +299,16 @@ header {
     }
 }
 
-.section#cover {
-    min-height: 100vh;
-    @include grid;
-    margin-top: 0;
-    padding-bottom: 128px; // Prevent bottom of cover from being covered by nav
-    
-    &:before {
-        display: none;
-    }
-    
-    &:after {
-        top: 96px;
-        border-top: none;
-    }
-    
-    figure.canvas-container {
-        grid-column: var(--grid-column-left);
-        grid-row: 1 / 10;
-        border: none;
-//         border: 1px solid red;
-        display: block;
-        height: 100%;
 
-        // Extra gradient under header
-        &:before {
-            content: "";
-            top: 0;
-            left: calc(var(--grid-column-gap) * -1);
-            height: 96px;
-            width: 50vw;
-            position: absolute;
-            background-image: var(--red-gradient);
-        }
-    }
+
+// Nav menu button
+input#toggle-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
     
-    h1, h2, author {
-        grid-column: var(--grid-column-right);
-    }
-    
-    h1 {
-        padding-top: 160px;
-    }
-    
-    h2 {
-        padding-top: 24px;
-    }
-    
+    @media screen and (min-width: $bp-1-col) {
+        display: none;        
+    }  
 }

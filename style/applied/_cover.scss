@@ -1,0 +1,48 @@
+.section#cover {
+    min-height: 100vh;
+    @include grid;
+    margin-top: 0;
+    padding-bottom: 128px; // Prevent bottom of cover from being covered by nav
+    
+    &:before {
+        display: none;
+    }
+    
+    &:after {
+        top: 96px;
+        border-top: none;
+    }
+    
+    figure.canvas-container {
+        grid-column: var(--grid-column-left);
+        grid-row: 1 / 10;
+        border: none;
+//         border: 1px solid red;
+        display: block;
+        height: 100%;
+
+        // Extra gradient under header
+        &:before {
+            content: "";
+            top: 0;
+            left: calc(var(--grid-column-gap) * -1);
+            height: 96px;
+            width: 50vw;
+            position: absolute;
+            background-image: var(--red-gradient);
+        }
+    }
+    
+    h1, h2, author {
+        grid-column: var(--grid-column-right);
+    }
+    
+    h1 {
+        padding-top: 160px;
+    }
+    
+    h2 {
+        padding-top: 24px;
+    }
+    
+}
