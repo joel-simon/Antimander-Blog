@@ -11,7 +11,10 @@ import { DrawController } from './draw_controller'
 import init_varytest  from './varytest'
 // import smoothscroll from 'smoothscroll-polyfill'
 import inlineSVG from './lib/inlineSVG.js'
+// import ndarray from 'ndarray'
+// import JsZip from 'jszip'
 
+// window.BigUint64Array = null
 // Bind scroll down button
 // smoothscroll.polyfill() // Safari polyfill.
 // query('#header .scroll_down').onclick = () => {
@@ -26,7 +29,6 @@ import inlineSVG from './lib/inlineSVG.js'
 async function main() {
     console.time('main')
     const viewers = []
-    
     // Create the drawing interface.
     const color_scale_img = '/imgs/scale_rdbu_1px.png'
     const draw_controller = new DrawController(color_scale_img)
@@ -43,6 +45,9 @@ async function main() {
     for (const row of queryAll('.viewer_row')) {
         let { datapath, stage } = row.dataset
         const rundata = await fetch_rundata(datapath, +stage)
+        if (row.id == 'viewer') {
+            rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
+        }
         const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
         const viewer = new ResultViewer(draw_cmd, row, rundata, true, ['rep advantage'])
         if (row.id == 'varytest') {
