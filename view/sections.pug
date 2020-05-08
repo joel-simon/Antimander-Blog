@@ -2,8 +2,8 @@ include mixins
 
 mixin cover()
     .section#cover
-        h1 Antimander is open source software to generate congressional districts. 
-        //- h2 Open-source research #[br] and software to fight Gerrymandering.
+        h3 Antimander
+        h1 Open source software to generate congressional districts. 
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
         
         p Adjust to see alternatives to Wisconsin's districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
@@ -22,7 +22,7 @@ mixin cover()
         // img.scroll_down(src='/icons/arrow-down.svg')
         figure.canvas-container
             .inner
-                canvas.main_canvas(width=512, height=512)
+                canvas.main_canvas(width=1024, height=1024)
                 p.counts.metadata     
 
         author
@@ -76,8 +76,8 @@ mixin viewer()
     .section.viewer.viewer_row#viewer(data-datapath='general_fif_centers', data-stage='5')
         .viewer-track
             .viewer-container
-                // +district_viewer()
-                img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
+                +district_viewer()
+                // img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
                 // +district_viewer("Interactive Viewer")
         section.snap
             h2 Viewer
