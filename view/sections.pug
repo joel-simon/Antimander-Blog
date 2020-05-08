@@ -23,7 +23,7 @@ mixin header()
                 //- .github-button.button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")')
                 //-     | Contact
                 //-     img.inline(src='/icons/arrow-up.svg')
-                p Adjust to see alternatives to Wisconsin's districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
+                p Adjust to see alternatives to Wisconsin's current districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
                 br
                 .slider_container
                     input.slider(type='range', min='0', max='.99', value='.5', step='any',
@@ -51,49 +51,49 @@ mixin overview()
             .content
                 .hover-link(data-hover_name='the_gerrymander')
                     img.medium-img(src='imgs/the_gerrymander.png', style='margin:48px;margin-bottom:0px;')
-                    h3.no-marg-top The original gerrymander
+                    //- h3.no-marg-top The original gerrymander
                 .divider(style='height:64px;')
                 .hover-link(data-hover_name='how2win')
                     img.medium-img(src='imgs/pack&crack.svg', style='position:relative;margin-top:00px;top:0px;opacity: .85;')
-                    h3.no-marg-top How to steal an Election
+                    //- h3.no-marg-top How to steal an Election
                 //- .divider(style='height:64px;')
                 //- br
             .text
                 h2.section_header Overview
-                p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How they are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
-                
+
+                p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How the districts are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
                 p.hover-link(data-hover_name='the_gerrymander') 
-                    //- | #[b Left]: 
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i A political cartoon of the #[a(href='https://www.smithsonianmag.com/history/where-did-term-gerrymander-come-180964118', target="_blank") infamous 1812 Massachusetts districting] by its governor Elbridge Gerry that inspired the name 'Gerrymander' due to it resemblance to a mythical salamander.
+                    i A cartoon of the #[a(href='https://www.smithsonianmag.com/history/where-did-term-gerrymander-come-180964118', target="_blank") infamous 1812 Massachusetts districting] by its governor Elbridge Gerry that inspired the name 'Gerrymander' due to it resemblance to a mythical salamander.
                 
                 p Gerrymandering works by "packing" a small number of districts full of the opposing party’s voters to "waste" many votes, enabling other districts to "crack," i.e. to be won by a small (but comfortable) amount, thereby securing an outsize proportion of a state’s representatives for the gerrymandering party.
 
                 p.hover-link(data-hover_name='how2win')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i "How to Steal an Election" from #[a(href='https://upload.wikimedia.org/wikipedia/commons/5/55/How_to_Steal_an_Election_-_Gerrymandering.svg') Wikimedia].
+                    i An example of packing and cracking from #[a(href='https://www.washingtonpost.com/news/wonk/wp/2015/03/01/this-is-the-best-explanation-of-gerrymandering-you-will-ever-see/') Washington Post].
 
-                p While a districting should intuitively be 'fair' to each party, often multiple objectives are desired, such as being 'regularly shaped' and having competitive elections.  Many metrics have been defined (#[a(href='#metrics') discussed below]) but their relative importance are ultimately subjective and the baselines for 'good' vary by state. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
-
-                
-                
-                br
-            
+                p While a districting should intuitively be 'fair' to each party, often multiple other criteria are important, too, such as being 'regularly shaped' and having competitive elections(#[a(href='#metrics') discussed below]. Their relative importance are ultimately subjective. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering, ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
+        
         .line_entry 
             .content.cjust
                 .hover-link(data-hover_name='algoev', style='padding:16px')
                     img.medium-img(src='imgs/nc_evidence.png')
-                    h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019)
+                    //- h3.no-marg-top Algorithmic evidence from #[br] Common Cause v. Lewis (2019).
             .text
-                p Thankfully, the admissibility of algorithmic evidence provides some hope. Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it takes into account natural biases of geography and voter distribution and provides clear counter examples. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units, with trade-offs between many competing objectives. In Common Cause v. Lewis, comparing a proposed plan to randomly sampled and algorithmically generated examples helped convince the court that the proposed plan was a biased outlier. More discussion of current methods is (#[a(href='#methods') discussed below])
+                p Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it demonstrates that superior solutions are possible while taking into account natural biases of geography and voter distribution. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units and be optimized for many competing objectives.
 
                 p.hover-link(data-hover_name='algoev')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen showing how a proposed plan (red) is less compact than randomly sampled solutions. 
+                    i Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen showing how a proposed plan (red) is less compact than sampled generated plans which helped convince the court that the proposed plan was a biased outlier.
+                    //-  Comparing a proposed plan to randomly sampled and algorithmically generated examples helped convince the court that the proposed plan was a biased outlier. More discussion of current methods is (#[a(href='#methods') discussed below])
 
                 //- p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings.
+                
+                p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
 
-                p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
+                //- The goal of this ANTI-MANDER project is establish algorithmic criteria to impartially judge the fairness of a districting plan . All of our software is posted on-line in GitHub so that anyone can evaluate the algorithms to test the effects of varying parameters.  Our goal is to have a transparent impartial algorithm to assure people that no one parties finger is on the scale skewing the results. 
+
+                //- p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
 
                 //- button View supplementary technical overview.
 
@@ -169,16 +169,16 @@ mixin metrics()
                 p The original gerrymander was named for its peculiar shape and it is intuitively desirable to expect to live near people within the same district. A lot of attention is therefore paid to the shape of districts, especially since - unlike other metrics - it is easy to evaluate visually. But what does it mean for a shape to be 'compact'? It turns out there are many metrics that can be used. Images below are from #[a(href="https://fisherzachary.github.io/public/r-output.html") this article] which also has additional metrics.
                 p.hover-link(data-hover_name='polspy')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    | #[b Polspy-Popper]: The ratio of the area to the perimeter (used above).
+                    | #[b Polspy-Popper]: The ratio of the shape's area to its perimeter (used above).
                 p.hover-link(data-hover_name='convex')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    | #[b Convex-Hull]: The ratio of smallest convex shape that can fit around a shape to its perimeter).
+                    | #[b Convex-Hull]: The ratio of smallest convex shape that can fit around a shape to its perimeter.
                 p.hover-link(data-hover_name='reock')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     | #[b Bounding-Circle (Reock)]: Ratio of the area to that of the minimum circle that can fit around it. Also knows as "Reock."
                 p.hover-link(data-hover_name='cdist')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    | #[b Center-Distance]: The average distance of all tiles to the center of the district they belong to.
+                    | #[b Center-Distance]: The average distance to the center of a shape from the points within that shape.
         .line_entry
             .content
             .text
@@ -189,7 +189,7 @@ mixin metrics()
                 
             .text
                 //- h4 Efficiency-Gap:
-                p Generally we want the percent of representatives to correspond to the percent of voters for that party. The #[i Efficiency-Gap] [5] is a metric that views fairness through the lens of the lost votes of each party. Votes cast for the losing party, or those cast for the winning party beyond the winning threshold are considered lost.
+                p Generally we want the percent of elected representatives to correspond to the percent of voters for that party. The #[i Efficiency-Gap] [5] is a metric that views fairness through the lens of the lost votes of each party. Votes cast for the losing party, or those cast for the winning party beyond the  threshold needed to win are considered lost.
                 //- https://www.brennancenter.org/sites/default/files/legal-work/How_the_Efficiency_Gap_Standard_Works.pdf
                 p There is another metric called #[i Partisan Symmetry] based on the Seats-Votes curve which plots how number of representatives varies with percent of the vote for each party. #[a(href='https://jeffreyshen19.github.io/Seats-Votes-Curves/', target='_blank') This article] has excellent explanations with interactive charts of pervious years districts.
                 p.hover-link(data-hover_name='seat-votes')
@@ -199,18 +199,18 @@ mixin metrics()
             .content
             .text
                 h3 3. Competitiveness
-                p Close races helps prevent incumbents from being too entrenched (incumbent gerrymandering). Also, less polarized representatives are beneficial for a healthy democracy. Competitiveness is measured by the largest ratio by which one party wins over another.
+                p Close races help prevent incumbents from becoming too entrenched (incumbent gerrymandering). Also, less polarized representatives are beneficial for a healthy democracy. Competitiveness is measured by the largest ratio by which one party wins over another.
             
         .line_entry
             .content
             .text
                 h2 Additional metrics
-                h3 4. Minority representation
-                p While partisan gerrymandering is not illegal, #[a(href='http://www.publicmapping.org/what-is-redistricting/redistricting-criteria-the-voting-rights-act') racial gerrymandering is under the Voting Rights Act]. There should be enough "majority-minority" district that minority groups representatives. However, defining racial gerrymandering is also complicated and #[a(href='https://fivethirtyeight.com/features/is-gerrymandering-the-best-way-to-make-sure-black-voters-are-represented/') is also complicated] and North Carolina illustrated how preventing one kind of gerrymandering may come directly at the expense of another.
+                h3 4. Minority Representation
+                p While partisan gerrymandering is not illegal, #[a(href='http://www.publicmapping.org/what-is-redistricting/redistricting-criteria-the-voting-rights-act') racial gerrymandering is under the Voting Rights Act]. There should be enough "majority-minority" districts that have minority groups representatives. However, defining racial gerrymandering #[a(href='https://fivethirtyeight.com/features/is-gerrymandering-the-best-way-to-make-sure-black-voters-are-represented/') is also complicated] and North Carolina is one example of where preventing one kind of gerrymandering came directly at the expense of another.
         .line_entry
             .content
             .text
-                h3 5. Preserving communities.
+                h3 5. Preserving Communities.
                 p Another desired redistricting criteria is to not divide communities or "areas of interest". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
 mixin all_compactness_viewer()
@@ -222,19 +222,19 @@ mixin all_compactness_viewer()
         .district-text
             .district-text-inner
                 .scroll_block
-                    p As you can see above, there are many many things we want in districts and being good in one regard may result in being be bad in another.
+                    p As you can see above, there are many many things we want in districts and and improving one metric may sometimes require harming another.
                 .scroll_block
                     p Generative algorithms can also be used here to help explore the space of tradeoffs.
                 .scroll_block
-                    p On the left are districts optimized for all of the compactness metrics above. They still had to be contiguous and have equal population.
+                    p On the left are districts optimized for all of the compactness metrics above. In addition, districts were required to be contiguous and have nearly-equal populations.
                 .scroll_block
-                    p We can see which metrics corelate and which do not, or what it means to be compact for one but not the other.
+                    p We can see which metrics correlate with each other and which do not, or what it means to be compact in one regard but not the other.
                 .scroll_block
-                    p The dark colors mean these districts are not competitive, which is not surprising since that was not something optimized for.
+                    p The dark reds and blues mean these districts are not competitive, which is not surprising since that was not something optimized for.
                 .scroll_block
-                    p Metrics like Polsby-Popper that are based on surface area more inverse (more lines cross) to metrics that are based on general shape (like center dist).
+                    p Metrics like Polsby-Popper that are based on surface area conflict more with metrics (i.e. more lines cross) that are based on general shape (like center dist).
                 .scroll_block
-                    p Which metrics (or pairs of) best correspond do your idea of 'compactness?'
+                    p Which metrics (or pairs of) best correspond to your idea of 'compactness?'
              
 mixin methods()
     #methods.section
@@ -251,7 +251,7 @@ mixin methods()
                     h3 Single Vs. Multi-Objective Optimization.
                     br
             .text
-                p Optimization is typically a process considered for a goal; however, many real world problems are complex with multiple competing goals. Some domains handle this by creating a weighted average 'composite' goal. This requires picking a precise and often arbitrary weighting A priori. Consider choosing an airplane flight, usually some balance of speed and affordability is desired but that tradeoff is subjective and it's hard to weight them before seeing the options. Multi objective optimization is the process of finding the optimal set of solutions.
+                p Optimization is is typically a process aimed towards achieving a particular goal; however, many real world problems are complex with multiple competing goals. Some domains handle this by creating a weighted average 'composite' goal. This requires picking a precise and often arbitrary weighting a priori. Consider choosing an airplane flight, usually some balance of speed and affordability is desired but that tradeoff is subjective and it's hard to weight them before seeing the options. Multi-objective optimization is the process of finding the optimal set of solutions.
                 p.hover-link(data-hover_name='moo')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     i #[b Left]: Minimizing the error rate of a single-objective over time. #[br] #[b Right]: In multi-objective optimization there is a "pareto-front" or n-dimensional surface of solutions where every solution in the front has no other solution that is better in every regard (dominates). These are called  "pareto-optimal."
@@ -271,7 +271,7 @@ mixin methods()
                     img.background(src='imgs/methods/nsgaii.png', style='width:550px;')
                     h3 NSGA-II Algorithm.
             .text
-                p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [cite] is used here which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed.
+                p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [cite] is used here, which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed.
                 p.hover-link(data-hover_name='nsgaii')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     i Overview of the NSGA-II process.
@@ -300,7 +300,10 @@ mixin methods()
             .content
             .text
                 h3 Novelty Search
-                p Novelty search explicitly promotes diversity, thereby assisting exploration [ #[a.cite(href='') cite] ]. Novelty Search requires a behavior characterization that captures important traits in few dimensions. Multiple characterization descriptors were proposed and tested. One of the challenges was the method should be invariance to swapping district id's since those are functionally equivalent.
+                p Novelty search explicitly promotes diversity, thereby assisting exploration in search [ #[a.cite(href='') cite] ]. Novelty Search requires a behavior characterization that captures important traits in few dimensions. Multiple characterization descriptors were proposed and tested.
+                
+                //- Not sure how to explain this clearly.
+                //- p One of the challenges was that the method should be invariance to swapping district id's since those are functionally equivalent.
                 
         .line_entry
             .content
@@ -330,7 +333,7 @@ mixin methods()
             .text
                 p.hover-link(data-hover_name='mutual_tiles')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i Method #3: Mutual-Tiles. Pairs of tiles are selected at the start of each run (dashed lines). Then, a binary array is constructed such that Vi is 1 if the ith pair is in teh same district and 0 otherwise. The k top principal components of this binary array are the features. It captures the most information at the expense of the most meta-parameters.
+                    i Method #3: Mutual-Tiles. Pairs of tiles are selected at the start of each run (dashed lines). Then, a binary array is constructed such that Vi is 1 if the ith pair is in the same district and 0 otherwise. The k top principal components of this binary array are the features. It captures the most information at the expense of the most meta-parameters.
         .line_entry
             .content
             .text
@@ -344,7 +347,7 @@ mixin methods()
                     data-hover_name='fifsearch'
                 )
             .text                
-                p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majority of the possibilities are inviable. Often, finding a good solution requires explores some bad ones first. Some genetic-algorithms simply throw out invalid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satisfy all constraints) and one for infeasible (FIF). The feasible optimize for all the objectives while the infeasible optimize to satisfy the objectives. Liapis et all (cite Enhancements to Constrained Novelty Search) propose combining novelty search with FIF.
+                p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majority of the possibilities are inviable. Often, finding a good solution requires exploring some bad ones first. Some genetic algorithms simply throw out invalid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satisfy all constraints) and one for infeasible (FIF). The feasible population optimizes for all the objectives while the infeasible one optimizes to satisfy the objectives. Liapis et all (cite Enhancements to Constrained Novelty Search) propose combining novelty search with FIF.
                 p.hover-link(data-hover_name='fifsearch')
                     img.text-arrow(src='/icons/arrow-left.svg')
                     i Re-creation of figure 1-C in Liapis et all showing the total solution space with disjoint spaces of feasible solutions. Infeasible solutions (orange) also have a pressure to explore, making them more likely to discover novel solutions.
@@ -390,7 +393,7 @@ mixin results()
                 p Three novelty methods were compared using NSGA-II as well as with and without feasible-infeasible search (FIF). Novelty was added as an additional objective. Each run had a total population of 700, and consisted of 15000 generations across five phases. Each run was replicated five times.
                 p.hover-link(data-hover_name='comp')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i All three novelty metrics outperformed the baseline with 'Centers' metric doing the best. Surprisingly, novelty search without Feas-Infeas did the worst, and seemed to struggle with the complexity of later phases. This validates that novelty search combined with Feas-Infeas is an effective combination. 
+                    i All three novelty metrics outperformed the baseline with 'Centers' metric doing the best. Surprisingly, novelty search without FIF did the worst, and seemed to struggle with the complexity of later phases. This validates that novelty search combined with Feas-Infeas is an effective combination. 
                 //- FIF with novelty outperformed vanilla NSGA-2 and FIF without novelty. Somewhat suprisingly, FIF did worse than NSGA if no novelty was employed.
 
         .line_entry
@@ -411,7 +414,7 @@ mixin results()
 
                 p.hover-link(data-hover_name='novelty_grid')
                     img.text-arrow(src='/icons/arrow-left.svg')
-                    i The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. Feas-Infeas with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline. 
+                    i The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. FIF with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline. 
 
 mixin next-steps()
     #next-steps.section
@@ -442,8 +445,8 @@ mixin next-steps()
                 .padding(style='height:40px;')
 
             .text
-                p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will exposed gerrymandered districts as statistical outliers.
-                P Antimander an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statistician, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
+                p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will expose gerrymandered districts as statistical outliers.
+                P Antimander an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statisticians, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
 
 mixin appendix()
     #appendix.section
@@ -470,10 +473,10 @@ mixin vary_tests()
             .district-text-inner
                 .scroll_block
                     h3 Varying Cities and Districts:
-                    p Another benefit of a generative tool the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
+                    p Another benefit of a generative tool is the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
                 
                 .scroll_block
-                    p In these experiments Antimander optimizes for compactness as well as partisan bias for varying numbers of districts and cities. These states were artificially constructed and have equal voters of each party.
+                    p In these experiments Antimander optimizes for compactness as well as partisan bias for artificially constructed states varying numbers of districts and cities. The cities are composed of one party and states have equal voters of each party.
                 
                 .scroll_block.map_opts
                     p Click a map to view
@@ -483,7 +486,10 @@ mixin vary_tests()
                     img(src='imgs/varytest/WI.png', data-datapath='bias', data-stage='5')
 
                 .scroll_block
-                    p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities.
+                    p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities. This is a direct result of one party being forced into a small geographic area.
+                    
+                .scroll_block
+                    p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
 
 mixin references()
     #references.section
