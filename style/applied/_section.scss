@@ -111,14 +111,20 @@
         > img, .image-set {
             grid-column: var(--grid-column-left);
             
-            @media screen and (min-width: $bp-wide) {
-                grid-column: 1 / 4;
-            }
             
             @media screen and (min-width: $bp-single-col) {
                 position: absolute;
             }
+
+            @media screen and (min-width: $bp-desktop) {
+                grid-column: 2 / 5;
+            }
+            
+            @media screen and (min-width: $bp-max) {
+                grid-column: 2 / 4;
+            }
         }
+        
 
         
         .image-set { // 2x2 grid layout

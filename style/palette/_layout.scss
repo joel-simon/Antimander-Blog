@@ -1,5 +1,6 @@
 // Breakpoints
 $bp-max: 1440px;            //  Fixed with layout for wide screens
+$bp-desktop: 1280px;        
 $bp-wide: 1024px;           //  Above this, adjust layout for wider views
 $bp-single-col: 768px;      //  Everything below this is single column,
                             //  everything above is double column.
