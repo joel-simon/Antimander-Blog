@@ -1,3 +1,6 @@
+/*
+Add class to these elements when they are in sticky state
+*/
 function detectWhenSticky($elements) {
 /*
     const observer = new IntersectionObserver( 
@@ -13,7 +16,7 @@ function detectWhenSticky($elements) {
         entries.forEach(entry => {
             entry.target.classList.toggle("sticky");
         }, {
-            // rootMargin: "0px 0px 0px",
+//             rootMargin: "0px 0px 0px",
             threshhold: 1
         });
     });
@@ -24,29 +27,38 @@ function detectWhenSticky($elements) {
     })
 }
 
+
+/*
+Place nav at correct height on the cover
+*/
 function updateNavY() {
-    // Place sticky nav at correct height
-    const $nav = document.querySelector("nav"),
-          $cover = document.querySelector("#cover"),
-          $navOl = $nav.querySelector("ol"),
-          y = ($cover.offsetTop + $cover.offsetHeight) - ($navOl.offsetHeight);
+    const   $nav    = document.querySelector("nav"),
+            $cover  = document.querySelector("#cover"),
+            $navOl  = $nav.querySelector("ol"),
+            y       = ($cover.offsetTop + $cover.offsetHeight) - ($navOl.offsetHeight);
           
     $nav.style.setProperty("--overview-offset-top", `${y}px`);
 }
 
+
+/*
+Emphasize sections on scroll
+*/
 function toggleViewerSectionEmphasis($sections, isGradual) {    
     for ($section of $sections) {
         const y = $section.getBoundingClientRect().top;
-        
-        if (isGradual) { // Fades in as you scroll
-            const   threshhold = 160,
-                    progress = Math.max(0, (y - threshhold)/(window.innerHeight-250)),
-                    opacity = Math.max(.125, 1 - progress);
+
+        if (isGradual) { 
+        //  Fades in as you scroll
+            const   threshhold  = 160,
+                    progress    = Math.max(0, (y - threshhold)/(window.innerHeight-250)),
+                    opacity     = Math.max(.125, 1 - progress);
                     
             $section.style.opacity = opacity;
             $section.style.filter = `saturate(${opacity})`;
-        } else { // Triggered on a threshhold
-            const   threshhold = 220;
+        } else {
+        //  Triggered on a threshhold
+            const   threshhold  = 220;
                     
             if (y <= threshhold) {
                 $section.classList.add("focused");
@@ -59,43 +71,51 @@ function toggleViewerSectionEmphasis($sections, isGradual) {
     }
 }
 
+
+/*
+Scale the symbol proportionate to how far the header
+has traveled to the top of the screen.
+*/
 function scaleSymbol() {
-    const   $header = document.querySelector("header"),
-            $symbol = document.querySelector("header a.logo .symbol"),
-            progress = Math.max(0, $header.getBoundingClientRect().top / 64);
+    const   $header     = document.querySelector("header"),
+            $symbol     = document.querySelector("header a.logo .symbol"),
+            progress    = Math.max(0, $header.getBoundingClientRect().top / 64);
             
-//  Scale the symbol proportionate to how far the header
-//  has traveled to the top of the screen.
-    $symbol.style.transform = `scale(${progress + 1})`;// translateY(${progress * 16}px)`;
+    $symbol.style.transform = `scale(${progress + 1})`;
 }
 
+
+/*
+Toggle class on body when cover is on screen
+*/
 function isCoverOnScreen() {   
-    const   $overview = document.querySelector("#overview");
+    const $overview = document.querySelector("#overview");
     
 //  Has the user scrolled past the cover yet
     if ($overview.getBoundingClientRect().top <= 0) {
     //  If overview section has not yet scrolled past top of window
         document.querySelector("body").classList.add("cover-off-screen");
-//         document.documentElement.classList.add("cover-off-screen");
     } else {
         document.querySelector("body").classList.remove("cover-off-screen");
         document.querySelector(".menu-inner").classList.remove("open");
-//         document.documentElement.classList.remove("cover-off-screen");
     }
 }
 
+
+/*
+Based on whether section is in view, give it current class
+and remove all others's current classses.
+*/
 function getCurrentSection() {
-    const   $sections = document.querySelectorAll(".section"),
-            $nav = document.querySelector("nav");
-    let $current = $sections[0]; // Initial value
+    const   $sections   = document.querySelectorAll(".section"),
+            $nav        = document.querySelector("nav");
+    let     $current    = $sections[0]; // Initial value
     
-//  Based on whether section is in view, give it current class
-//  and remove all others's current classses.
 //  This should be an observer…
     for ($section of $sections) {
-        const   y = $section.getBoundingClientRect().top,
-                h = $section.offsetHeight,
-                wh = window.innerHeight;
+        const   y   = $section.getBoundingClientRect().top,
+                h   = $section.offsetHeight,
+                wh  = window.innerHeight;
         if ((y <= wh/8) & (Math.abs(y) <= (h-(wh/8)))) {
             $current = $section
             $current.classList.add("current");
@@ -121,6 +141,7 @@ function getCurrentSection() {
     }
 }
 
+
 /*
 function toggleScrollSnap() {
     const $current = document.querySelector(".section.current");
@@ -144,8 +165,12 @@ function toggleScrollSnap() {
 }
 */
 
+
+/*
+Toggle open class on nav menu sections when clicking button
+*/
 function setupNavMenuButton() {
-    const   $button = document.querySelector("input#toggle-menu"),
+    const   $button     = document.querySelector("input#toggle-menu"),
             $menuInners = document.querySelectorAll(".menu-inner");
     
     $button.onclick = () => {
@@ -155,38 +180,29 @@ function setupNavMenuButton() {
     };
 }
 
-window.addEventListener("scroll", isCoverOnScreen);
-window.addEventListener("scroll", scaleSymbol);
-window.addEventListener("scroll", function() {
+
+/*
+————————————————————————————————————————————————————————————————————————————————
+*/
+
+
+window.addEventListener("load",     setupNavMenuButton);
+window.addEventListener("load",     updateNavY);
+window.addEventListener("load",     () => {
+    detectWhenSticky([
+        document.querySelector("header"),
+        document.querySelector("nav")
+    ]);
+});
+
+window.addEventListener("resize",   updateNavY);
+
+window.addEventListener("scroll",   isCoverOnScreen);
+window.addEventListener("scroll",   scaleSymbol);
+window.addEventListener("scroll",   getCurrentSection);
+window.addEventListener("scroll",   () => {
     toggleViewerSectionEmphasis(
         document.querySelectorAll("section.snap"),
         isGradual = false
     );
 });
-window.addEventListener("scroll", getCurrentSection);
-
-window.addEventListener("resize", updateNavY);
-setTimeout(updateNavY, 100);
-
-setupNavMenuButton();
-
-detectWhenSticky([
-    document.querySelector("header"),
-    document.querySelector("nav")
-]);
-
-
-// window.dispatchEvent(new CustomEvent('scroll'))
-/*
-    scaleSymbol();
-    isCoverOnScreen();
-*/
-
-
-
-// Scroll snap workaround
-
-
-
-
-
