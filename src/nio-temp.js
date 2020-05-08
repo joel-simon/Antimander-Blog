@@ -11,51 +11,32 @@ function detectWhenSticky($elements) {
     
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
-            entry.target.classList.toggle("at-top");
-/*
-            if (entry.isIntersecting) {
-                isLeaving = true;
-                entry.target.startCarousel();
-            } else if (isLeaving) {
-                isLeaving = false;
-                entry.target.stopCarousel();
-            }
-*/
+            entry.target.classList.toggle("sticky");
         }, {
+            // rootMargin: "0px 0px 0px",
             threshhold: 1
         });
     });
 
 
     $elements.forEach($element => {
-        console.log("wooo", $element)
         observer.observe($element);
     })
 }
 
-
-
-function setNavToCorrectHeight() {
+function updateNavY() {
     // Place sticky nav at correct height
     const $nav = document.querySelector("nav"),
           $cover = document.querySelector("#cover"),
-          $navOl = $nav.querySelector("ol");
-    
-    function updateNavY() {
-        const y = ($cover.offsetTop + $cover.offsetHeight) - ($navOl.offsetHeight);
-    //     console.log(y);
-        $nav.style.setProperty("--overview-offset-top", `${y}px`);
-    }
-    window.onresize = updateNavY;
-    setTimeout(updateNavY, 100);
+          $navOl = $nav.querySelector("ol"),
+          y = ($cover.offsetTop + $cover.offsetHeight) - ($navOl.offsetHeight);
+          
+    $nav.style.setProperty("--overview-offset-top", `${y}px`);
 }
-
-
-
 
 function toggleViewerSectionEmphasis($sections, isGradual) {    
     for ($section of $sections) {
-        const   y = $section.getBoundingClientRect().top;
+        const y = $section.getBoundingClientRect().top;
         
         if (isGradual) { // Fades in as you scroll
             const   threshhold = 160,
@@ -82,7 +63,9 @@ function scaleSymbol() {
     const   $header = document.querySelector("header"),
             $symbol = document.querySelector("header a.logo .symbol"),
             progress = Math.max(0, $header.getBoundingClientRect().top / 64);
-//     console.log("SYMBOL",  document.scrollTop)
+            
+//  Scale the symbol proportionate to how far the header
+//  has traveled to the top of the screen.
     $symbol.style.transform = `scale(${progress + 1})`;// translateY(${progress * 16}px)`;
 }
 
@@ -96,6 +79,7 @@ function isCoverOnScreen() {
 //         document.documentElement.classList.add("cover-off-screen");
     } else {
         document.querySelector("body").classList.remove("cover-off-screen");
+        document.querySelector(".menu-inner").classList.remove("open");
 //         document.documentElement.classList.remove("cover-off-screen");
     }
 }
@@ -105,6 +89,9 @@ function getCurrentSection() {
             $nav = document.querySelector("nav");
     let $current = $sections[0]; // Initial value
     
+//  Based on whether section is in view, give it current class
+//  and remove all others's current classses.
+//  This should be an observer…
     for ($section of $sections) {
         const   y = $section.getBoundingClientRect().top,
                 h = $section.offsetHeight,
@@ -119,18 +106,22 @@ function getCurrentSection() {
     
     if ($current.id && ($current.id != "cover")) {
         const $currentNavItem = $nav.querySelector("li#nav-" + $current.id);
-        $currentNavItem.classList.add("current");
-        
-        for ($li of $nav.querySelectorAll("li:not(#nav-" + $current.id)) {
-            $li.classList.remove("current");
-        }
+    //  If there's a corresponding nav item, give it current class
+        $currentNavItem?.classList.add("current");
+
+    //  Remove current class from all other nav lis
+        $nav.querySelectorAll("li:not(#nav-" + $current.id + ")").forEach($li =>
+            $li.classList.remove("current")
+        );
     } else {
-        for ($li of $nav.querySelectorAll("li")) {
-            $li.classList.remove("current");
-        }
+    //  Remove current class from all  nav lis
+        $nav.querySelectorAll("li").forEach($li =>
+            $li.classList.remove("current")
+        );
     }
 }
 
+/*
 function toggleScrollSnap() {
     const $current = document.querySelector(".section.current");
     
@@ -151,19 +142,7 @@ function toggleScrollSnap() {
         
     }
 }
-
-window.onscroll = function() {    
-    isCoverOnScreen();
-    scaleSymbol();
-    
-//  Emphasize and deemphasize viewer text blocks as you scroll
-    toggleViewerSectionEmphasis(
-        document.querySelectorAll("section.snap"),
-        isGradual = false
-    );
-    
-    getCurrentSection();
-}
+*/
 
 function setupNavMenuButton() {
     const   $button = document.querySelector("input#toggle-menu"),
@@ -173,11 +152,21 @@ function setupNavMenuButton() {
         $menuInners.forEach($menuInner =>
             $menuInner.classList.toggle("open")
         );
-        console.log($menuInners)
     };
 }
 
-setNavToCorrectHeight();
+window.addEventListener("scroll", isCoverOnScreen);
+window.addEventListener("scroll", scaleSymbol);
+window.addEventListener("scroll", function() {
+    toggleViewerSectionEmphasis(
+        document.querySelectorAll("section.snap"),
+        isGradual = false
+    );
+});
+window.addEventListener("scroll", getCurrentSection);
+
+window.addEventListener("resize", updateNavY);
+setTimeout(updateNavY, 100);
 
 setupNavMenuButton();
 

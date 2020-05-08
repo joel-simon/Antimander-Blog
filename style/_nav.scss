@@ -1,26 +1,35 @@
-.cover-off-screen {
+body.cover-off-screen {
     header, nav {
-        --menu-hide-offset: -160px;
-        top: var(--menu-hide-offset); // Hide on scroll
+        @media screen and (max-width: $breakpoint-s) {
+            --menu-hide-offset: -320px;
+            top: var(--menu-hide-offset); // Hide on scroll
+            
+            .menu-inner {
+                transition: transform var(--motion-duration-med) var(--motion-easing);
+                
+                &.open {
+                    transform: translateY(calc(var(--menu-hide-offset) * -1));
+                }
+            }
+            
+/*
+            &.not-sticky {
+                .menu-inner.open {
+                    transform: translateY(0);
+                }
+            }
+*/
+        }
+
+    }
+}
+
+header, nav {
+    @media screen and (min-width: $breakpoint-s) {
+        top: -1px;
         
         .menu-inner, .menu-inner.open {
             transform: translateY(0);
-            transition: transform var(--motion-duration-fast) var(--motion-easing);
-            
-        }
-        
-        &.at-top {
-            .menu-inner.open {
-                transform: translateY(calc(var(--menu-hide-offset) * -1));
-                
-                @media screen and (min-width: $breakpoint-s) {
-                    transform: unset;
-                }
-            }
-        }
-        
-        @media screen and (min-width: $breakpoint-s) {
-            top: 0;
         }
     }
 }
@@ -43,12 +52,10 @@ nav {
     
     @media screen and (min-width: $breakpoint-s) {
         width: 50vw;
-        left: 50vw;
-        top: 0; // So that browser can tell when nav is at top of view
-        
+        left: 50vw;        
     }
     
-    &.at-top {
+    &.sticky {
         --box-shadow-size: 4px;
     }
         
@@ -61,17 +68,20 @@ nav {
         padding-bottom: 32px; // Ensure that shadow is visible
         padding-top: 8px;
         
-        column-count: 2;
+        column-count: 1;
         column-rule: 1px solid var(--gray-50);
         column-gap:0px;
         
-                
+        top: calc((var(--header-height) * 2) + 0px);
+        
+        @media screen and (min-width: $breakpoint-s) {
+            column-count: 2;
+            top: calc(var(--header-height) + 1px);
+        }
+        
         @media screen and (min-width: $breakpoint-m) {
             column-count: 4;
         }
-        
-        top: 34px;
-//         border-top: var(--border);
         
         &:after {
             content: "";
@@ -84,6 +94,7 @@ nav {
             z-index: -1;
             border-bottom: var(--border);
             box-shadow: var(--box-shadow);
+            box-shadow: 0px var(--box-shadow-size) calc(2 * var(--box-shadow-size)) var(--gray-100);
             transition: box-shadow .25s cubic-bezier(0.25, 1, 0.5, 1);
         }
         
@@ -127,9 +138,15 @@ nav {
     }
 }
 
+
+// Nav menu button
 input#toggle-menu {
     position: fixed;
     top: 0;
     right: 0;
     z-index: 9999;
+    
+    @media screen and (min-width: $breakpoint-s) {
+        display: none;        
+    }  
 }

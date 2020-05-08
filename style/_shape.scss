@@ -6,7 +6,7 @@
 body:after {
     content: " ";
     height: 100vh;
-    width: 24px;
+    width: var(--grid-outer-gap-l);
     border-right: var(--border);
     position: fixed;
     top: 0;
