@@ -9,7 +9,7 @@ html {
 
     
 //  Weird hacks to make vertical spacing same on Safari and Chrome
-    --snap-section-padding-top: 112px;
+    --snap-section-padding-top: 192px;
     --snap-section-padding-top-mobile-offset: 16px;
 
     * {
@@ -29,7 +29,7 @@ Safari requires that scroll snapping be applied to <body>
                 scroll-snap-type: y proximity;
         
     //  Weird hacks to make vertical spacing same on Safari and Chrome
-        --snap-section-padding-top: 48px;
+        --snap-section-padding-top: 128px;
         --snap-section-padding-top-mobile-offset:
             calc(var(--snap-section-padding-top) * -1);
         
@@ -60,9 +60,16 @@ Safari requires that scroll snapping be applied to <body>
     z-index: 2;
     pointer-events: none;
     
+/*
+    &#cover-viewer {
+        top: var(--cover-viewer-top);
+    }
+*/
+    
     .viewer-container {
         height: 50vh; // Temporary, to keep text visible
         width: 100%;
+        position: -webkit-sticky;
         position: sticky;
         top: 0;
         box-shadow: var(--box-shadow);
@@ -101,7 +108,8 @@ Safari requires that scroll snapping be applied to <body>
     section.snap {
         -webkit-scroll-snap-align: start !important;
                 scroll-snap-align: start !important;
-//         scroll-snap-stop: always !important;
+        -webkit-scroll-snap-stop: always !important;
+                scroll-snap-stop: always !important;
     }
     
     section.snap {
@@ -115,6 +123,10 @@ Safari requires that scroll snapping be applied to <body>
         @media screen and (min-width: $bp-single-col) {
             padding-top: var(--snap-section-padding-top);
             margin-bottom: 64px;
+            
+            &:nth-child(2) {
+                padding-top: 48px;
+            }
         }
         
         p {

@@ -41,6 +41,7 @@ header, nav {
 
 nav {
     --nav-margin-top: calc(var(--overview-offset-top) - 8px);
+    position: -webkit-sticky;
     position: sticky;
     height: 0;
     left: 0;
