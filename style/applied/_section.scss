@@ -82,6 +82,13 @@
         grid-column: var(--grid-column-all);
         position: relative;
         margin-top: 64px;
+        border-top: var(--border);
+        border-color: var(--gray-40);
+//         border-width: 4px;
+        background-color: var(--gray-10);
+//         background-color: #fff; // rgba(252, 251, 247, .75);
+        margin-left: calc(var(--grid-outer-gap-l) * -1);
+        margin-right: calc(var(--grid-outer-gap-r) * -1);
         
         @media screen and (min-width: $bp-single-col) {
             margin-top: 0;
@@ -110,19 +117,34 @@
         
         > img, .image-set {
             grid-column: var(--grid-column-left);
+            margin-left: var(--grid-outer-gap-l);
+            
+/*
+            background-color: var(--gray-10);
+            border: var(--border);
+*/
             
             
             @media screen and (min-width: $bp-single-col) {
-                position: absolute;
+//                 position: absolute;
             }
 
             @media screen and (min-width: $bp-desktop) {
-                grid-column: 2 / 5;
+                &.square {
+                    grid-column: 1/4;
+                }
+
+                &.wide {
+                    grid-column: 1/5;
+                }
+
             }
             
+/*
             @media screen and (min-width: $bp-max) {
                 grid-column: 2 / 4;
             }
+*/
         }
         
 
@@ -151,7 +173,12 @@
         }
         
         figcaption {
+            p {
+                @include font-p;
+                font-style: italic;
+            }
             grid-column: var(--grid-column-right);
+            margin-right: var(--grid-outer-gap-r);
         }
         
     }
