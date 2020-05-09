@@ -29,7 +29,7 @@ export class DrawController {
             gl: this.canvas.getContext("webgl", { preserveDrawingBuffer: this.debug }),
             extensions: [ 'oes_texture_float' ],
             optionalExtensions: [ 'oes_texture_half_float' ],
-            attributes: { antialias: false }
+            attributes: { antialias: true }
         })
         this.t_district_values = this.regl.texture()
         this.t_district_colors = this.regl.texture()
@@ -47,8 +47,8 @@ export class DrawController {
         const { regl, color_scale } = this
         const n_tiles = rundata.state_data.voters.length
         const { n_districts } = rundata.config
-        const state = regl.texture(rundata.state_image)
-        const voters = regl.texture(this.voter_color_values(rundata.state_data))
+        const state = regl.texture({data: rundata.state_image, wrap: 'clamp'})
+        const voters = regl.texture({data: this.voter_color_values(rundata.state_data), wrap: 'clamp'})
         return (nx: number, ny: number, selected_id:number, solutions: NdArray[]) => {
             let idx = 0
             // console.time('draw')
@@ -65,11 +65,15 @@ export class DrawController {
             // Reinitialize textures with data.
             this.t_district_values({
                 data: this.tile_district_values,
-                shape: [ this.buffer_r, this.buffer_r, 1 ]
+                shape: [ this.buffer_r, this.buffer_r, 1 ],
+                wrapS: 'clamp',
+                wrapT: 'clamp'
             })
             this.t_district_colors({
                 data: this.tile_district_colors,
-                shape: [ this.buffer_r, this.buffer_r, 1 ]
+                shape: [ this.buffer_r, this.buffer_r, 1 ],
+                wrapS: 'clamp',
+                wrapT: 'clamp'
             })
             this.draw_cmd({
                 nx, ny, selected_id, state, color_scale, mix, voters, n_tiles,
@@ -77,7 +81,8 @@ export class DrawController {
                 tile_district_colors: this.t_district_colors,
                 n_solutions: solutions.length,
                 color_texture_size: this.buffer_r,
-                voters_texture_size: 128
+                voters_texture_size: 128,
+                border_radius: 1.5,
             })
             if (this.debug) {
                 const data = regl.read().filter((x, idx) => idx%4 < 2)//.slice(0, 2044)

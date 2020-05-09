@@ -13,6 +13,7 @@ export default function(regl: any): any {
 
         const float s16 = 65535.0;
         const float s8  = 256.0;
+        uniform float border_radius;
         uniform float nx;
         uniform float ny;
         uniform float mix_p;
@@ -49,9 +50,12 @@ export default function(regl: any): any {
         }
 
         vec4 get_dist_data(int tile_index, vec2 cell) {
+            if (tile_index == -1) {
+                return vec4(0.0,0.0,0.0,-1.0);
+            }
             vec2 colorPos = idx_to_xy(tile_index, cell);
             float color_value = texture2D(tile_district_colors, colorPos).x;
-            float dist_idx = texture2D(tile_district_values, colorPos).x;
+            float dist_idx = float(roundp(texture2D(tile_district_values, colorPos).x * 8.0));
             vec3 color = texture2D(color_scale, vec2(color_value, 0.0)).rgb;
             return vec4(color, dist_idx);
         }
@@ -72,25 +76,20 @@ export default function(regl: any): any {
         void main() {
             // We are drawing a grid of states. First find the cell index.
             vec2 cell = get_cell(uv);
-                        
             if (cell.x + cell.y*nx >= n_solutions) {
                 discard;
             }
             
             int tile_index = get_tile_index(uv, cell);
-            if (tile_index == -1) {
-                discard;
-            }
-
             vec4 dist_data = get_dist_data(tile_index, cell);
             vec3 dist_color = dist_data.rgb;
             float dist_idx  = dist_data.a;
             vec3 voter_color = get_voter_color(tile_index);
-            
-            vec2 uv_top    = vec2(uv+vec2(0.0, -1.0)*u_size);
-            vec2 uv_left   = vec2(uv+vec2(-1.0, 0.0)*u_size);
-            vec2 uv_bottom = vec2(uv+vec2(0.0, 1.0)*u_size);
-            vec2 uv_right  = vec2(uv+vec2(1.0, 0.0)*u_size);
+
+            vec2 uv_top    = vec2(uv+vec2(0.0, -border_radius)*u_size);
+            vec2 uv_left   = vec2(uv+vec2(-border_radius, 0.0)*u_size);
+            vec2 uv_bottom = vec2(uv+vec2(0.0, border_radius)*u_size);
+            vec2 uv_right  = vec2(uv+vec2(border_radius, 0.0)*u_size);
 
             int ti_left   = get_tile_index(uv_left, cell);
             int ti_top    = get_tile_index(uv_top, cell);
@@ -101,18 +100,23 @@ export default function(regl: any): any {
                                (get_dist_data(ti_right, cell).a != dist_idx) || \
                                (get_dist_data(ti_bottom, cell).a != dist_idx) || \
                                (get_dist_data(ti_left, cell).a != dist_idx);
-            
+
+            /*
             bool cell_border = !all(equal(cell, get_cell(uv_top))) || \
                                !all(equal(cell, get_cell(uv_left))) ||
                                !all(equal(cell, get_cell(uv_right))) || \
                                !all(equal(cell, get_cell(uv_bottom)));
-
-            if (cell_border) {
+            
+            if (cell_border && draw_cell_borders) {
                 gl_FragColor = vec4(BLACK, 1.0);
-            } else if (dist_border) {
+            } else 
+            */
+            if (dist_border) {
                 bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
                 gl_FragColor = is_selected ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
-            } else {
+            } else if (tile_index == -1) {
+                discard;
+            } else {                
                 gl_FragColor = vec4(mix(dist_color, voter_color, mix_p), 1.0);
             }            
         }`,
@@ -141,6 +145,7 @@ export default function(regl: any): any {
             n_tiles: regl.prop('n_tiles'),
             color_texture_size: regl.prop('color_texture_size'),
             voters_texture_size: regl.prop('voters_texture_size'),
+            border_radius: regl.prop('border_radius'),
             u_size: ctx => [1 / ctx.framebufferWidth, 1 / ctx.framebufferHeight],
         },
         count: 3
