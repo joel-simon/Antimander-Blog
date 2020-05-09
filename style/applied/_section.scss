@@ -134,6 +134,16 @@
             grid-template-rows: 1fr 1fr;
             grid-row: 1 / 5;
             
+            li:before {
+                background: var(--gray-100);
+                color: var(--gray-10);
+                @include font-metadata;
+                border-radius: 100px;
+                height: 32px;
+                width: 32px;
+                text-align: center;
+                line-height: 32px;
+            }
         }
 
         h2 {
@@ -173,7 +183,7 @@
         
         @media screen and (min-width: $bp-single-col) {
             // Arrow
-            &:before {
+            &:before:not(.no-arrow) {
                 content: " ";
                 position: absolute;
                 left: -24px;
@@ -206,6 +216,21 @@
 */
 //         margin-bottom: 32px;
     }
+    
+//     .img-row {
+//         grid-column: var(--grid-column-right);
+        
+        img.input {
+            grid-column: span 1;
+            margin-top: 16px;
+            border-radius: 2px;
+            &:hover {
+                box-shadow: 0 0 0 1px var(--gray-100)
+            }
+//             width: 25%;
+//             display: inline-block;
+        }
+//     }
     
     &#cover {
 //         --vertical-offset: 0px;

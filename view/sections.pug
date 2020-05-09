@@ -106,13 +106,17 @@ mixin metrics()
         p The results above were optimized for "fairness", "compactness" and "competitiveness." But what are those and what do they mean and what makes a 'good' district?
         h3 1. Compactness
         p The original gerrymander was named for its peculiar shape and it is intuitively desirable to expect to live near people within the same district. A lot of attention is therefore paid to the shape of districts, especially since - unlike other metrics - it is easy to evaluate visually. But what does it mean for a shape to be 'compact'? It turns out there are many metrics that can be used. Images below are from #[a(href="https://fisherzachary.github.io/public/r-output.html") this article] which also has additional metrics.
-        figure.up
-            .image-set
-                img(src='imgs/compactness/polsby_popper.png')
-                img(src='imgs/compactness/convex_hull.png')
-                img(src='imgs/compactness/reock.png')
-                img(src='imgs/compactness/center_distance.png')
-            figcaption
+        figure.mid
+            ol.image-set
+                li
+                    img(src='imgs/compactness/polsby_popper.png')
+                li
+                    img(src='imgs/compactness/convex_hull.png')
+                li
+                    img(src='imgs/compactness/reock.png')
+                li
+                    img(src='imgs/compactness/center_distance.png')
+            figcaption.no-arrow
                 ol
                     li #[b Polspy-Popper]: The ratio of the shape's area to its perimeter (used above).
                     li #[b Convex-Hull]: The ratio of smallest convex shape that can fit around a shape to its perimeter.
@@ -298,10 +302,10 @@ mixin vary_tests()
         
         section.snap.map_opts
             p Click a map to view
-            img(src='imgs/varytest/c1_small.jpg', data-datapath='vary_test_2k/d7-c1', data-stage='3')
-            img(src='imgs/varytest/c2_small.jpg', data-datapath='vary_test_2k/d7-c2', data-stage='3')
-            img(src='imgs/varytest/c3_small.jpg', data-datapath='vary_test_2k/d7-c3', data-stage='3')
-            img(src='imgs/varytest/WI.png', data-datapath='bias', data-stage='5')
+            img.input(src='imgs/varytest/c1_small.jpg', data-datapath='vary_test_2k/d7-c1', data-stage='3')
+            img.input(src='imgs/varytest/c2_small.jpg', data-datapath='vary_test_2k/d7-c2', data-stage='3')
+            img.input(src='imgs/varytest/c3_small.jpg', data-datapath='vary_test_2k/d7-c3', data-stage='3')
+            img.input(src='imgs/varytest/WI.png', data-datapath='bias', data-stage='5')
 
         section.snap
             p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities. This is a direct result of one party being forced into a small geographic area.
