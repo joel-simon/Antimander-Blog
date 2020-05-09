@@ -4,15 +4,19 @@ Chrome requires that scroll snapping be applied to <html>
 */
 
 html {
-    scroll-snap-type: y proximity;
+    -webkit-scroll-snap-type: y proximity;
+            scroll-snap-type: y proximity;
+
     
 //  Weird hacks to make vertical spacing same on Safari and Chrome
     --snap-section-padding-top: 112px;
     --snap-section-padding-top-mobile-offset: 16px;
 
     * {
-        scroll-snap-type:   none; 
-        scroll-snap-align:  none;
+        -webkit-scroll-snap-type:   none; 
+                scroll-snap-type:   none; 
+        -webkit-scroll-snap-align:  none;
+                scroll-snap-align:  none;
     }
 }
 
@@ -21,7 +25,8 @@ Safari requires that scroll snapping be applied to <body>
 */
 @media not all and (min-resolution:.001dpcm) { 
     body {
-        scroll-snap-type: y proximity;
+        -webkit-scroll-snap-type: y proximity;
+                scroll-snap-type: y proximity;
         
     //  Weird hacks to make vertical spacing same on Safari and Chrome
         --snap-section-padding-top: 48px;
@@ -29,8 +34,10 @@ Safari requires that scroll snapping be applied to <body>
             calc(var(--snap-section-padding-top) * -1);
         
         * {
-            scroll-snap-type:   none; 
-            scroll-snap-align:  none;
+            -webkit-scroll-snap-align:  none;
+                    scroll-snap-type:   none; 
+            -webkit-scroll-snap-type:   none; 
+                    scroll-snap-align:  none;
         }
         
     //  On Safari, the first snap section needs more top padding 
@@ -92,7 +99,8 @@ Safari requires that scroll snapping be applied to <body>
     padding-bottom: 512px; // Extra space so sticky viewer stays on screen
     
     section.snap {
-        scroll-snap-align: start !important;
+        -webkit-scroll-snap-align: start !important;
+                scroll-snap-align: start !important;
 //         scroll-snap-stop: always !important;
     }
     
