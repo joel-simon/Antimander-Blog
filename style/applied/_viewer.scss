@@ -67,6 +67,8 @@ Safari requires that scroll snapping be applied to <body>
         @media screen and (min-width: $bp-single-col) {
             background: none;
             height: auto;
+            top: 128px;
+            box-shadow: none;
         }
         
         .canvas-container {
@@ -75,21 +77,15 @@ Safari requires that scroll snapping be applied to <body>
         }
     }
     
+    
+    
     @media screen and (min-width: $bp-single-col) {
         top: 0;
         left: 0;
         right: 0;
-//         top: 24px;
-        //     height: 100vh;
-        //     @include grid;
-            
-            .viewer-container {
-                top: 128px;
-                box-shadow: none;
-                
-        /*         grid-column: var(--grid-column-left); */
-            }
+        pointer-events: auto;
     }
+    
 }
 
 .section.viewer {
