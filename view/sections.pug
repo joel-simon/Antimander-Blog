@@ -5,7 +5,6 @@ mixin cover()
         h3 Antimander
         h1 Open source software to generate congressional districts. 
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
-        
         p Adjust to see alternatives to Wisconsin's current districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
         section.controls
             label.metadata Compact districts
@@ -17,13 +16,12 @@ mixin cover()
             label.metadata Competitive elections
             input.slider(type='range', min='0', max='.99', value='.5', step='any', 
                          data-metric='competitiveness' )
-            a.metadata.set_current See the current map
+            a.metadata.set_current See the current 2011 districts
         // img.scroll_down(src='/icons/arrow-down.svg')
         figure.canvas-container
             .inner
                 canvas.main_canvas(width=1024, height=1024)
                 p.counts.metadata     
-
         author
             p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman]#[br] and design by #[a(href='http://nioono.com/') Nio Ono].
         
