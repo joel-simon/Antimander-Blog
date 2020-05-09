@@ -134,7 +134,10 @@ function getCurrentSection() {
     if ($current.id && ($current.id != "cover")) {
         const $currentNavItem = $nav.querySelector("li#nav-" + $current.id);
     //  If there's a corresponding nav item, give it current class
-        $currentNavItem?.classList.add("current");
+            if ($currentNavItem) {
+                $currentNavItem.classList.add("current");
+            }
+//         $currentNavItem?.classList.add("current");
 
     //  Remove current class from all other nav lis
         $nav.querySelectorAll("li:not(#nav-" + $current.id + ")").forEach($li =>
