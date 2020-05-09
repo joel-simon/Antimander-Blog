@@ -183,7 +183,7 @@
         
         @media screen and (min-width: $bp-single-col) {
             // Arrow
-            &:before:not(.no-arrow) {
+            &:not(.no-arrow):before {
                 content: " ";
                 position: absolute;
                 left: -24px;
