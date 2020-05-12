@@ -16,7 +16,8 @@ async function main(run, stage) {
     // const background = await fetch_imagedata('imgs/district.png')
     const container  = document.getElementById('viewer')
     const draw_cmd:DrawCMD = draw_controller.createViewerDrawCmd(rundata, 0.7)
-    const viewer = new ResultViewer(draw_cmd, container, rundata)
+    const viewer = new ResultViewer(container)
+    viewer.setData(draw_cmd, rundata)
     viewer_update_loop([ viewer ])
 }
 

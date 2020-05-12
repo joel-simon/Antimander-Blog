@@ -4,8 +4,9 @@ import ResultViewer from './ResultViewer'
 import JsZip from 'jszip'
 
 type RunDataResponse = [ any, any, NdArray, NdArray, NdArray ]
+const rundata_cache = new Map()
 
-export async function fetch_rundata(run:string, stage:number): Promise<RunData> {
+async function _fetch_rundata(run:string, stage:number): Promise<RunData> {
     console.time('fetch_rundata:'+run)
     const zipped = await fetch(`/data/${run}/Archive.zip`).then(d => d.arrayBuffer())
     const { files } = await JsZip.loadAsync(zipped)
@@ -17,6 +18,16 @@ export async function fetch_rundata(run:string, stage:number): Promise<RunData> 
     console.timeEnd('fetch_rundata:'+run)
     config.metrics = config.metrics.map(v => v.replace(/_/g, ' '))
     return { config, state_data, state_image, X, F }
+}
+export async function fetch_rundata(run:string, stage:number):Promise<RunData> {
+    let rundata
+    if (rundata_cache[run]) {
+        rundata = rundata_cache[run]
+    } else {
+        rundata = await _fetch_rundata(run, stage)
+        rundata_cache[run] = rundata
+    }
+    return rundata
 }
 
 export function viewer_update_loop(viewers: ResultViewer[]) {

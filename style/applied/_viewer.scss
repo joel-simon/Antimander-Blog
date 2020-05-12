@@ -161,6 +161,7 @@ Safari requires that scroll snapping be applied to <body>
             box-shadow: none;
         }
         .parcoords {
+            position: relative;
             transition: var(--motion-duration-med) var(--motion-easing);
             transition-property: opacity;
             text-transform: capitalize;
@@ -171,6 +172,7 @@ Safari requires that scroll snapping be applied to <body>
         }
         .canvas-container {
             // width: 100%;
+            @extend .cursor-pointer;
             text-align: center;
         }
         .view_count {

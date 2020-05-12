@@ -2,6 +2,9 @@ import { query, queryAll, range } from './utils'
 import { RunData } from './datatypes'
 import { X_real, F_real } from './real_data'
 import * as array_utils from './array_utils'
+import ResultViewer from './ResultViewer'
+import { DrawController } from './draw_controller'
+import { fetch_rundata } from './viewer_utils'
 
 type ScrollSection = HTMLElement & {turn_on: Function, turn_off: Function }
 type ViewerSlider = HTMLInputElement & {metric_index: number, sorted_idxs: number[] }
@@ -12,10 +15,8 @@ function set_real_map(viewer, sliders:ViewerSlider[]) {
     for (const slider of sliders) {
         const m_idx = slider.metric_index
         slider.value  = (slider.sorted_idxs.indexOf(viewer.current[0]) / viewer.rundata.X.shape[0]).toString()
-        // slider.value = viewer.rundata.F.get(viewer.current[0], m_idx)
     }
 }
-
 
 function update_viewer_from_sliders(viewer, slider, sliders) {
     const v = parseFloat(slider.value)
@@ -30,9 +31,22 @@ function update_viewer_from_sliders(viewer, slider, sliders) {
     })            
 }
 
-export default function (viewer) {
+function bind_bias_tests(viewer:ResultViewer, draw_controller:DrawController) {
+    // Initialize the section that contains optimization for bias.
+    // This function bind the images in the text column to update the viewer.
+    queryAll('.map_opts img', viewer.container).forEach(img => {
+        const { datapath, stage } = img.dataset
+        img.onclick = async () => {
+            let rundata = await fetch_rundata(datapath, +stage)
+            rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
+            const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
+            viewer.setData(draw_cmd, rundata, ['rep advantage'])
+        }
+    })
+}
+
+export default function(viewer:ResultViewer, draw_controller:DrawController) {
     const sliders = queryAll('.slider', viewer.container) as ViewerSlider[]
-    // add_real_data(viewer.rundata)
     for (const slider of sliders) {
         const { metric } = slider.dataset
         slider.metric_index = viewer.rundata.config.metrics.indexOf(metric)        
@@ -48,7 +62,6 @@ export default function (viewer) {
     const sp0 = document.getElementById('set-WI') as ScrollSection
     sp0.turn_on  = () => set_real_map(viewer, sliders)
     sp0.turn_off = () => set_real_map(viewer, sliders)
-
     const pc = query('.parcoords', viewer.container)
     const vc = query('.view_count', viewer.container)
     const sp1 = document.getElementById('show_parcoords_pt1') as ScrollSection
@@ -56,11 +69,14 @@ export default function (viewer) {
     sp1.turn_off = () => pc.style.opacity = '0'
     console.log(vc);
     const sp2 = document.getElementById('show_parcoords_pt2') as ScrollSection
-    sp2.turn_on  = () => {
+    const orig_rundata = viewer.rundata
+    const orig_drwcmd = viewer.draw_cmd
+    sp2.turn_on = () => {
         viewer.setShape(3, 3)
         vc.style.opacity = '1'
     }
     sp2.turn_off = () => {
+        viewer.setData(orig_drwcmd, orig_rundata, ['rep advantage']) // If a user scrolls back to the cover, make sure WI is showing
         viewer.setShape(1, 1)
         vc.style.opacity = '0'
     }
@@ -77,4 +93,5 @@ export default function (viewer) {
             block.turn_on()
         }
     })
+    bind_bias_tests(viewer, draw_controller)
 }

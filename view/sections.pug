@@ -138,6 +138,35 @@ mixin viewer()
         section.snap
             p Exploring the results allows us to build intuition about the tradeoffs.
 
+        section.snap
+            h2 Optimizing for bias
+            p In these experiments Antimander optimizes for compactness as well as partisan bias for artificially constructed states. The cities are composed of one party and states have equal voters of each party.
+            //- This can help illuminate how by seeing what strategies are optimal for different situations.
+
+        //- section.snap
+            //- h2 Varying Cities and Districts
+            //- p Another benefit of a generative tool is the ability better understand gerrymandering by seeing what strategies are optimal for different situations.
+        
+        section.snap.map_opts
+            p Click one of the maps below to see what the districts optimized for partisan bias look like.
+            img.input(src='imgs/varytest/c1_small.jpg', data-datapath='vary_test_2k/d7-c1', data-stage='3')
+            img.input(src='imgs/varytest/c2_small.jpg', data-datapath='vary_test_2k/d7-c2', data-stage='3')
+            img.input(src='imgs/varytest/c3_small.jpg', data-datapath='vary_test_2k/d7-c3', data-stage='3')
+            img.input(src='imgs/varytest/WI.png', data-datapath='bias', data-stage='5')
+
+        section.snap
+            p Some interesting patterns emerge, such as how with you can have compact and republican-biased but not compact and democrat biased for some numbers of cities. This is a direct result of one party being forced into a small geographic area.
+            
+        section.snap
+            p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
+
+        section.snap
+            h2 Coming below:
+            p #[b Overview]: An overview of gerrymandering and how computer generated districtings are useful. 
+            p #[b Metrics]: How districtings are judged.
+            p #[b Conclusion]: How you can get involved.
+            p #[b Methods&Results]: A technical overview of the algorithms developed for the library and their results.
+            //- We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
         //- section.snap
             //- p Below is more background on Gerrymandering, foll
 
@@ -360,8 +389,9 @@ mixin vary_tests()
         section.snap
             p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
 
-        //- section.snap
+        section.snap
             p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
+
 
 mixin references()
     .section#references

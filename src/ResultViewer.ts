@@ -18,16 +18,16 @@ export default class {
     brushed_indexes: number[]
     hover_idx: number
     use_parcoords: boolean
-    constructor(draw_cmd, container:HTMLElement, rundata:RunData, use_parcoords=true, hidden_axes=[]) {
+    constructor(container:HTMLElement, use_parcoords=true) {
         this.container = container
         this.nx_max = 3
         this.ny_max = 3
         this.nx = this.nx_max
         this.ny = this.ny_max
         this.use_parcoords = use_parcoords
-        this.setData(draw_cmd, rundata, hidden_axes)
+        this.draw_cmd = null
+        this.rundata = null
     }
-
     setData(draw_cmd, rundata, hidden_axes=[]) {
         this.draw_cmd = draw_cmd
         this.rundata = rundata

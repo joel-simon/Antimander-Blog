@@ -5,8 +5,6 @@ import { query, queryAll } from './utils'
 import { RunData, DrawCMD } from './datatypes'
 import { fetch_rundata, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
-import init_varytest  from './varytest'
-//import inlineSVG from './lib/inlineSVG.js'
 import './scroll_sections'
 import { X_real, F_real } from './real_data'
 import * as array_utils from './array_utils'
@@ -30,16 +28,13 @@ async function main() {
         if (row.id == 'viewer') {
             add_real_data(rundata)
             rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
-        } else if (row.id == 'varytest') {
-            rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
         }
         const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
-        const viewer = new ResultViewer(draw_cmd, row, rundata, true, ['rep advantage'])
+        const viewer = new ResultViewer(row, true)
+        viewer.setData(draw_cmd, rundata, ['rep advantage'])
         viewers.push(viewer)
-        if (row.id == 'varytest') {
-            init_varytest(viewer, draw_controller)
-        } else if (row.id == 'viewer') {
-            init_viewer_events(viewer)
+        if (row.id == 'viewer') {
+            init_viewer_events(viewer, draw_controller)
             viewer_update_loop(viewers)// Start the draw loop before loading other viewers.
         }
     }
