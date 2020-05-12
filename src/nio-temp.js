@@ -48,7 +48,7 @@ function toggleViewerSectionEmphasis($sections, isGradual) {
         const y = $section.getBoundingClientRect().top;
 
         if (isGradual) { 
-        //  Fades in as you scroll
+            //  Fades in as you scroll
             const   threshhold  = 160,
                     progress    = Math.max(0,
                             (y - threshhold)/(window.innerHeight-250)
@@ -82,11 +82,10 @@ function scaleSymbol() {
             $symbol     = document.querySelector("header a.logo .symbol"),
             progress    = Math.max(0, $header.getBoundingClientRect().top / 64);
     
-//  Only execute transform if this CSS variable is set to true
+    //  Only execute transform if this CSS variable is set to true
     if (JSON.parse(getComputedStyle($symbol).getPropertyValue("--can-scale"))) {
-        $symbol.style.transform = `scale(${progress + 1})`;
-//  Reset property in case viewport changes
-    } else {
+        $symbol.style.transform = `scale(${progress + 1})`;        
+    } else { //  Reset property in case viewport changes
         $symbol.style.transform = "scale(1)";
     }
 }
@@ -211,9 +210,9 @@ window.addEventListener("resize",   scaleSymbol);
 window.addEventListener("scroll",   isCoverOnScreen);
 window.addEventListener("scroll",   scaleSymbol);
 window.addEventListener("scroll",   getCurrentSection);
-window.addEventListener("scroll",   () => {
-    toggleViewerSectionEmphasis(
-        document.querySelectorAll("section.snap"),
-        isGradual = false
-    );
-});
+// window.addEventListener("scroll",   () => {
+//     toggleViewerSectionEmphasis(
+//         document.querySelectorAll("section.snap"),
+//         isGradual = false
+//     );
+// });

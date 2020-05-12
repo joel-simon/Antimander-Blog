@@ -1,17 +1,30 @@
 declare var d3: any;
 declare var window: any;
 export default function(div:HTMLElement, data:any[], hidden_axes: string[], on_change:Function ) {
-    // const dimensions = {}
-    const parcoords = d3.parcoords()(div)
+    
+    // Hack because .filAxes was giving issues.
+    const dims = Object.keys(data[0])    
+    data.forEach(row => {
+        for (let dim of dims) {
+            if (dim != 'index') {
+                row[dim] *= -1
+            }
+        }
+    })
+    // console.log(dims, dims.slice(0, dims.length-1));
+    
+    const parcoords = d3.parcoords({
+        alpha: .1
+    })(div)
         .data(data)
-        .alpha(.1)
-        // .dimensions(dimensions)
+        // .alpha(.1)
         .color("black")
         // .brushedColor('black')
         // .shadows()
         // .alphaOnBrushed(.5)
         // .composite("darker")
-        .hideAxis(hidden_axes.concat([ 'index' ]))
+        // .flipAxes(dims.slice(1))
+        .hideAxis(hidden_axes.concat([ 'index' ]))        
         .render()
         .reorderable()
         .brushMode('1D-axes')  // enable brushing

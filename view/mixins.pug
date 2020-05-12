@@ -8,10 +8,11 @@ mixin header()
                 a(href="https://github.com/joel-simon/antimander/") Github
 
 mixin nav()
+    - var sections = ['viewer', 'overview', 'metrics',  'conclusion', 'methods', 'results', 'references']
     nav
         .menu-inner
             ol
-                for name, idx in ['overview', 'viewer', 'metrics', 'methods', 'results', 'conclusion', 'appendix', 'references']
+                for name, idx in sections
                     li.navlink.caption(id="nav-"+name)
                         a(href='#'+name)!=name
     input#toggle-menu(type="button", value="Toggle Menu")
@@ -140,7 +141,6 @@ mixin d3_scripts()
     script(src='src/lib/d3.svg.multibrush.js')
     script(src='src/lib/d3.autodesk.parcoords.js')
     //- script(src='src/lib/d3.parcoords.js')
-
     //- script(src='https://d3js.org/d3-color.v1.min.js')
     //- script(src='https://d3js.org/d3-interpolate.v1.min.js')
     //- script(src='https://d3js.org/d3-scale-chromatic.v1.min.js')

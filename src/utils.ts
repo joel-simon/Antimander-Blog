@@ -43,6 +43,13 @@ export async function fetch_npy_zip(path: string): Promise<NdArray> {
     return ndarray(data, shape)
 }
 
+export async function file2ndarray(file: any) {
+    const np = new npyjs()
+    const unzip = await file.async('arraybuffer')
+    const { shape, data } = np.parse(unzip)
+    return ndarray(data, shape)
+}
+
 export function sum(arr: number[]):number {
     return arr.reduce((a, b) => a+b)
 }

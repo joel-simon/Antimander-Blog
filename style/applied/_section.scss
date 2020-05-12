@@ -1,5 +1,4 @@
 .section {
-//     grid-template-rows: auto;
     align-items: start;
     position: relative;
     z-index: 1;
@@ -7,9 +6,6 @@
     @include grid;
     padding-left:  var(--grid-outer-gap-l); // Simulates gutters on outside of grid
     padding-right: var(--grid-outer-gap-r);
-//     padding-bottom: 96px;
-
-//     overflow: hidden;
     // Push down section so it doesn't collide with nav when scrolling to anchor
     --vertical-offset: 98px; 
     
@@ -43,10 +39,10 @@
         }
     }
     
-    &:nth-child(odd):after {
+    &:nth-child(even):after {
         background: var(--blue-gradient);
     }
-    &:nth-child(even):after {
+    &:nth-child(odd):after {
         background: var(--red-gradient);
     }
 
@@ -216,30 +212,37 @@
 */
 //         margin-bottom: 32px;
     }
-    
-//     .img-row {
-//         grid-column: var(--grid-column-right);
-        
-        img.input {
-            grid-column: span 1;
-            margin-top: 16px;
-            border-radius: 2px;
-            &:hover {
-                box-shadow: 0 0 0 1px var(--gray-100)
-            }
-//             width: 25%;
-//             display: inline-block;
+
+    img.input {
+        grid-column: span 1;
+        margin-top: 16px;
+        border-radius: 2px;
+        &:hover {
+            box-shadow: 0 0 0 1px var(--gray-100)
         }
-//     }
-    
+    }
+
     &#cover {
-//         --vertical-offset: 0px;
     }
     
     &#overview {
         margin-top: calc(var(--vertical-offset) * -1);
     }
     
+    // Hacks to have the viewer extend into cover.
+    &#viewer {
+        > .viewer-track {
+            @media screen and (min-width: $bp-single-col) {
+                padding-top: 0px;
+                top: -100vh;
+            }
+        }
+        &:after {
+            // top: calc(-100vh + var(--cover-header-height));
+            top: calc(-100vh + 96px);
+        }
+    }
+
     &#varytest {
         .map_opts {
             img {

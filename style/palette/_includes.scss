@@ -1,19 +1,5 @@
-// @import 'cursors';
-.col {
-    display: inline-block;
-    vertical-align: middle;
-}
-.col2 {
-    width: 50%;
-    @extend .col;
-}
-.col3 {
-    width: 33%;
-    @extend .col;
-}
-.col4 {
-    width: 25%;
-    @extend .col;
+.hidden {
+    visibility: hidden;
 }
 
 .shadow {
@@ -22,18 +8,3 @@
 .center {
     text-align: center;
 }
-.no-marg-top {
-    margin-top: 0px;
-}
-.align_top {
-    vertical-align: top;
-}
-
-.cjust {
-    justify-content: center;
-}
-
-// .text_button {
-//     text-decoration: underline;
-//     @extend .cursor-pointer;
-// }

@@ -1,63 +1,49 @@
 declare let window: any
 import '../style/index.scss'
 import ResultViewer from './ResultViewer'
-import HeaderViewer from './HeaderViewer'
-import { fetch_imagedata, query, queryAll, fetch_npy_zip } from './utils'
+import { query, queryAll } from './utils'
 import { RunData, DrawCMD } from './datatypes'
 import { fetch_rundata, viewer_update_loop } from './viewer_utils'
 import { DrawController } from './draw_controller'
-// import './hover_link'
-// import './scroll_sections'
 import init_varytest  from './varytest'
-// import smoothscroll from 'smoothscroll-polyfill'
-import inlineSVG from './lib/inlineSVG.js'
-// import ndarray from 'ndarray'
-// import JsZip from 'jszip'
+//import inlineSVG from './lib/inlineSVG.js'
+import './scroll_sections'
+import { X_real, F_real } from './real_data'
+import * as array_utils from './array_utils'
+import init_viewer_events from './viewer_section'
 
-// window.BigUint64Array = null
-// Bind scroll down button
-// smoothscroll.polyfill() // Safari polyfill.
-// query('#header .scroll_down').onclick = () => {
-//     window.scrollTo({ top: window.innerHeight, left: 0, behavior: 'smooth' })
-// }
-
-// inlineSVG.init({
-//     svgSelector: '.inline', // the class attached to all images that should be inlined
-//     // initClass: 'js-inlinesvg', // class added to <html>
-// });
+function add_real_data(rundata:RunData) {
+    // Add Wisconsin's real districts to the rundata.
+    rundata.X = array_utils.append(rundata.X, X_real)
+    const real_f = rundata.config.metrics.map(name => F_real[name])//.filter(v => v)
+    rundata.F = array_utils.append(rundata.F, real_f)
+}
 
 async function main() {
     console.time('main')
     const viewers = []
-    // Create the drawing interface.
-    const color_scale_img = '/imgs/scale_rdbu_1px.png'
-    const draw_controller = new DrawController(color_scale_img)
+    const draw_controller = new DrawController('/imgs/scale_rdbu_1px.png') // Create the drawing interface.
     await draw_controller.initialize()
-
-    // Load the header viewer.
-    const rundata = await fetch_rundata('general_fif_centers', 5)
-    const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
-    viewers.push(new HeaderViewer(draw_cmd, query('#cover'), rundata))
-    
-    // Start the draw loop before loading other viewers.
-    viewer_update_loop(viewers)
-
     for (const row of queryAll('.viewer_row')) {
         let { datapath, stage } = row.dataset
         const rundata = await fetch_rundata(datapath, +stage)
         if (row.id == 'viewer') {
+            add_real_data(rundata)
             rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
+        } else if (row.id == 'varytest') {
+            rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
         }
         const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
         const viewer = new ResultViewer(draw_cmd, row, rundata, true, ['rep advantage'])
+        viewers.push(viewer)
         if (row.id == 'varytest') {
             init_varytest(viewer, draw_controller)
+        } else if (row.id == 'viewer') {
+            init_viewer_events(viewer)
+            viewer_update_loop(viewers)// Start the draw loop before loading other viewers.
         }
-        viewers.push(viewer)
     }
     console.timeEnd('main')
 }
-
-    
 
 main()

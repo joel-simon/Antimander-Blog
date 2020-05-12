@@ -54,6 +54,15 @@ export default class {
         }
     }
 
+    setShape(nx:number, ny:number) {
+        this.nx_max = nx
+        this.ny_max = ny
+        this.nx = this.nx_max
+        this.ny = this.ny_max
+        this.current = sample(this.brushed_indexes, this.nx*this.ny)
+        this.needsDraw()
+    }
+
     _onParCoordsUpdate(brushed_indexes: number[]) {
         const { current, parcoords, nx_max, ny_max } = this
         this.brushed_indexes = brushed_indexes

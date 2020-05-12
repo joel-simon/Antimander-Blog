@@ -1,63 +1,40 @@
-// import Viewer from './ResultViewer'
-// import { StateData, RunData, DrawCMD } from './datatypes'
-import { clamp, inView } from './utils'
+import { clamp, inView, queryAll } from './utils'
+let active_block = null
+let active_block_d = 0
+let lastScrollTop = window.pageYOffset
+type ScrollSection = HTMLElement & {turn_on: Function, turn_off: Function }
 
-interface sdata {
-    section: HTMLElement;
-    scroll_blocks:  NodeListOf<HTMLElement>;
-}
+const scroll_blocks = queryAll('section.snap') as ScrollSection[]
 
-/*
-function updatePositions({ section, scroll_blocks }: sdata) {
-    const viewer = section.querySelector('.district-viewer') as HTMLElement
-    const { top, bottom, height } = section.getBoundingClientRect()
-    const stick_top_point = 0
-    viewer.style.position = 'fixed'
-    if (bottom < window.innerHeight) {
-        viewer.style.top = (bottom - window.innerHeight) + 'px'
-    } else if (top < stick_top_point) { // Stuck to view.
-        viewer.style.top = stick_top_point+'px'
-    } else {
-        viewer.style.top = top + 'px' // Scroll normally when below.
-    }
-}
-*/
-
-function updateScrollBlocks({ section, scroll_blocks }: sdata) {
-    let most_middle = null
-    const mobile = window.innerWidth < 800
+window.addEventListener("scroll", () => {    
+    const last_active = active_block
+    const scroll_down = window.pageYOffset > lastScrollTop
+    lastScrollTop = window.pageYOffset
+    
+    active_block = null
+    const highlight_height = (window.innerWidth < 768) ? 0.75 : 0.5
     scroll_blocks.forEach(block => {
         const { top, height } = block.getBoundingClientRect()
         const y_perc = (top+height/2) / window.innerHeight
-        const from_mid = clamp(Math.abs(y_perc - (mobile ? 0.75 : 0.5))*2, 0, 1)
-        block.style.opacity = (1.0 - from_mid).toString()
-        block.classList.remove('block_focus')
-        if (most_middle == null || from_mid < most_middle[0]) {
-            most_middle = [from_mid, block]
+        const from_mid = clamp(Math.abs(y_perc - highlight_height)*2, 0, 1)        
+        if (active_block == null || from_mid < active_block_d) {
+            active_block = block
+            active_block_d = from_mid        
         }
     })
-    if (most_middle) {
-        most_middle[1].classList.add('block_focus')
-    }    
-}
 
-let last_scroll = null
-const section_divs: sdata[] = []
-document.querySelectorAll('section.viewer_row').forEach((section: HTMLElement) => {
-    const scroll_blocks = section.querySelectorAll('.scroll_block') as NodeListOf<HTMLElement>
-    section_divs.push({ section, scroll_blocks })
-})
-function update() {
-    if (last_scroll != window.scrollY) {
-        section_divs.forEach(({ section, scroll_blocks }) => {
-            // if (inView(section)) {
-            // updatePositions({ section, scroll_blocks })
-            // updateScrollBlocks({ section, scroll_blocks })
-            // }
-        })
-        last_scroll = window.scrollY
+    if (active_block && last_active != active_block) {
+        active_block.classList.remove("defocused")
+        active_block.classList.add("focused")
+        if (last_active) {
+            last_active.classList.add("defocused")
+            last_active.classList.remove("focused")
+            if (!scroll_down && last_active.turn_off) {
+                last_active.turn_off()
+            }
+        }
+        if (active_block.turn_on && scroll_down) {
+            active_block.turn_on()
+        }
     }
-    window.requestAnimationFrame(update)
-}
-update()
-
+})

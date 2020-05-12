@@ -69,3 +69,7 @@
   .resize.n, .resize.s {
     cursor: url('/icons/cursor-resize-vertical-wide.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-resize-vertical-wide.svg') 18 18, auto !important;
   }
+
+.parcoords .tick {
+  display: none;
+}
