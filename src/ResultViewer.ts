@@ -59,7 +59,12 @@ export default class {
         this.ny_max = ny
         this.nx = this.nx_max
         this.ny = this.ny_max
-        this.current = sample(this.brushed_indexes, this.nx*this.ny)
+        console.log({nx, ny});
+        if (this.brushed_indexes) {
+            this.current = sample(this.brushed_indexes, this.nx*this.ny)
+        } else {
+            this.current = sample(range(this.rundata.X.shape[0]), this.nx*this.ny)
+        }
         this.needsDraw()
     }
 
@@ -83,7 +88,7 @@ export default class {
         } else { // Draw just one.
             const c_i = Math.floor(x * nx)
             const c_j = Math.floor(y * ny)
-            this.current = [ this.current[ (c_i*nx) + c_j ] ]
+            this.current = [ this.current[ (c_j*ny) + c_i ] ]
             this.needs_draw = true
             parcoords.highlight([this.values[this.current[0]]])
         }
@@ -97,7 +102,8 @@ export default class {
         const { nx, ny, values, parcoords, current } = this
         const c_i = Math.floor(x * nx)
         const c_j = Math.floor(y * ny)
-        const hover_idx = (c_i*nx) + c_j
+        const hover_idx = (c_j*ny) + c_i
+        // console.log(c_i, c_j, hover_idx);
         if (hover_idx != this.hover_idx) {
             this.hover_idx = hover_idx
             parcoords.highlight([values[current[hover_idx]]])
@@ -118,18 +124,18 @@ export default class {
         const { parcoords, viewer_div } = this
 
         const vw = viewer_div.clientWidth
-        if (vw < 400) {
-            this.nx_max = 2
-            this.ny_max = 2
-        }
-        //  else if (vw < 600) {
+        // if (vw < 400) {
+        //     this.nx_max = 2
+        //     this.ny_max = 2
+        // }
+        // //  else if (vw < 600) {
+        // //     this.nx_max = 3
+        // //     this.ny_max = 3
+        // // }
+        //  else {
         //     this.nx_max = 3
         //     this.ny_max = 3
         // }
-         else {
-            this.nx_max = 3
-            this.ny_max = 3
-        }
         // console.log(vw)
         if (parcoords) {
             parcoords.width(vw)
@@ -153,7 +159,8 @@ export default class {
         const { needs_draw, draw_cmd, current, rundata, viewer_div, brushed_indexes } = this
         if (needs_draw) {
             this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
-            this.ny = this.nx
+            this.ny = Math.min(this.nx, this.ny_max)
+            // console.log(this.nx, this.ny);
             draw_cmd(this.nx, this.ny, this.hover_idx, current.map(i => rundata.X.pick(i)))
             viewer_div.querySelector('.view_count').innerHTML = `Viewing ${current.length} / ${brushed_indexes.length}`
             this.needs_draw = false

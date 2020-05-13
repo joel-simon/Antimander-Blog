@@ -1,4 +1,4 @@
-import { file2ndarray, inView, percentSeen } from './utils'
+import { file2ndarray, inView, percentSeen, query } from './utils'
 import { NdArray, RunData } from './datatypes'
 import ResultViewer from './ResultViewer'
 import JsZip from 'jszip'
@@ -38,22 +38,24 @@ export function viewer_update_loop(viewers: ResultViewer[]) {
     function step() {
         if (last_scroll != window.scrollY) {
             last_scroll = window.scrollY
-        }
-        if (!active_viewer) {
-            viewers.sort((a, b) => percentSeen(b.container) - percentSeen(a.container))
-            if (inView(viewers[0].container)) {
-                active_viewer = viewers[0]
+            if (!active_viewer) {
+                viewers.sort((a, b) => percentSeen(b.container) - percentSeen(a.container))
+                if (inView(viewers[0].container)) {
+                    active_viewer = viewers[0]
+                }
+                if (active_viewer) {
+                    active_viewer.container.querySelector('.canvas-container').append(canvas)
+                    console.log('append');
+                    
+                    active_viewer.needsDraw()
+                }
             }
-            if (active_viewer) {
-                active_viewer.container.querySelector('.canvas-container').append(canvas)
-                active_viewer.needsDraw()
+            if (active_viewer && !inView(active_viewer.container)) {
+                active_viewer = null
             }
         }
         if (active_viewer) {
             active_viewer.onStep()
-            if (percentSeen(active_viewer.container) < 0.5) {
-                active_viewer = null
-            }
         }
         window.requestAnimationFrame(step)
     }

@@ -46,8 +46,7 @@
         background: var(--red-gradient);
     }
 
-    h1, h2, h3, h4, p, ol, ul, .button,
-    section {
+    h1, h2, h3, h4, p, ol, ul, .button, section {
         grid-column: var(--grid-column-right);
     }
     
@@ -59,7 +58,6 @@
         >* {
             grid-column: 1 / 5;
         }
-        
         img.inline {
             grid-column: 1 / 3;
             
@@ -238,8 +236,11 @@
             }
         }
         &:after {
+            @media screen and (min-width: $bp-single-col) {
+                top: calc(-100vh + 96px);
+            }
             // top: calc(-100vh + var(--cover-header-height));
-            top: calc(-100vh + 96px);
+            
         }
         .map_opts {
             img {

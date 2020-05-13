@@ -58,6 +58,8 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
         }
     }
     set_real_map(viewer, sliders)
+    const orig_rundata = viewer.rundata
+    const orig_drwcmd = viewer.draw_cmd
     query('.set_current').onclick = () => set_real_map(viewer, sliders)
     const sp0 = document.getElementById('set-WI') as ScrollSection
     sp0.turn_on  = () => set_real_map(viewer, sliders)
@@ -65,21 +67,44 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
     const pc = query('.parcoords', viewer.container)
     const vc = query('.view_count', viewer.container)
     const sp1 = document.getElementById('show_parcoords_pt1') as ScrollSection
-    sp1.turn_on  = () => pc.style.opacity = '1'
-    sp1.turn_off = () => pc.style.opacity = '0'
-    console.log(vc);
-    const sp2 = document.getElementById('show_parcoords_pt2') as ScrollSection
-    const orig_rundata = viewer.rundata
-    const orig_drwcmd = viewer.draw_cmd
-    sp2.turn_on = () => {
-        viewer.setShape(3, 3)
-        vc.style.opacity = '1'
+    const canvas = query('.main_canvas') as HTMLCanvasElement
+    if (window.innerWidth < 768 ) {
+        pc.style.display = 'none'
     }
-    sp2.turn_off = () => {
-        viewer.setData(orig_drwcmd, orig_rundata, ['rep advantage']) // If a user scrolls back to the cover, make sure WI is showing
-        viewer.setShape(1, 1)
+    sp1.turn_on  = () => {
+        console.log('sp1.turn_on');        
+        pc.style.opacity = '1'
+        if (window.innerWidth < 768 ) {
+            pc.style.display = 'block'
+            viewer.setShape(4, 4)
+        } else {
+            viewer.setShape(3, 3)
+            vc.style.opacity = '1'
+        }
+    }
+    sp1.turn_off = () => {
+        console.log('sp1.turn_off');
+        pc.style.opacity = '0'
         vc.style.opacity = '0'
+        viewer.setShape(1, 1)
+        viewer.setData(orig_drwcmd, orig_rundata, ['rep advantage']) // If a user scrolls back to the cover, make sure WI is showing
+        if (window.innerWidth < 768 ) {
+            pc.style.display = 'none'
+            // canvas.width = 1024
+            // canvas.height = 1024
+        }
     }
+    // const sp2 = document.getElementById('show_parcoords_pt2') as ScrollSection
+
+    // sp2.turn_on = () => {
+    //     viewer.setShape(3, 3)
+    //     vc.style.opacity = '1'
+    // }
+    // sp2.turn_off = () => {
+    //     viewer.setData(orig_drwcmd, orig_rundata, ['rep advantage']) // If a user scrolls back to the cover, make sure WI is showing
+    //     viewer.setShape(1, 1)
+    //     vc.style.opacity = '0'
+    // }
 
     const scroll_blocks = queryAll('section.snap') as ScrollSection[]
     scroll_blocks.forEach(block => {

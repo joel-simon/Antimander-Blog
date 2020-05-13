@@ -70,7 +70,7 @@ export default function(regl: any): any {
         }
 
         vec2 get_cell(vec2 _uv) {
-            return vec2(floor(_uv.x * nx), floor(_uv.y * ny));
+            return vec2(floor(_uv.y * ny), floor(_uv.x * nx));
         }
 
         void main() {
@@ -146,7 +146,7 @@ export default function(regl: any): any {
             color_texture_size: regl.prop('color_texture_size'),
             voters_texture_size: regl.prop('voters_texture_size'),
             border_radius: regl.prop('border_radius'),
-            u_size: ctx => [1 / ctx.framebufferWidth, 1 / ctx.framebufferHeight],
+            u_size: ctx => [1 / ctx.framebufferHeight, 1 / ctx.framebufferWidth],
         },
         count: 3
     })

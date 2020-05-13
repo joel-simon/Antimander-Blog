@@ -90,7 +90,7 @@ mixin viewer()
 
         section.snap
             h2 Viewer
-            p On the left is a map of Wisonsin's current districts
+            p Here is a map of Wisonsin's current districts.
             
         section.snap#set-WI
             p Wisconsin is divided into eight districts. The color represents what party that district is leaning towards. Five of the eight are majority republican. 
@@ -214,7 +214,7 @@ mixin metrics()
         p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
 mixin all_compactness_viewer()
-    .section.viewer.viewer_row(
+    #all_compactness.section.viewer.viewer_row(
         data-datapath='all_compactness',
         data-stage='5'
     )

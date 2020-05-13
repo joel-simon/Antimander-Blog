@@ -39,7 +39,10 @@ html, body {
     color: var(--gray-100);
     scroll-behavior: smooth;
 }
-
+body {
+    width: 100vw;
+    overflow-x: hidden;
+}
 // .basele {
 //     background-image:  url(//basehold.it/i/8);
 //     background-repeat: repeat repeat;

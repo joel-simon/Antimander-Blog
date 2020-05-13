@@ -52,6 +52,7 @@ export class DrawController {
         return (nx: number, ny: number, selected_id:number, solutions: NdArray[]) => {
             let idx = 0
             // console.time('draw')
+            // console.time('a')
             for (let i = 0; i < solutions.length; i++) {
                 let values = this.district_color_values(solutions[i], n_districts, rundata.state_data)
                 this.tile_district_colors.set(values, i*values.length)
@@ -60,26 +61,25 @@ export class DrawController {
                 }
                 idx = (i+1)*values.length
             }
+            // console.timeEnd('a')
             this.tile_district_values.fill(0, idx)
             this.tile_district_colors.fill(0, idx)
             // Reinitialize textures with data.
+            // console.time('b')
             this.t_district_values({
                 data: this.tile_district_values,
-                shape: [ this.buffer_r, this.buffer_r, 1 ],
-                wrapS: 'clamp',
-                wrapT: 'clamp'
+                shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
             this.t_district_colors({
                 data: this.tile_district_colors,
-                shape: [ this.buffer_r, this.buffer_r, 1 ],
-                wrapS: 'clamp',
-                wrapT: 'clamp'
+                shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
+            // console.timeEnd('b')
             this.draw_cmd({
                 nx, ny, selected_id, state, color_scale, mix, voters, n_tiles,
                 tile_district_values: this.t_district_values,
                 tile_district_colors: this.t_district_colors,
-                n_solutions: solutions.length,
+                n_solutions: (window.innerWidth < 768) ? 4 : solutions.length, //BAd hack
                 color_texture_size: this.buffer_r,
                 voters_texture_size: 128,
                 border_radius: 1.5,
