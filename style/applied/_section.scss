@@ -10,7 +10,7 @@
     --vertical-offset: 98px; 
     
     // Divider
-    &:not(#viewer):before {
+    &:not(#overview):before {
         content: " ";
         grid-column: var(--grid-column-right);
         height: 8px;
