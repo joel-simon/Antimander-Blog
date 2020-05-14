@@ -68,6 +68,11 @@ export default class {
         this.needsDraw()
     }
 
+    setCurrent(current:number[]) {
+        this.current = current
+        this.needsDraw()
+    }
+
     _onParCoordsUpdate(brushed_indexes: number[]) {
         const { current, parcoords, nx_max, ny_max } = this
         this.brushed_indexes = brushed_indexes

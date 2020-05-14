@@ -118,7 +118,7 @@ export default function(regl: any): any {
                 discard;
             } else {                
                 gl_FragColor = vec4(mix(dist_color, voter_color, mix_p), 1.0);
-            }            
+            }
         }`,
         vert: `
         precision highp float;

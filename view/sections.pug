@@ -2,99 +2,36 @@ include mixins
 
 mixin cover()
     .section#cover
-        h3 Antimander
+        h2 Antimander
         h1 Open source software to generate congressional districts. 
+        //- The below section.snap is there just to help trigger a scroll event.
+        section.snap(style='display:none;')
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
-        //- p Adjust to see alternatives to Wisconsin's current districts. Read more to learn how this could help fight gerrymandering and why gerrymandering is so complex.
-        //- section.controls
-            label.metadata Compact districts
-            input.slider(type='range', min='0', max='.99', value='.5', step='any',
-                         data-metric='polsby popper' )
-            label.metadata Fair ratios of representatives to voters
-            input.slider(type='range', min='0', max='.99', value='.5', step='any', 
-                         data-metric='efficiency gap' )
-            label.metadata Competitive elections
-            input.slider(type='range', min='0', max='.99', value='.5', step='any', 
-                         data-metric='competitiveness' )
-            a.metadata.set_current See the current 2011 districts
-        // img.scroll_down(src='/icons/arrow-down.svg')
-        //- figure.canvas-container
-            .inner
-                canvas.main_canvas(width=1024, height=1024)
-                p.counts.metadata     
         author
             p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman]#[br] and design by #[a(href='http://nioono.com/') Nio Ono].
-        
-mixin overview()
-    .section#overview
-        h2 Overview
-        p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How the districts are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
-                 p.hover-link(data-hover_name='the_gerrymander') 
-        figure.mid
-            img(src='imgs/the_gerrymander.png')
-            figcaption
-                p A cartoon of the #[a(href='https://www.smithsonianmag.com/history/where-did-term-gerrymander-come-180964118', target="_blank") infamous 1812 Massachusetts districting] by its governor Elbridge Gerry that inspired the name 'Gerrymander' due to it resemblance to a mythical salamander.
-        p Gerrymandering works by "packing" a small number of districts full of the opposing party’s voters to "waste" many votes, enabling other districts to "crack," i.e. to be won by a small (but comfortable) amount, thereby securing an outsize proportion of a state’s representatives for the gerrymandering party.
-        figure.down
-            img(src='imgs/pack&crack.svg')
-            figcaption
-                p An example of packing and cracking from #[a(href='https://www.washingtonpost.com/news/wonk/wp/2015/03/01/this-is-the-best-explanation-of-gerrymandering-you-will-ever-see/') Washington Post].
-        p While a districting should intuitively be 'fair' to each party, often multiple other criteria are important, too, such as being 'regularly shaped' and having competitive elections(#[a(href='#metrics') discussed below]. Their relative importance are ultimately subjective. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering, ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
-        p  Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it demonstrates that superior solutions are possible while taking into account natural biases of geography and voter distribution. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units and be optimized for many competing objectives.
-
-        figure
-            img(src='imgs/nc_evidence.png')
-            figcaption
-                p Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen showing how a proposed plan (red) is less compact than sampled generated plans which helped convince the court that the proposed plan was a biased outlier.
- 
-        //- p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each political party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than specific percentage from the state’s total population divided by the number of districts), and each district must be contiguous.
-        
-        p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
-        p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings.
-        // p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
-        //- button View supplementary technical overview.
-        //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
-        //- p Antimander is a generative design tool and research project to both help detect gerrymandering and also bring transparancy to the the complex trade-offs in district design. 
-        
-        //- generate and browse optimized congressional districtings. While districting commitess using it directly is unikely, it could be used as evidence of gerrymandering and also to help inform to public about the tradeoffs and how these trade-offs were made for their districts.
     
-        //- p Antimander proposes connecting algorithmic districting to the research field of multi-objective evolutionary algorithms (MOEAs) and novelty search and presents an open source optimization engine and viewer that does so. It is just a first-step and more work and help is needed.
-    
-    
-        //- p TODO - add more
-        //- p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings. Antimander is a open source, multi-objective evolutionary that creates optimzied dsitricts for comparison.
-    
-        //- h4 The  original "Gerrymander"] in Massachusetts
-        //- img(src='img=s/the_gerrymander.jpg', style='width:256px;')
-        //- H2 The role of Software
-        //- P
-        //- p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may o er relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts.
-    
-        //- p However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
-    
-        //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
-
 mixin viewer()
-    .section.viewer.viewer_row#viewer(data-datapath='general_fif_centers', data-stage='5')
+    .section.viewer.viewer_row#overview(data-datapath='general_fif_centers', data-stage='5')
         .viewer-track
             .viewer-container
                 .district-viewer
                     .parcoords(style='opacity:0;')
                     .canvas-container
                         canvas.main_canvas(width=1024, height=1024)
+                        //- img.main_canvas(src='imgs/WI_dists.png', style='width:auto;')
                     p.view_count.metadata(style='opacity:0;') Viewing N / K
                 
-                // img(src="https://media2.giphy.com/media/v0eHX3n28wvoQ/giphy.gif")
-                // +district_viewer("Interactive Viewer")
-        
-
-        section.snap
-            h2 Viewer
+        section.snap#set-WI
+            h2 Overview
             p Here is a map of Wisonsin's current districts.
             
-        section.snap#set-WI
+        section.snap
             p Wisconsin is divided into eight districts. The color represents what party that district is leaning towards. Five of the eight are majority republican. 
-            img.inline.wide(src='imgs/figure_legend.png')
+            p(style='display:inline-flex;justify-content:space-between;')
+                span.metadata Republican
+                span.metadata Competitive
+                span.metadata Democrat
+            img.inline.wide(src='imgs/figure_legend_base.png')
             
             //- An interactive browser of one run of Antimander for Wisconsin. 
         
@@ -102,15 +39,15 @@ mixin viewer()
             p Adjust the below sliders to see generated alternatives.
             br
             label.metadata Compactness (more simple districts shapes)
-            input.slider(type='range', min='0', max='.99', value='.5', step='any',
+            input.slider(type='range', min='0', max='1.0', value='.5', step='.05',
                          data-metric='compactness')
             br
             label.metadata Fair ratios of representatives to voters
-            input.slider(type='range', min='0', max='.99', value='.5', step='any', 
+            input.slider(type='range', min='0', max='1.0', value='.5', step='.05', 
                          data-metric='fairness')
             br
             label.metadata Competitive elections
-            input.slider(type='range', min='0', max='.99', value='.5', step='any', 
+            input.slider(type='range', min='0', max='1.0', value='.5', step='.05', 
                          data-metric='competitiveness')
             br
             a.metadata.set_current See the current 2011 districts
@@ -162,13 +99,62 @@ mixin viewer()
 
         section.snap
             h2 Coming below:
-            p #[b Overview]: An overview of gerrymandering and how computer generated districtings are useful. 
+            p #[b Background]: An background of gerrymandering and how computer generated districtings are useful. 
             p #[b Metrics]: How districtings are judged.
             p #[b Conclusion]: How you can get involved.
             p #[b Methods&Results]: A technical overview of the algorithms developed for the library and their results.
             //- We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
         //- section.snap
             //- p Below is more background on Gerrymandering, foll
+    
+mixin background()
+    .section#background
+        h2 Background
+        p Once a decade the United States takes a census of its population and accordingly redraws congressional districts to ensure that each state is fairly divided into equal populations. How the districts are drawn determines the distribution of elected representatives and has significant political impact, motivating political parties to exploit districting to their advantage, known as gerrymandering. Gerrymandering has become a challenge to democracy in large part because because it is challenging to define.
+                 p.hover-link(data-hover_name='the_gerrymander') 
+        figure.mid
+            img(src='imgs/the_gerrymander.png')
+            figcaption
+                p A cartoon of the #[a(href='https://www.smithsonianmag.com/history/where-did-term-gerrymander-come-180964118', target="_blank") infamous 1812 Massachusetts districting] by its governor Elbridge Gerry that inspired the name 'Gerrymander' due to it resemblance to a mythical salamander.
+        p Gerrymandering works by "packing" a small number of districts full of the opposing party’s voters to "waste" many votes, enabling other districts to "crack," i.e. to be won by a small (but comfortable) amount, thereby securing an outsize proportion of a state’s representatives for the gerrymandering party.
+        figure.down
+            img(src='imgs/pack&crack.svg')
+            figcaption
+                p An example of packing and cracking from #[a(href='https://www.washingtonpost.com/news/wonk/wp/2015/03/01/this-is-the-best-explanation-of-gerrymandering-you-will-ever-see/') Washington Post].
+        p While a districting should intuitively be 'fair' to each party, often multiple other criteria are important, too, such as being 'regularly shaped' and having competitive elections(#[a(href='#metrics') discussed below]. Their relative importance are ultimately subjective. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering, ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
+        p  Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it demonstrates that superior solutions are possible while taking into account natural biases of geography and voter distribution. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units and be optimized for many competing objectives.
+
+        figure
+            img(src='imgs/nc_evidence.png')
+            figcaption
+                p Admitted Algorithmic evidence in #[a(href='https://www.nccourts.gov/assets/inline-files/18-CVS-14001_Final-Judgment.pdf?Bwsegeo1VV20zhJsp9hoClvmoRp3A6AR') Common Cause v. Lewis] presented by Dr Chen showing how a proposed plan (red) is less compact than sampled generated plans which helped convince the court that the proposed plan was a biased outlier.
+ 
+        //- p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each political party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than specific percentage from the state’s total population divided by the number of districts), and each district must be contiguous.
+        
+        p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
+        p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings.
+        // p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
+        //- button View supplementary technical overview.
+        //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
+        //- p Antimander is a generative design tool and research project to both help detect gerrymandering and also bring transparancy to the the complex trade-offs in district design. 
+        
+        //- generate and browse optimized congressional districtings. While districting commitess using it directly is unikely, it could be used as evidence of gerrymandering and also to help inform to public about the tradeoffs and how these trade-offs were made for their districts.
+    
+        //- p Antimander proposes connecting algorithmic districting to the research field of multi-objective evolutionary algorithms (MOEAs) and novelty search and presents an open source optimization engine and viewer that does so. It is just a first-step and more work and help is needed.
+    
+    
+        //- p TODO - add more
+        //- p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings. Antimander is a open source, multi-objective evolutionary that creates optimzied dsitricts for comparison.
+    
+        //- h4 The  original "Gerrymander"] in Massachusetts
+        //- img(src='img=s/the_gerrymander.jpg', style='width:256px;')
+        //- H2 The role of Software
+        //- P
+        //- p Despite gerrymandering remaining a challenge, there is promise that algorithmic developments may o er relief. Towards that end, we have demonstrated a method and open-source tool that optimizes districts across several objectives using multi-objective evolution. Our study in Wisconsin demonstrates the capacity to produce districts that are more equal, competitive, and compact than the current real-world districts.
+    
+        //- p However, for tools like this to be successful they must incorporate many further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. We suggest the districting problem as a potential MOEA benchmark for both technical reasons and because of its timely need for the 2021 redistricting.
+    
+        //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
 
 mixin metrics()
     .section#metrics

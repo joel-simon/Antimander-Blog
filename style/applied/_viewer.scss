@@ -41,8 +41,8 @@
         // &.defocused:not(:nth-child(2))/
         &.defocused {
             opacity: .125;
-            filter: saturate(0);
-            font-family: redaction-100;
+            // filter: saturate(0);
+            // font-family: redaction-100;
             img {
             }            
             p:first-of-type:before {
@@ -162,7 +162,7 @@ Safari requires that scroll snapping be applied to <body>
         @media screen and (min-width: $bp-single-col) {
             background: none;
             height: auto;
-            top: 128px;
+            top: 96px;
             box-shadow: none;
         }
         .parcoords {

@@ -10,7 +10,7 @@
     --vertical-offset: 98px; 
     
     // Divider
-    &:before {
+    &:not(#viewer):before {
         content: " ";
         grid-column: var(--grid-column-right);
         height: 8px;
@@ -38,7 +38,15 @@
             border-top: var(--border);
         }
     }
-    
+    // &#cover:after {
+    //     width: 0px;
+    //     height: 0px;
+    //     @media screen and (min-width: $bp-single-col) {
+    //         width: 0px;
+    //         height: 0px; 
+    //     }
+    // }
+
     &:nth-child(even):after {
         background: var(--blue-gradient);
     }
@@ -223,12 +231,12 @@
     &#cover {
     }
     
-    &#overview {
+    &#background {
         margin-top: calc(var(--vertical-offset) * -1);
     }
     
     // Hacks to have the viewer extend into cover.
-    &#viewer {
+    &#overview {
         > .viewer-track {
             @media screen and (min-width: $bp-single-col) {
                 padding-top: 0px;
