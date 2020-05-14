@@ -282,7 +282,11 @@ mixin methods()
         h3 Multi-Phase
         p Because optimizing a large number of nodes directly is challenging, districts are optimized through a multi-phase evolutionary algorithm, where each successive phase divides districts more granularly (similarly to Swarmy et al. cite{swamymulti}). To create a series of coarsening graphs, the graph is iteratively contracted using star contraction \cite[ch. 13]{ab-algorithms} until the state has reached 500 nodes. An additional bias is added to preserve compact shapes across graph resolutions. 
         figure
-            img(src='imgs/methods/contract.png')
+            //- img(src='imgs/methods/contract.png')
+            //- img(src='imgs/methods/contractions/state_0.png')
+            img(src='imgs/methods/contractions2x2.png')
+            //- img(src='imgs/methods/contractions/state_2.png')
+            //- img(src='imgs/methods/contractions/state_4.png')
             figcaption
                 p Multiple graph contractions with compactness bias.
         //- The results of optimizing at a more coarse representation serve as a starting point for optimizing the successive (less-coarse) phase.
