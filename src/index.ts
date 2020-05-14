@@ -13,9 +13,7 @@ import bind_scroll_blocks from './scroll_block_events'
 function add_real_data(rundata:RunData) {
     // Add Wisconsin's real districts to the rundata.
     rundata.X = array_utils.append(rundata.X, X_real)
-    const real_f = rundata.config.metrics.map(name => F_real[name])//.filter(v => v)
-    console.log(real_f);
-    
+    const real_f = rundata.config.metrics.map(name => F_real[name])    
     rundata.F = array_utils.append(rundata.F, real_f)
 }
 

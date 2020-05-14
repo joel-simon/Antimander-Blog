@@ -143,6 +143,8 @@ export default class {
         // }
         // console.log(vw)
         if (parcoords) {
+            console.log('resize', vw);
+            
             parcoords.width(vw)
             parcoords.resize()
             parcoords.render()

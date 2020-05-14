@@ -23,10 +23,10 @@ mixin viewer()
                 
         section.snap#set-WI
             h2 Overview
-            p Here is a map of Wisonsin's current districts.
+            p Here is a map of Wisonsin's current congressional districts.
             
         section.snap
-            p Wisconsin is divided into eight districts. The color represents what party that district is leaning towards. Five of the eight are majority republican. 
+            p The color represents what party that district is leaning towards. Five of the eight are majority republican. 
             p(style='display:inline-flex;justify-content:space-between;')
                 span.metadata Republican
                 span.metadata Competitive
@@ -36,7 +36,7 @@ mixin viewer()
             //- An interactive browser of one run of Antimander for Wisconsin. 
         
         section.snap#viewer-sliders
-            p Adjust the below sliders to see generated alternatives.
+            p Adjust the below sliders to see generated alternatives from Antimander.
             br
             label.metadata Compactness (more simple districts shapes)
             input.slider(type='range', min='0', max='1.0', value='.5', step='.05',
@@ -60,14 +60,14 @@ mixin viewer()
             //- It has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
         
         section.snap
-            p Each districting is 'optimal' for a slightly different weighing of the three metrics.
+            p Each districting is 'optimal' for a slightly different weighing of the three metrics and there is no best one.
 
         section.snap#show_parcoords_pt2
             p You can drag (brush) on an axis to filter values and may see many at one time.
             img.inline.narrow(src='imgs/filter.png')
 
         section.snap
-            p This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one objective and also how those solutions rank in other metrics.
+            p This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one metric and also how those solutions rank in other metrics.
             
         section.snap
             p You may also click on any district to enlarge it.
@@ -96,16 +96,34 @@ mixin viewer()
             
         section.snap
             p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
+        
+        
+        section.snap
+            h2 Goals
+            p Antimanders goals are to bring transparency to the districting process, help build understanding of the various tradeoffs and expose gerrymandered districts by comparing them to generated alternatives. 
+            
+        section.snap
+            p Below is a brief overview of gerrymandering, algorithmic evidence and the metrics that have been established for districting. Following that is a technical overview of the research methods developed.
+        
+        section.snap
+            p The methods developed build upon multi objective evolutionary algorithms and connect the fields of generative districtings to novelty search to explicity optimize for high-quality as well as diverse districts.
 
         section.snap
-            h2 Coming below:
-            p #[b Background]: An background of gerrymandering and how computer generated districtings are useful. 
-            p #[b Metrics]: How districtings are judged.
-            p #[b Conclusion]: How you can get involved.
-            p #[b Methods&Results]: A technical overview of the algorithms developed for the library and their results.
-            //- We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
-        //- section.snap
-            //- p Below is more background on Gerrymandering, foll
+            +mailchimp()
+            p #[a(href='mailto:joelsimon6@gmail.com', target="_top") Contact]
+            p: a(href='https://github.com/joel-simon/Antimander') Github
+            P: a(href='https://discord.gg/UmgaE74') Discord
+            //- p: 
+            //- p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
+    //        .github_row.card
+    //            h3 Contribute:
+    //            .github
+    //                img(src='/imgs/github.png')
+    //                a(href='https://github.com/joel-simon/Antimander') Github
+    //            .github
+    //                img(src='/imgs/Discord-Logo-Color.png')
+    //                a(href='https://discord.gg/UmgaE74') Discord
+    //        .padding(style='height:40px;')     
     
 mixin background()
     .section#background
@@ -157,7 +175,7 @@ mixin background()
         //- p Here we present an evolutionary multi-objective approach to identify gerrymandering, building on recent approaches that contrast a prospective districting with an ensemble of simulated solutions [7]. The premise is that a fair districting should not be heavily Pareto-dominated by such simulated solutions. However, generating a large set of satisfactory districts is a signi cant technical because states may be composed of tens of thousands of geographic units, with trade-o s between many competing objectives. Previous approaches apply Monte Carlo methods [1], single- objective evolutionary algorithms [4], and non-evolutionary two- objective methods [6] to generate districtings. However, there re- mains a need for an optimization tool that can scale to thousands of geographic units, several constraints, and more than two objectives. This paper connects the problem of congressional districting to the research  eld of multi-objective evolutionary algorithms (MOEAs) and novelty search. We introduce and validate a framework and open source library called Antimander1 for multi-objective optimiization of congressional districts.
 
 mixin metrics()
-    .section#metrics
+    #metrics.section
         h2 Metrics
         //- h3 What makes a good district?
         p The results above were optimized for "fairness", "compactness" and "competitiveness." But what are those and what do they mean and what makes a 'good' district?
@@ -199,8 +217,7 @@ mixin metrics()
         h3 5. Preserving Communities
         p Another desired redistricting criteria is to not divide "communities". While there are #[a(href='https://www.brennancenter.org/sites/default/files/analysis/6%20Communities%20of%20Interest.pdf') some guidelines] for how to do so it is exceptionally hard to codify explicitly. One #[a(href='https://representable.org/') recent approach] is to use crowd sourcing.
 
-mixin all_compactness_viewer()
-    #all_compactness.section.viewer.viewer_row(
+    #metrics.section.viewer.viewer_row(
         data-datapath='all_compactness',
         data-stage='5'
     )
@@ -312,30 +329,15 @@ mixin results()
         figure.full-height
             img(src='imgs/results/novelty.png')
             figcaption
-                p The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. FIF with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline. 
+                p The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. FIF with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline.     
 
-mixin next-steps()
+mixin conclusion()
     .section#conclusion
         h2 Conclusion & Next Steps
-        p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will expose gerrymandered districts as statistical outliers.
-        p Antimander an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statisticians, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
-    //        .card
-    //            +mailchimp()
-    //        br
-    //        .card
-    //            h3 Contact
-    //            //- p: a(href='mailto:joelsimon6@gmail.com', target="_top") joelsimon6@gmail.com
-    //            p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
-    //        br
-    //        .github_row.card
-    //            h3 Contribute:
-    //            .github
-    //                img(src='/imgs/github.png')
-    //                a(href='https://github.com/joel-simon/Antimander') Github
-    //            .github
-    //                img(src='/imgs/Discord-Logo-Color.png')
-    //                a(href='https://discord.gg/UmgaE74') Discord
-    //        .padding(style='height:40px;')          
+        p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will expose gerrymandered districts as statistical outliers. 
+
+        p Antimander is an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statisticians, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
+ 
 
 mixin appendix()
     .section#appendix
@@ -381,7 +383,6 @@ mixin vary_tests()
 
         section.snap
             p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
-
 
 mixin references()
     .section#references
