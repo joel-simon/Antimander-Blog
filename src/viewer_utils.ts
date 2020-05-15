@@ -70,8 +70,8 @@ export function viewer_update_loop(viewers: ResultViewer[]) {
     canvas.onmouseleave = () => {
         active_viewer?.onMouseLeave()
     }
-    window.onresize = () => {
+    window.addEventListener("resize", () => {
         viewers.forEach(v => v.onResize())
-    }
+    })
     step()
 }

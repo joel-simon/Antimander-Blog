@@ -83,7 +83,7 @@ function scaleSymbol() {
             progress    = Math.max(0, $header.getBoundingClientRect().top / 64);
     
     //  Only execute transform if this CSS variable is set to true
-    if (JSON.parse(getComputedStyle($symbol).getPropertyValue("--can-scale"))) {
+    if (getComputedStyle($symbol).getPropertyValue("--can-scale") == 'true') {
         $symbol.style.transform = `scale(${progress + 1})`;        
     } else { //  Reset property in case viewport changes
         $symbol.style.transform = "scale(1)";

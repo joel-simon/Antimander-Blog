@@ -1,7 +1,5 @@
   .parcoords > svg, .parcoords > canvas {
-    font: 18px sans-serif;
     position: absolute;
-    font-family: vg5000;
   }
   .parcoords > canvas {
     pointer-events: none;
@@ -9,6 +7,9 @@
   
   .parcoords text.label {
     cursor: default;
+    fill: black;
+    font: 18px sans-serif;
+    font-family: vg5000;
   }
 
   .parcoords rect.background {
@@ -20,9 +21,12 @@
   .parcoords .resize rect {
     fill: rgba(0,0,0,0.1);
   }
-  .parcoords rect.extent {
-    fill: rgba(255,255,255,0.25);
+  .parcoords rect.selection {
+    /* fill: rgba(0,0,0,0.25); */
     stroke: rgba(0,0,0,0.6);
+
+    /* fill: rgba(255,255,255,0.25);
+    stroke: rgba(0,0,0,0.6); */
   }
   .parcoords .axis line, .parcoords .axis path {
     fill: none;
@@ -59,17 +63,32 @@
     /* background-color: white; */
   }
 
-  .parcoords .brush .background {
-    cursor: url('/icons/cursor-crosshairs.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 18 18, auto !important;
+  .brush .overlay[cursor="crosshair"] {
+    cursor: url('/icons/cursor-crosshairs.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 18 18, auto;
   }
-  .extent {
-    cursor: url('/icons/cursor-move.svg') 18 18 , url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-move.svg') 18 18, auto !important;
+  .brush .overlay[cursor="move"] {
+    cursor: url('/icons/cursor-move.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-move.svg') 18 18, auto;
   }
-
-  .resize.n, .resize.s {
+  .brush .overlay[cursor="ns-resize"] {
     cursor: url('/icons/cursor-resize-vertical-wide.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-resize-vertical-wide.svg') 18 18, auto !important;
   }
-
-.parcoords .tick {
+  .brush .selection {
+    cursor: url('/icons/cursor-move.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-move.svg') 18 18, auto;
+  }
+  
+  .handle.handle--n, .handle.handle--s {
+    cursor: url('/icons/cursor-resize-vertical-wide.svg') 18 18, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-resize-vertical-wide.svg') 18 18, auto !important;
+  }
+/* 
+.parcoords  .ticks {
+  display: none;
+} */
+.parcoords  .tick text {
   display: none;
 }
+
+.parcoords .axis line, .parcoords .axis path {
+  fill: none;
+  stroke: #222;
+  shape-rendering: crispEdges;
+} */

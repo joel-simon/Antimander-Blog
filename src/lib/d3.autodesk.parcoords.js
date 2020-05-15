@@ -154,6 +154,8 @@ d3.rebind(pc, events, "on");
 
 // getter/setter with event firing
 function getset(obj,state,events)  {
+  console.log(state,events);
+  
   d3.keys(state).forEach(function(key) {
       obj[key] = function(x) {
         if (!arguments.length) {
@@ -1214,12 +1216,15 @@ pc.brushMode = function(mode) {
     brush
       .y(__.dimensions[axis].yscale)
       .on("brushstart", function() {
+        console.log('brushstart', d3.event);
 				if(d3.event.sourceEvent !== null) {
 					events.brushstart.call(pc, __.brushed);
 					d3.event.sourceEvent.stopPropagation();
 				}
 			})
 			.on("brush", function() {
+        console.log('bursh', d3.event);
+        
 				brushUpdated(selected());
 			})
 			.on("brushend", function() {
@@ -1754,6 +1759,8 @@ pc.brushMode = function(mode) {
     brush
       .y(__.dimensions[axis].yscale)
       .on("brushstart", function() {
+        console.log('here');
+        
 				if(d3.event.sourceEvent !== null) {
                     events.brushstart.call(pc, __.brushed);
 					d3.event.sourceEvent.stopPropagation();

@@ -166,7 +166,7 @@ Safari requires that scroll snapping be applied to <body>
             box-shadow: none;
         }
         .parcoords {
-            position: relative;
+            // position: relative;
             transition: var(--motion-duration-med) var(--motion-easing);
             transition-property: opacity;
             text-transform: capitalize;

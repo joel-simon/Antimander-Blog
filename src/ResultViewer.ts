@@ -18,6 +18,7 @@ export default class {
     brushed_indexes: number[]
     hover_idx: number
     use_parcoords: boolean
+    hidden_axes: string[]
     constructor(container:HTMLElement, use_parcoords=true) {
         this.container = container
         this.nx_max = 3
@@ -31,6 +32,7 @@ export default class {
     setData(draw_cmd, rundata, hidden_axes=[]) {
         this.draw_cmd = draw_cmd
         this.rundata = rundata
+        this.hidden_axes = hidden_axes
         this.needs_draw = true
         this.hover_idx = -1
         this.brushed_indexes = range(rundata.X.shape[0])
@@ -39,19 +41,27 @@ export default class {
         this.values = new Array(rundata.F.shape[0]).fill(0).map((_, i) => {
             const obj:object = { index: i }
             for (let j = 0; j < rundata.F.shape[1]; j++) {
-                obj[rundata.config.metrics[j]] = rundata.F.get(i, j)
+                obj[rundata.config.metrics[j]] = rundata.F.get(i, j) * -1 //Hack to flip y order.
             }
             return obj
         })        
         if (this.use_parcoords) {
-            this.container.querySelector('.parcoords').innerHTML = ''
-            delete this.parcoords
-            this.parcoords = bind_parcoords(
-                this.container.querySelector('.parcoords'),
-                this.values, hidden_axes,
-                (idx) => this._onParCoordsUpdate(idx)
-            )
+            this._createParcoords()
         }
+    }
+
+    _createParcoords() {
+        // Delete any that already exist.
+        console.log('bind', this.container);
+        
+        this.container.querySelector('.parcoords').innerHTML = ''
+        delete this.parcoords
+        this.parcoords = bind_parcoords(
+            this.container.querySelector('.parcoords'),
+            this.values,
+            this.hidden_axes,
+            (idx) => this._onParCoordsUpdate(idx)
+        )
     }
 
     setShape(nx:number, ny:number) {
@@ -79,7 +89,7 @@ export default class {
         if (current.length == 1) {
             parcoords.unhighlight()
         }
-        this.current = sample(brushed_indexes, Math.min(brushed_indexes.length, nx_max*ny_max))
+        this.current = sample(brushed_indexes, Math.min(brushed_indexes.length, nx_max*ny_max))        
         this.needs_draw = true
     }
 
@@ -127,7 +137,6 @@ export default class {
 
     onResize() {
         const { parcoords, viewer_div } = this
-
         const vw = viewer_div.clientWidth
         // if (vw < 400) {
         //     this.nx_max = 2
@@ -143,23 +152,10 @@ export default class {
         // }
         // console.log(vw)
         if (parcoords) {
-            console.log('resize', vw);
-            
-            parcoords.width(vw)
-            parcoords.resize()
-            parcoords.render()
+            // Unfortunately, the resize method is broken. So we must recreate.
+            // https://github.com/BigFatDog/parcoords-es/issues/73
+            this._createParcoords()
         }
-        // nx = _nx
-        // ny = _ny
-        // nx = Math.floor(canvas.clientWidth / dist_width)
-        // ny = Math.floor(canvas.clientHeight / dist_width)
-        // console.log('setting', {nx, ny})
-        // draw = draw_districts( regl, map_data, statedata )
-        // window.map_texture.resize(width, height)
-        // current = sample(range(solutions.length), nx*ny)
-        // console.log({nx, ny, width, height}, current.length);
-        // needs_draw = true
-        // console.log(width, height);
     }
 
     onStep() {
@@ -167,7 +163,6 @@ export default class {
         if (needs_draw) {
             this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
             this.ny = Math.min(this.nx, this.ny_max)
-            // console.log(this.nx, this.ny);
             draw_cmd(this.nx, this.ny, this.hover_idx, current.map(i => rundata.X.pick(i)))
             viewer_div.querySelector('.view_count').innerHTML = `Viewing ${current.length} / ${brushed_indexes.length}`
             this.needs_draw = false
