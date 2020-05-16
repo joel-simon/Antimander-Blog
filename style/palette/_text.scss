@@ -142,6 +142,10 @@ ol li {
         z-index: 10; // Ensures numeral is visible if text has background
         pointer-events: none; // Ensures links work if you click on numeral
     }
+
+    &:nth-child(1n+10):before {
+        content: counter(customlistcounter) " ";
+    }
     
     &:first-child {
         counter-reset: customlistcounter;

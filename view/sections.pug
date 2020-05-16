@@ -150,7 +150,8 @@ mixin background()
         //- p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each political party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than specific percentage from the state’s total population divided by the number of districts), and each district must be contiguous.
         
         p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
-        p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [4], and non-evolutionary two-objective methods [6] to generate districtings.
+        
+        p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [5], and non-evolutionary two-objective methods [7] to generate districtings.
         // p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
         //- button View supplementary technical overview.
         //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.
@@ -200,7 +201,7 @@ mixin metrics()
 
         h3 2. Fairness
         //- h4 Efficiency-Gap:
-        p Generally we want the percent of elected representatives to correspond to the percent of voters for that party. The #[i Efficiency-Gap] [5] is a metric that views fairness through the lens of the lost votes of each party. Votes cast for the losing party, or those cast for the winning party beyond the  threshold needed to win are considered lost.
+        p Generally we want the percent of elected representatives to correspond to the percent of voters for that party. The #[i Efficiency-Gap] [6] is a metric that views fairness through the lens of the lost votes of each party. Votes cast for the losing party, or those cast for the winning party beyond the  threshold needed to win are considered lost.
         //- https://www.brennancenter.org/sites/default/files/legal-work/How_the_Efficiency_Gap_Standard_Works.pdf
         p There is another metric called #[i Partisan Symmetry] based on the Seats-Votes curve which plots how number of representatives varies with percent of the vote for each party. #[a(href='https://jeffreyshen19.github.io/Seats-Votes-Curves/', target='_blank') This article] has excellent explanations with interactive charts of pervious years districts.
         figure.up
@@ -255,7 +256,7 @@ mixin methods()
         //- p Here we optimize districtings for three objectives Polspy-Popper (compactness), Equality-Gap (fairness) and competitiveness. As discussed above, many other measures beyond those exist, and Antimander tool can be used with measures most appropriate for a particular state.
         
         h3 Process
-        p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [cite] is used here, which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed.
+        p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [2] is used here, which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed.
         figure
             img(src='imgs/methods/nsgaii.png')
             figcaption
@@ -272,14 +273,14 @@ mixin methods()
                 p Mutation process: A node (orange outline) is random selected to swap districts. The circles are the immediate adjacency graph, a simple DFS is done on nodes in the same district (black-circles). Here we see that removing the orange node would break the district and is therefore prohibited. A full graph traversal is not needed because of assumptions about the structure of districts (such that one district will never fully enclosed another district) that are preserved by the objectives.
     
         h3 Novelty Search
-        p Novelty search explicitly promotes diversity, thereby assisting exploration in search [ #[a.cite(href='') cite] ]. Novelty Search requires a behavior characterization that captures important traits in few dimensions. Multiple characterization descriptors were proposed and tested.
+        p Novelty search explicitly promotes diversity, thereby assisting exploration in search [3]. Novelty Search requires a behavior characterization that captures important traits in few dimensions. Multiple characterization descriptors were proposed and tested.
 
          //- Not sure how to explain this clearly.
          //- p One of the challenges was that the method should be invariance to swapping district id's since those are functionally equivalent.
         figure.full-height
             img(src='imgs/novelty_metrics/center_histograms.svg')
             figcaption
-                p Method #1: Tile-Histograms. A histogram of the distances between nodes within the same district. Inspired by shape features used to characterize 3D meshes [cite osada2002shape] for object databases in ways invariant to scale and rotation. It was used as a novelty metric for #[a(href='http://www.joelsimon.net/corals.html', target='_blank') Evolving Alien Corals.] #[img(src='imgs/coral.lol.png', style='height:18px;width:auto;')]
+                p Method #1: Tile-Histograms. A histogram of the distances between nodes within the same district. Inspired by shape features used to characterize 3D meshes [10] for object databases in ways invariant to scale and rotation. It was used as a novelty metric for #[a(href='http://www.joelsimon.net/corals.html', target='_blank') Evolving Alien Corals.] #[img(src='imgs/coral.lol.png', style='height:18px;width:auto;')]
         figure.full-height
             img(src='imgs/novelty_metrics/centers.svg')
             figcaption
@@ -290,14 +291,14 @@ mixin methods()
                 p Method #3: Mutual-Tiles. Pairs of tiles are selected at the start of each run (dashed lines). Then, a binary array is constructed such that Vi is 1 if the ith pair is in the same district and 0 otherwise. The k top principal components of this binary array are the features. It captures the most information at the expense of the most meta-parameters.
     
         h3 Feasible-Infeasible Search               
-        p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majority of the possibilities are inviable. Often, finding a good solution requires exploring some bad ones first. Some genetic algorithms simply throw out invalid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satisfy all constraints) and one for infeasible (FIF). The feasible population optimizes for all the objectives while the infeasible one optimizes to satisfy the objectives. Liapis et all (cite Enhancements to Constrained Novelty Search) propose combining novelty search with FIF.
+        p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majority of the possibilities are inviable. Often, finding a good solution requires exploring some bad ones first. Some genetic algorithms simply throw out invalid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satisfy all constraints) and one for infeasible (FIF). The feasible population optimizes for all the objectives while the infeasible one optimizes to satisfy the objectives. [4, 11] propose combining novelty search with FIF.
         figure
             img(src='imgs/methods/feas_infeas_drawing.svg')
             figcaption
-                p Re-creation of figure 1-C in Liapis et all showing the total solution space with disjoint spaces of feasible solutions. Infeasible solutions (orange) also have a pressure to explore, making them more likely to discover novel solutions.
+                p Re-creation of figure 1-C in Liapis et all [11] showing the total solution space with disjoint spaces of feasible solutions. Infeasible solutions (orange) also have a pressure to explore, making them more likely to discover novel solutions.
     
         h3 Multi-Phase
-        p Because optimizing a large number of nodes directly is challenging, districts are optimized through a multi-phase evolutionary algorithm, where each successive phase divides districts more granularly (similarly to Swarmy et al. cite{swamymulti}). To create a series of coarsening graphs, the graph is iteratively contracted using star contraction \cite[ch. 13]{ab-algorithms} until the state has reached 500 nodes. An additional bias is added to preserve compact shapes across graph resolutions. 
+        p Because optimizing a large number of nodes directly is challenging, districts are optimized through a multi-phase evolutionary algorithm, where each successive phase divides districts more granularly (similarly to Swarmy et al. [7]). To create a series of coarsening graphs, the graph is iteratively contracted using star contraction [12] until the state has reached 500 nodes. An additional bias is added to preserve compact shapes across graph resolutions. 
         figure
             //- img(src='imgs/methods/contract.png')
             //- img(src='imgs/methods/contractions/state_0.png')
@@ -310,7 +311,7 @@ mixin methods()
         //- The multi-objective evolutionary algorithm NSGA-II \cite{deb2002fast} is used to optimize the populations at each phase. The implementation used of NGSA-II [pymoo] handles constraints by placing infeasible solutions into their own front. A spatially aware mutation operator (described below) is implemented to encourage feasible mutations.
     
         h2 Data
-        p Wisconsin is chosen as a test as in [cite{liu2016pear,swamymulti}]. Census and geographic data was downloaded from the Metric Geometry and Gerrymandering Group's mggg-states #[a(href='https://github.com/mggg-states/WI-shapefiles') Github repository]. Voters for each party were the average voters in the 2012 and 2016 presidential election. Wisconsin has eight congressional districts composed from 6634 census wards.
+        p Wisconsin is chosen as a test as in [5,7]. Census and geographic data was downloaded from the Metric Geometry and Gerrymandering Group's mggg-states #[a(href='https://github.com/mggg-states/WI-shapefiles') Github repository]. Voters for each party were the average voters in the 2012 and 2016 presidential election. Wisconsin has eight congressional districts composed from 6634 census wards.
 
 mixin results()
     .section#results
@@ -337,7 +338,6 @@ mixin conclusion()
         p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will expose gerrymandered districts as statistical outliers. 
 
         p Antimander is an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statisticians, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
- 
 
 mixin appendix()
     .section#appendix
@@ -387,21 +387,29 @@ mixin vary_tests()
 mixin references()
     .section#references
         h2 References
-        h3 Libraries used
-        ul
-            li: p: a(href='https://pymoo.org/') Pymoo: Multi-objective Optimization.
-            li: p: a(href='http://regl.party/') Regl: A functional abstraction for webgl.
-            li: p: a(href='https://cython.org/') Cython: Language and static compiler for Python.
-            li: p: a(href='https://www.redaction.us/') Redaction: Typeface used.
+        //- h3 Papers Cited
+        ol
+            li Metric Geometry and Gerrymandering Group. 2013. Gerrychain. https://github. com/mggg/GerryChain. (2013).
+            li K. Deb, A. Pratap, S. Agarwal and T. Meyarivan, "A fast and elitist multiobjective genetic algorithm: NSGA-II," in IEEE Transactions on Evolutionary Computation, vol. 6, no. 2, pp. 182-197, April 2002.
+            li Joel Lehman and Kenneth O Stanley. 2008. Exploiting open-endedness to solve problems through the search for novelty. In ALIFE. 329–336.
+            li Antonios Liapis, Georgios N Yannakakis, and Julian Togelius. 2015. Constrained novelty search: A study on game content generation. Evolutionary computation 23, 1 (2015), 101–129.
+            li Yan Y Liu, Wendy K Tam Cho, and Shaowen Wang. 2016. PEAR: a massively parallel evolutionary computation approach for political redistricting optimization and analysis. Swarm and Evolutionary Computation 30 (2016), 78–92.
+            li Nicholas O Stephanopoulos and Eric M McGhee. 2015. Partisan gerrymandering and the effciency gap. U. Chi. L. Rev. 82 (2015), 831.
+            li Rahul Swamy, Douglas King, and Sheldon Jacobson. [n. d.]. Multi-Objective Optimization for Political Districting: A Scalable Multilevel Approach. ([n. d.]).
+            li Wendy K Tam Cho and Yan Y Liu. 2016. Toward a talismanic redistricting tool: A computational method for identifying extreme redistricting plans. Election Law Journal 15, 4 (2016), 351–366.
+            li Schutzman, Zachary. "Trade-Offs in Fair Redistricting." Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society. 2020.
+            li Osada, Robert, et al. "Shape distributions." ACM Transactions on Graphics (TOG) 21.4 (2002): 807-832.
+            li Liapis, Antonios, Georgios N. Yannakakis, and Julian Togelius. "Enhancements to constrained novelty search: Two-population novelty search for generating game content." Proceedings of the 15th annual conference on Genetic and evolutionary computation. 2013.
+            li Umut A. Acar and Guy E. Blelloch, Algorithms: Parallel and Sequential, Chapter 13.
+
+        h3 Software Libraries - Optimization
+        ol
+            li: a(href='https://pymoo.org/') Pymoo: Multi-objective Optimization.
+            li: a(href='https://cython.org/') Cython: Language and static compiler for Python.
+        h3 Software Libraries - Blog
+        ol
+            li: a(href='https://www.redaction.us/') Redaction typeface
+            li: a(href='http://regl.party/') Regl: A functional abstraction for webgl.
+            li #[a(href='https://github.com/BigFatDog/parcoords-es/') Parallel coordinates D3 chart], a fork of #[a(href='https://github.com/syntagmatic/parallel-coordinates') the original.]
             
-        h3 Papers Cited
-        ul
-            li: p Metric Geometry and Gerrymandering Group. 2013. Gerrychain. https://github. com/mggg/GerryChain. (2013).
-            li: p K. Deb, A. Pratap, S. Agarwal and T. Meyarivan, "A fast and elitist multiobjective genetic algorithm: NSGA-II," in IEEE Transactions on Evolutionary Computation, vol. 6, no. 2, pp. 182-197, April 2002.
-            li: p Joel Lehman and Kenneth O Stanley. 2008. Exploiting open-endedness to solve problems through the search for novelty.. In ALIFE. 329–336.
-            li: p Antonios Liapis, Georgios N Yannakakis, and Julian Togelius. 2015. Constrained novelty search: A study on game content generation. Evolutionary computation 23, 1 (2015), 101–129.
-            li: p Yan Y Liu, Wendy K Tam Cho, and Shaowen Wang. 2016. PEAR: a massively parallel evolutionary computation approach for political redistricting optimization and analysis. Swarm and Evolutionary Computation 30 (2016), 78–92.
-            li: p Nicholas O Stephanopoulos and Eric M McGhee. 2015. Partisan gerrymandering and the e ciency gap. U. Chi. L. Rev. 82 (2015), 831.
-            li: p Rahul Swamy, Douglas King, and Sheldon Jacobson. [n. d.]. Multi-Objective Optimization for Political Districting: A Scalable Multilevel Approach. ([n. d.]).
-            li: p Wendy K Tam Cho and Yan Y Liu. 2016. Toward a talismanic redistricting tool: A computational method for identifying extreme redistricting plans. Election Law Journal 15, 4 (2016), 351–366.
         
