@@ -1,14 +1,26 @@
 .cursor-arrow {
-    cursor: url('/icons/cursor-arrow.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-arrow.svg'), auto;
+    cursor: url('/icons/cursor-arrow.svg') 16 0, auto;
 }
 .cursor-pointer {
-    cursor: url('/icons/cursor-pointer.svg') 0 0, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto !important;
+    cursor: url('/icons/cursor-pointer.svg') 16 16, auto;
 }
 
 .cursor-text {
-    cursor: url('/icons/cursor-text-selection.svg') 16 16, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-text-selection.svg'), auto;
+    cursor: url('/icons/cursor-text-selection.svg') 16 16, auto;
 }
 
 .cursor-crosshair {
-    cursor: url('/icons/cursor-crosshairs.svg') 0 0, url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-crosshairs.svg') 0 0, auto;
+    cursor: url('/icons/cursor-crosshairs.svg') 16 16, auto;
 }
+
+.cursor-move {
+    cursor: url('/icons/cursor-move.svg') 16 16, auto;
+}
+
+.cursor-resize-vertical {
+    cursor: url('/icons/cursor-resize-vertical-wide.svg') 16 16, auto;
+}
+
+// @mixin cursor-resize-horizontal {
+//     cursor: url('/icons/cursor-resize-horizontal-wide.svg') 16 16, auto;
+// }

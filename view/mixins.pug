@@ -49,13 +49,20 @@ mixin mailchimp()
                         input#mc-embedded-subscribe.button(type='submit', value='Subscribe', name='subscribe')
 
 mixin google_analytics()
-    script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-101632858-6')
+    script(async='1', src='https://www.googletagmanager.com/gtag/js?id=UA-101632858-6')
     script.
         if (document.location.hostname != 'localhost') {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'UA-101632858-6');
+        }
+
+mixin https_redirect()
+    script.
+        let host = "antimander.org"
+        if (window.location.host == host && window.location.protocol != "https:") {
+            window.location.protocol = "https:"
         }
 
 mixin redaction_font()
@@ -135,8 +142,6 @@ mixin redaction_font()
         }
 
 mixin d3_scripts()
-    script(src='src/lib/d3.v5.min.js')
-    //- link(href='style/lib/parcoords-es.css', rel='stylesheet', type='text/css')
-    link(href='style/lib/parcoords.css', rel='stylesheet', type='text/css')
     script(src='src/lib/parcoords.standalone.js')
+    //- link(href='style/lib/parcoords.css', rel='stylesheet', type='text/css')
 

@@ -23,7 +23,6 @@ h1,h2,h3,h4,p,a {
 
 a {
     @extend .cursor-pointer;
-    cursor: url('/icons/cursor-pointer.svg'), url('https://joels-share.s3.amazonaws.com/antimander_blog/icons/cursor-pointer.svg'), auto;
     color: var(--gray-100);
     text-decoration: none;
     // display: block;
@@ -86,7 +85,7 @@ a {
 
 h1,h2,h3,h4,h5,.button {
     font-style: italic;
-    font-family: redaction-35; 
+    font-family: redaction-20; 
     
 }
 

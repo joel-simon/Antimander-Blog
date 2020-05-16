@@ -7,10 +7,10 @@ module.exports = (env, { mode }) => {
       'index': './src/index.ts',
       'viewer': './src/viewer.ts',
     },
-    devtool: (mode == 'production') ? 'source-map' : 'inline-source-map',
+    devtool: (mode == 'production') ? false : 'inline-source-map',
     devServer: {
       host: (mode == 'production') ? null : '0.0.0.0',
-      disableHostCheck: (mode != 'production'),   // That solved it
+      disableHostCheck: (mode != 'production'), // Allow mobile device testing
       compress: true
     },
     output: {

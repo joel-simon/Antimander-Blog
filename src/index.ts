@@ -22,13 +22,15 @@ async function main() {
     const viewers = []
     // Create the drawing interface.
     const draw_controller = new DrawController('/imgs/scale_rdbu_1px.png')
-    await draw_controller.initialize()
 
     // Load the first viewer and start draw loop before the others.
     console.time('time_to_first_viewer')
     const viewer_row = query('#overview.viewer_row')
     let { datapath, stage } = viewer_row.dataset    
-    const rundata = await fetch_rundata(datapath, +stage)
+    const [ rundata ] = await Promise.all([ 
+        fetch_rundata(datapath, +stage), 
+        draw_controller.initialize()
+    ])
     add_real_data(rundata)
     rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
     const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
