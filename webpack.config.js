@@ -9,8 +9,9 @@ module.exports = (env, { mode }) => {
     },
     devtool: (mode == 'production') ? 'source-map' : 'inline-source-map',
     devServer: {
-      host: '0.0.0.0',
-      disableHostCheck: true,   // That solved it
+      host: (mode == 'production') ? null : '0.0.0.0',
+      disableHostCheck: (mode != 'production'),   // That solved it
+      compress: true
     },
     output: {
       filename: '[name].js',

@@ -52,8 +52,6 @@ export default class {
 
     _createParcoords() {
         // Delete any that already exist.
-        console.log('bind', this.container);
-        
         this.container.querySelector('.parcoords').innerHTML = ''
         delete this.parcoords
         this.parcoords = bind_parcoords(
@@ -69,7 +67,6 @@ export default class {
         this.ny_max = ny
         this.nx = this.nx_max
         this.ny = this.ny_max
-        console.log({nx, ny});
         if (this.brushed_indexes) {
             this.current = sample(this.brushed_indexes, this.nx*this.ny)
         } else {

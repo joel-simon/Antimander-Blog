@@ -139,12 +139,12 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
         let anim_interval = start_animate(viewer)
         const sp = query('#set-WI') as ScrollSection
         sp.turn_on  = () => {
-            console.log('turn on #1');
+            // console.log('turn on #1');
             clearInterval(anim_interval)
             set_real_map(viewer, sliders)
         }
         sp.turn_off = () => {
-            console.log('turn off #1');
+            // console.log('turn off #1');
             anim_interval = start_animate(viewer)
         }
     }
@@ -163,7 +163,7 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
     }
     {
         sp1.turn_on  = () => {
-            console.log('sp1.turn_on');        
+            // console.log('sp1.turn_on');        
             pc.style.opacity = '1'
             if (window.innerWidth < 768 ) {
                 pc.style.display = 'block'
@@ -178,7 +178,7 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
         }
 
         sp1.turn_off = () => {
-            console.log('sp1.turn_off');
+            // console.log('sp1.turn_off');
             pc.style.opacity = '0'
             vc.style.opacity = '0'
             viewer.setShape(1, 1)
