@@ -39,15 +39,15 @@ mixin viewer()
             p Adjust the below sliders to see generated alternatives from Antimander.
             br
             label.metadata Compactness (more simple districts shapes)
-            input.slider(type='range', min='0', max='1.0', value='.5', step='.05',
+            input.slider(type='range', min='0', max='1.0', value='.5', step='.025',
                          data-metric='compactness')
             br
             label.metadata Fair ratios of representatives to voters
-            input.slider(type='range', min='0', max='1.0', value='.5', step='.05', 
+            input.slider(type='range', min='0', max='1.0', value='.5', step='.025', 
                          data-metric='fairness')
             br
             label.metadata Competitive elections
-            input.slider(type='range', min='0', max='1.0', value='.5', step='.05', 
+            input.slider(type='range', min='0', max='1.0', value='.5', step='.025', 
                          data-metric='competitiveness')
             br
             a.metadata.set_current See the current 2011 districts
@@ -59,12 +59,10 @@ mixin viewer()
             p A better way to view these tradeoffs is something called a #[a.cite(href='https://eagereyes.org/techniques/parallel-coordinates') parallel coordinates plot]. It presents the sliders vertically and draw one line across for each option according to its scores on the three metrics.
             //- It has one line for every generated solution. Each vertical axis is a dimension that was optimized for.
         
-        section.snap
-            p Each districting is 'optimal' for a slightly different weighing of the three metrics and there is no best one.
-
         section.snap#show_parcoords_pt2
             p You can drag (brush) on an axis to filter values and may see many at one time.
-            img.inline.narrow(src='imgs/filter.png')
+            //- img.inline.narrow(src='imgs/filter.png')
+            video.inline.narrow(src='video/parcoords.mp4', autoplay='true', mute='true', loop='true')
 
         section.snap
             p This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one metric and also how those solutions rank in other metrics.
@@ -72,6 +70,9 @@ mixin viewer()
         section.snap
             p You may also click on any district to enlarge it.
        
+        section.snap
+            p There is not a single best districting, each is optimal for a slightly different weighing of the metrics.
+
         section.snap
             p Exploring the results allows us to build intuition about the tradeoffs.
 
@@ -97,16 +98,23 @@ mixin viewer()
         section.snap
             p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
         
-        
         section.snap
             h2 Goals
-            p Antimanders goals are to bring transparency to the districting process, help build understanding of the various tradeoffs and expose gerrymandered districts by comparing them to generated alternatives. 
+            p Antimander is an open source optimization engine and interactive viewer with the goals of bringing transparency to the districting process, building understanding of the tradeoffs in districting and helping expose gerrymandered districts as outliers in comparison. 
+            //- by comparing them to generated alternatives. 
+        
+        //- section.snap
             
+        section.snap
+            p The methods developed connect the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
+
+            //- p The methods developed build upon multi objective evolutionary algorithms and connect the fields of generative districtings to novelty search to explicity optimize for high-quality as well as diverse districts.
+            p An initial paper is in #[a(href='https://gecco-2020.sigevo.org/index.html/HomePage') GECCO 2020].
+
         section.snap
             p Below is a brief overview of gerrymandering, algorithmic evidence and the metrics that have been established for districting. Following that is a technical overview of the research methods developed.
         
-        section.snap
-            p The methods developed build upon multi objective evolutionary algorithms and connect the fields of generative districtings to novelty search to explicity optimize for high-quality as well as diverse districts.
+        //- p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
 
         section.snap
             +mailchimp()
@@ -139,7 +147,7 @@ mixin background()
             img(src='imgs/pack&crack.svg')
             figcaption
                 p An example of packing and cracking from Steven Nass / #[a(href='https://upload.wikimedia.org/wikipedia/commons/5/55/How_to_Steal_an_Election_-_Gerrymandering.svg') Wikimedia]
-        p While a districting should intuitively be 'fair' to each party, often multiple other criteria are important, too, such as being 'regularly shaped' and having competitive elections(#[a(href='#metrics') discussed below]. Their relative importance are ultimately subjective. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering, ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
+        p While a districting should intuitively be 'fair' to each party, often multiple other criteria are important, too, such as being 'regularly shaped' and having competitive elections #[a(href='#metrics') (discussed below)]. Their relative importance are ultimately subjective. As a result, there is no one 'ideal district' and it is difficult to definitively show that a districting could be more fair. This has led to the Supreme Court ruling that while gerrymandering may be unjust, an impartial means to evaluate it is lacking. - #[a(href='https://en.wikipedia.org/wiki/Vieth_v._Jubelirer') Vieth v. Jubelirer] (2004). In #[a(href='https://www.supremecourt.gov/opinions/18pdf/18-422_9ol1.pdf',target='_blank') Rucho v. Common Cause (2019)] the court returned to gerrymandering, ruling that partisan gerrymandering is not justiciable in federal court and litigation must shift to state courts.
         p  Evaluating a districting by comparing it to a set of reasonable alternatives has recently become a theoretically attractive approach since it demonstrates that superior solutions are possible while taking into account natural biases of geography and voter distribution. However, generating a large set of satisfactory districts is a significant technical challenge because states may be composed of tens of thousands of geographic units and be optimized for many competing objectives.
 
         figure
@@ -149,9 +157,18 @@ mixin background()
  
         //- p The districting problem is the partitioning of an undirected connected graph into a fixed number of districts. Each node in the graph represents the geographic unit of a state that composes a district, and contains a number of voters registered for each political party.The partitioning of the state has two constraints: the total population of each district must be approximately equal (i.e. it cannot deviate more than specific percentage from the state’s total population divided by the number of districts), and each district must be contiguous.
         
-        p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
+        //- p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
         
+        p However, for a comparison to be meaningful it must be against a optimal as well as diverse set of solutions:
+        figure
+            figcaption.no-arrow
+                p "if these 1,000 plans are chosen in such a way that they are highly similar, then having 1,000 plans is only marginally better than having a single comparison plan. The maps should be unique from one another, each contributing new information, so that we are able to gain some understanding of what is possible in map-making for a particular jurisdiction." 
+                p - Toward a Talismanic Redistricting [8]
+        //- Previous works do not explicitly encourage diversity, something discussed in 
+            i(style='font-style: italic;') .
         p Previous approaches apply Monte Carlo methods [1], single-objective evolutionary algorithms [5], and non-evolutionary two-objective methods [7] to generate districtings.
+
+       
         // p There remains a need for an open-source library that can optimize such a complex problem with many objectives as well as an interface for making the results accessible to the public. Having this would bring transparency the tradeoffs and how they were made for existing districts as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of generative design, multi-objective evolutionary algorithms (MOEAs) and novelty search.
         //- button View supplementary technical overview.
         //- p Like with generative design tools, the goal is to present an optimal set of options for every trade-off that can be used for comparison.

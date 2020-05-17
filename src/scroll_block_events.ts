@@ -78,7 +78,7 @@ function bind_scrolling(scroll_blocks) {
         active_block = null
 
         // Process highlighting
-        const highlight_y = (window.innerWidth < 768) ? window.innerHeight*.75 : 400
+        const highlight_y = (window.innerWidth < 768) ? window.innerHeight*.85 : 400
         scroll_blocks.forEach(block => {
             const { top, height } = block.getBoundingClientRect()
             const y = top + height/2
