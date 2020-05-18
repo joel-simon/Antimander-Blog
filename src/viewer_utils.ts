@@ -40,13 +40,11 @@ export function viewer_update_loop(viewers: ResultViewer[]) {
             last_scroll = window.scrollY
             if (!active_viewer) {
                 viewers.sort((a, b) => percentSeen(b.container) - percentSeen(a.container))
+                
                 if (inView(viewers[0].container)) {
                     active_viewer = viewers[0]
-                }
-                if (active_viewer) {
                     active_viewer.container.querySelector('.canvas-container').append(canvas)
-                    console.log('append');
-                    
+                    // console.log('append', active_viewer.container.querySelector('.canvas-container'), canvas);                    
                     active_viewer.needsDraw()
                 }
             }

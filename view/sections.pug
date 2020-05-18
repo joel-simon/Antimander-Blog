@@ -62,7 +62,7 @@ mixin viewer()
         section.snap#show_parcoords_pt2
             p You can drag (brush) on an axis to filter values and may see many at one time.
             //- img.inline.narrow(src='imgs/filter.png')
-            video.inline.narrow(src='video/parcoords.mp4', autoplay='true', mute='true', loop='true')
+            video.inline.narrow(src='video/parcoords.mp4', autoplay='true', muted='true', loop='true', playsinline='true', type='video/mp4')
 
         section.snap
             p This makes it easy to explore the tradeoffs. For example, you may see only the top percentage of one metric and also how those solutions rank in other metrics.
@@ -100,16 +100,20 @@ mixin viewer()
         
         section.snap
             h2 Goals
-            p Antimander is an open source optimization engine and interactive viewer with the goals of bringing transparency to the districting process, building understanding of the tradeoffs in districting and helping expose gerrymandered districts as outliers in comparison. 
-            //- by comparing them to generated alternatives. 
+            //- p Antimander is an open source optimization engine and interactive viewer 
+            p The goal of generative districting is not necessarily to design districts for use, but to demonstrate to a jury if and how a suspected partisan districting is significantly worse than all reasonable alternatives.
         
+        section.snap
+            p The other goal is to bring transparency to the districting process and help to build and understanding of the tradeoffs.
+            
+        section.snap
+            p Algorithms cannot make value judgements for us, such as balancing compactness vs competitiveness, but can provide an optimal set of options for us to evaluate. 
         //- section.snap
             
         section.snap
-            p The methods developed connect the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
-
+            p The methods developed connect the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search]. An initial paper is in #[a(href='https://gecco-2020.sigevo.org/index.html/HomePage') GECCO 2020].
             //- p The methods developed build upon multi objective evolutionary algorithms and connect the fields of generative districtings to novelty search to explicity optimize for high-quality as well as diverse districts.
-            p An initial paper is in #[a(href='https://gecco-2020.sigevo.org/index.html/HomePage') GECCO 2020].
+            //- p 
 
         section.snap
             p Below is a brief overview of gerrymandering, algorithmic evidence and the metrics that have been established for districting. Following that is a technical overview of the research methods developed.

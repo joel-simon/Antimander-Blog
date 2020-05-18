@@ -44,13 +44,14 @@ async function main() {
     
     bind_scroll_blocks(viewer, draw_controller)
 
-    for (const row of queryAll('.viewer_row:not(#overview')) {
+    for (const row of queryAll(`.viewer_row:not(#overview)`)) {
         let { datapath, stage } = row.dataset
-        const rundata = await fetch_rundata(datapath, +stage)
+        const rundata = await fetch_rundata(datapath, +stage)        
         const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
         const viewer = new ResultViewer(row, true)
         viewer.setData(draw_cmd, rundata, ['rep advantage'])
         viewers.push(viewer)
+        viewer.needsDraw()
     }
     console.timeEnd('main')
 }

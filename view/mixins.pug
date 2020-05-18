@@ -58,13 +58,6 @@ mixin google_analytics()
             gtag('config', 'UA-101632858-6');
         }
 
-mixin https_redirect()
-    script.
-        let host = "antimander.org"
-        if (window.location.host == host && window.location.protocol != "https:") {
-            window.location.protocol = "https:"
-        }
-
 mixin redaction_font()
     style.
         @font-face {

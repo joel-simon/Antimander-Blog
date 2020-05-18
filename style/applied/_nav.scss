@@ -145,6 +145,7 @@ nav {
 }
 
 header {
+    position: -webkit-sticky;
     position: sticky;
     z-index: 4;
     margin-top: 64px;
