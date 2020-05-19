@@ -24,15 +24,18 @@ mixin viewer()
                 
         section.snap#set-WI
             h2 Overview
-            p Here is a map of Wisonsin's current congressional districts.
-            
+            p Here are Wisonsin's current congressional districts. Wisonsin is used as a test case because it has been a battleground for gerrymandering.
+
         section.snap
-            p The color represents what party that district is leaning towards. Five of the eight are majority republican. 
+            p The color represents what party that district is leaning towards. 
             p(style='display:inline-flex;justify-content:space-between;')
                 span.metadata Republican
                 span.metadata Competitive
                 span.metadata Democrat
             img.inline.wide(src='imgs/figure_legend_base.png')
+
+        section.snap
+            p Five of the eight being majority republican even though Wisconsin has roughly equal amounts of voters in each party.
             
             //- An interactive browser of one run of Antimander for Wisconsin. 
         
