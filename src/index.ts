@@ -51,7 +51,6 @@ async function main() {
         const viewer = new ResultViewer(row, true)
         viewer.setData(draw_cmd, rundata, ['rep advantage'])
         viewers.push(viewer)
-        viewer.needsDraw()
     }
     console.timeEnd('main')
 }

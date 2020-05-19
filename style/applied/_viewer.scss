@@ -37,46 +37,49 @@
         &.focused {
             opacity: 1;
         }
-        
-        // &.defocused:not(:nth-child(2))/
-        &.defocused {
-            opacity: .125;
-            // filter: saturate(0);
-            // font-family: redaction-100;
-            img {
-            }            
-            p:first-of-type:before {
-                opacity: 0;
+        // &.defocused {
+        // }       
+
+        @media screen and (min-width: $bp-single-col) {
+            // &.defocused:not(:nth-child(2))/
+              
+            &.defocused {
+                opacity: .125;
+                // filter: saturate(0);
+                // font-family: redaction-100;
+                img {
+                }            
+                p:first-of-type:before {
+                    opacity: 0;
+                }            
             }
             
+            p:first-of-type:before {
+                content: " ";
+                position: absolute;
+                left: -24px;
+                top: 24px;
+                height: 18px;
+                width: 18px;
+                display: block;
+                z-index: 2000;
+                
+                -webkit-mask-image: url(/icons/arrow-right.svg);
+                        mask-image: url(/icons/arrow-right.svg);
+                -webkit-mask-repeat: no-repeat;
+                        mask-repeat: no-repeat;
+                -webkit-mask-size: 100% 100%;
+                        mask-size: 100% 100%;
+                -webkit-mask-position: left bottom;
+                        mask-position: left bottom;
+                background-color: var(--gray-100);
+                opacity: 1;
+                            
+                transition: var(--motion-duration-med) var(--motion-easing);
+                transition-property: opacity;
+                
+            }
         }
-        
-        p:first-of-type:before {
-            content: " ";
-            position: absolute;
-            left: -24px;
-            top: 24px;
-            height: 18px;
-            width: 18px;
-            display: block;
-            z-index: 2000;
-            
-            -webkit-mask-image: url(/icons/arrow-right.svg);
-                    mask-image: url(/icons/arrow-right.svg);
-            -webkit-mask-repeat: no-repeat;
-                    mask-repeat: no-repeat;
-            -webkit-mask-size: 100% 100%;
-                    mask-size: 100% 100%;
-            -webkit-mask-position: left bottom;
-                    mask-position: left bottom;
-            background-color: var(--gray-100);
-            opacity: 1;
-                        
-            transition: var(--motion-duration-med) var(--motion-easing);
-            transition-property: opacity;
-            
-        }
-        
     }
     a.metadata.set_current {
         width: fit-content;

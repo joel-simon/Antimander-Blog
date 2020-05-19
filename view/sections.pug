@@ -77,7 +77,7 @@ mixin viewer()
             p Exploring the results allows us to build intuition about the tradeoffs.
 
         section.snap
-            h2 Optimizing for bias
+            h3 Optimizing for bias
             p In these experiments Antimander optimizes for compactness as well as partisan bias for artificially constructed states. The cities are composed of one party and states have equal voters of each party.
             //- This can help illuminate how by seeing what strategies are optimal for different situations.
 
@@ -99,7 +99,7 @@ mixin viewer()
             p We also see that gerrymandering for democrats involves splitting cities into many districts so that they may be narrowly won.
         
         section.snap
-            h2 Goals
+            h3 Goals
             //- p Antimander is an open source optimization engine and interactive viewer 
             p The goal of generative districting is not necessarily to design districts for use, but to demonstrate to a jury if and how a suspected partisan districting is significantly worse than all reasonable alternatives.
         
@@ -120,7 +120,7 @@ mixin viewer()
         
         //- p Antimander is an open source library that generates diverse and optimized congressional districts with many objectives as well as an interface for making the results accessible to the public. Our goal is to  bring transparency to the tradeoffs as well as be courtroom evidence to prove partisan gerrymandering. This work connects the problem of congressional districting to the fields of #[a(href='https://en.wikipedia.org/wiki/Generative_design', target='_blank') generative design], #[a(href='https://en.wikipedia.org/wiki/Multi-objective_optimization', target='_blank') multi-objective evolutionary algorithms (MOEAs)] and #[a(href='http://eplex.cs.ucf.edu/noveltysearch/userspage/', target='_blank') novelty search].
 
-        section.snap
+        section.snap.no-arrow
             +mailchimp()
             p #[a(href='mailto:joelsimon6@gmail.com', target="_top") Contact]
             p: a(href='https://github.com/joel-simon/Antimander') Github
@@ -423,11 +423,14 @@ mixin references()
             li Liapis, Antonios, Georgios N. Yannakakis, and Julian Togelius. "Enhancements to constrained novelty search: Two-population novelty search for generating game content." Proceedings of the 15th annual conference on Genetic and evolutionary computation. 2013.
             li Umut A. Acar and Guy E. Blelloch, Algorithms: Parallel and Sequential, Chapter 13.
 
-        h3 Software Libraries - Optimization
+        h3 Software Libraries
+        br
+        h4 Optimization
         ol
             li: a(href='https://pymoo.org/') Pymoo: Multi-objective Optimization.
             li: a(href='https://cython.org/') Cython: Language and static compiler for Python.
-        h3 Software Libraries - Blog
+        br
+        h4 Blog
         ol
             li: a(href='https://www.redaction.us/') Redaction typeface
             li: a(href='http://regl.party/') Regl: A functional abstraction for webgl.
