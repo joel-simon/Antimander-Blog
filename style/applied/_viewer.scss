@@ -84,8 +84,20 @@
     a.metadata.set_current {
         width: fit-content;
     }
-    h2 {
-//         scroll-margin-top: 128px;
+
+    .canvas-container {
+        position: relative;
+    }
+
+    .view_count {
+        @extend .cursor-pointer;
+    }
+
+    .zero_warning {
+        @extend .cursor-pointer;
+        position: absolute;
+        top: 0px;
+        width: 100%;
     }
 }
 
@@ -199,12 +211,6 @@ Safari requires that scroll snapping be applied to <body>
         pointer-events: auto;
     }
     
-}
-@media screen and (max-width: $bp-single-col) {
-    // #all_compactness 
-    .label {
-        transform: rotate(-10deg);
-    }
 }
 
 @media only screen and (max-width: 1400px) {

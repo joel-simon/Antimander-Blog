@@ -1,10 +1,13 @@
 import { sample, range, clamp, inView } from './utils'
 import bind_parcoords from './parallel_coords'
 import { StateData, RunData, DrawCMD } from './datatypes'
+import { viewer_update_loop } from './viewer_utils'
 
 export default class {
     container: HTMLElement
     viewer_div: HTMLElement
+    zero_warning: HTMLElement
+    view_count: HTMLElement
     needs_draw: boolean
     values: any[]
     draw_cmd: DrawCMD
@@ -28,15 +31,18 @@ export default class {
         this.use_parcoords = use_parcoords
         this.draw_cmd = null
         this.rundata = null
+        this.view_count = container.querySelector('.view_count')
+        this.view_count.onclick = () => this.resample()
+        this.zero_warning = container.querySelector('.zero_warning')
+        this.zero_warning.onclick = () => this.reset()
     }
+    
     setData(draw_cmd, rundata, hidden_axes=[]) {
         this.draw_cmd = draw_cmd
         this.rundata = rundata
         this.hidden_axes = hidden_axes
         this.needs_draw = true
         this.hover_idx = -1
-        this.brushed_indexes = range(rundata.X.shape[0])
-        this.current = sample(this.brushed_indexes, this.nx*this.ny)
         this.viewer_div = this.container.querySelector('.district-viewer')
         this.values = new Array(rundata.F.shape[0]).fill(0).map((_, i) => {
             const obj:object = { index: i }
@@ -48,8 +54,19 @@ export default class {
         if (this.use_parcoords) {
             this._createParcoords()
         }
+        this.reset()
+    }
+    
+    reset() {
+        this.brushed_indexes = range(this.rundata.X.shape[0])
+        this.resample()
+        this.parcoords.brushReset()
     }
 
+    resample() {
+        this.setCurrent(sample(this.brushed_indexes, this.nx*this.ny))
+    }
+    
     _createParcoords() {
         // Delete any that already exist.
         this.container.querySelector('.parcoords').innerHTML = ''
@@ -61,7 +78,7 @@ export default class {
             (idx) => this._onParCoordsUpdate(idx)
         )
     }
-
+    
     setShape(nx:number, ny:number) {
         this.nx_max = nx
         this.ny_max = ny
@@ -83,6 +100,11 @@ export default class {
     _onParCoordsUpdate(brushed_indexes: number[]) {
         const { current, parcoords, nx_max, ny_max } = this
         this.brushed_indexes = brushed_indexes
+        if (brushed_indexes.length == 0) {
+            this.zero_warning.classList.remove('hidden')
+        } else {
+            this.zero_warning.classList.add('hidden')
+        }
         if (current.length == 1) {
             parcoords.unhighlight()
         }
@@ -92,8 +114,10 @@ export default class {
 
     onClick(x: number, y:number) {
         /* x and y are both percents. */
-        const {  parcoords, nx, ny, nx_max, ny_max} = this
-        if (this.current.length == 1) { // Reset.
+        const {  parcoords, nx, ny, nx_max, ny_max} = this        
+        if (this.current.length == 0) { // Zero selected, reset random.
+            this.reset()
+        } else if (this.current.length == 1) { // Reset.
             this.current = sample(range(this.rundata.X.shape[0]), nx_max*ny_max)
             this.needs_draw = true
             parcoords.unhighlight()
@@ -115,8 +139,7 @@ export default class {
         const c_i = Math.floor(x * nx)
         const c_j = Math.floor(y * ny)
         const hover_idx = (c_j*ny) + c_i
-        // console.log(c_i, c_j, hover_idx);
-        if (hover_idx != this.hover_idx) {
+        if (hover_idx != this.hover_idx && this.current.length) {
             this.hover_idx = hover_idx
             parcoords.highlight([values[current[hover_idx]]])
             this.needs_draw = true
@@ -130,8 +153,7 @@ export default class {
         this.hover_idx = -1
         this.needs_draw = true
     }
-
-
+    
     onResize() {
         const { parcoords, viewer_div } = this
         const vw = viewer_div.clientWidth
@@ -158,10 +180,16 @@ export default class {
     onStep() {
         const { needs_draw, draw_cmd, current, rundata, viewer_div, brushed_indexes } = this
         if (needs_draw) {
+            // console.log('drawing', this.current);
             this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
             this.ny = Math.min(this.nx, this.ny_max)
             draw_cmd(this.nx, this.ny, this.hover_idx, current.map(i => rundata.X.pick(i)))
-            viewer_div.querySelector('.view_count').innerHTML = `Viewing ${current.length} / ${brushed_indexes.length}`
+            const vc = viewer_div.querySelector('.view_count')
+            if (brushed_indexes.length == this.rundata.X.shape[0]) {
+                vc.innerHTML = `Viewing ${current.length} random maps, click to resample`
+            } else {
+                vc.innerHTML = `Viewing ${current.length} / ${brushed_indexes.length} selected, click to resample`
+            }
             this.needs_draw = false
         }
     }

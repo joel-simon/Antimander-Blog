@@ -40,9 +40,10 @@ async function main() {
     viewers.push(viewer)
     viewer_update_loop(viewers)
     console.timeEnd('time_to_first_viewer')
-    viewer.needsDraw()
-    
     bind_scroll_blocks(viewer, draw_controller)
+    window.viewer = viewer
+   
+    setTimeout(() => viewer.needsDraw(), 50)
 
     for (const row of queryAll(`.viewer_row:not(#overview)`)) {
         let { datapath, stage } = row.dataset

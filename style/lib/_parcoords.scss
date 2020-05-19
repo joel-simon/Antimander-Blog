@@ -75,3 +75,9 @@
   stroke: #222;
   shape-rendering: crispEdges;
 }
+@media screen and (max-width: $bp-single-col) {
+  .parcoords text.label {
+    font: 14px sans-serif;
+    // transform: rotate(-10deg);
+  }
+}

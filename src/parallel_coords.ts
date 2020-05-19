@@ -19,7 +19,6 @@ export default function(div:HTMLElement, data:any[], hidden_axes: string[], on_c
         .reorderable()
         .brushMode('1D-axes')  // enable brushing
         .on('brush', (values: any[]) => {            
-            if (values.length == 0) { return }
             on_change(values.map(o => o.index), values)
         })
     return parcoords

@@ -1,5 +1,5 @@
 @import "lib/_reset";
-@import "lib/_parcoords";
+
 
 /*
 Core styles
@@ -25,6 +25,8 @@ Application of styles
 @import "applied/_cover";
 @import "applied/_section";
 @import "applied/_viewer";
+
+@import "lib/_parcoords";
 
 * {
     box-sizing: border-box;

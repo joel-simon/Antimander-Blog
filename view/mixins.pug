@@ -26,7 +26,9 @@ mixin district_viewer()
     .district-viewer
         .parcoords
         .canvas-container
-        p.view_count.metadata Viewing N / K
+            p.zero_warning.metadata.hidden None selected, click to reset
+        .row
+            p.view_count.metadata Viewing N / K selected
 
 mixin mailchimp()
     .mailchimp

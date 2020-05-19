@@ -17,6 +17,7 @@ mixin viewer()
                 .district-viewer
                     .parcoords(style='opacity:0;')
                     .canvas-container
+                        p.zero_warning.metadata.hidden None selected, click to reset
                         canvas.main_canvas(width=1024, height=1024)
                         //- img.main_canvas(src='imgs/WI_dists.png', style='width:auto;')
                     p.view_count.metadata(style='opacity:0;') Viewing N / K
