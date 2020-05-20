@@ -98,8 +98,7 @@ function bind_scrolling(scroll_blocks) {
         })
         // Handle events.
         if (active_block != last_active) {
-            console.log('new active', active_block);
-            
+            // console.log('new active', active_block);
             scroll_blocks.forEach(block => {
                 const { top, height } = block.getBoundingClientRect()
                 const y = top + height/2

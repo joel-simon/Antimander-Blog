@@ -42,7 +42,7 @@ async function main() {
     console.timeEnd('time_to_first_viewer')
     bind_scroll_blocks(viewer, draw_controller)
     window.viewer = viewer
-   
+    setTimeout(() => viewer.needsDraw(), 1000)
     for (const row of queryAll(`.viewer_row:not(#overview)`)) {
         let { datapath, stage } = row.dataset
         const rundata = await fetch_rundata(datapath, +stage)        

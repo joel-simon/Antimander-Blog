@@ -1,6 +1,6 @@
 
 .section.viewer {
-    padding-bottom: 512px; // Extra space so sticky viewer stays on screen
+    padding-bottom:512px; // Extra space so sticky viewer stays on screen
     
     section.snap {
         -webkit-scroll-snap-align: start !important;
@@ -177,7 +177,7 @@ Safari requires that scroll snapping be applied to <body>
         @media screen and (min-width: $bp-single-col) {
             background: none;
             height: auto;
-            top: 96px;
+            top: 64px;
             box-shadow: none;
         }
         .parcoords {
@@ -188,10 +188,10 @@ Safari requires that scroll snapping be applied to <body>
             text-align: initial;
             width:100%;
             height:164px;
-            margin-top: 20px;
+            margin-top: 0px;
             @media screen and (min-width: $bp-single-col) {
                 margin-top: 0px;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
                 // display: block;
             }
         }

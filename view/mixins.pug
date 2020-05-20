@@ -36,7 +36,14 @@ mixin mailchimp()
         h3 Stay up to date
         link(href='//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css', rel='stylesheet', type='text/css')
         style(type='text/css').
-            #mc_embed_signup{clear:left; font:14px Helvetica,Arial,sans-serif; width:100%;}
+            #mc_embed_signup_scroll {
+                float: left;
+            }
+            #mc_embed_signup{
+                clear:left;
+                //- font:14px Helvetica,Arial,sans-serif;
+                width:100%;
+            }
             /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
             We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
         #mc_embed_signup
@@ -49,6 +56,25 @@ mixin mailchimp()
                         input(type='text', name='b_a8bf2c0baf9814ce560cee82d_9ea5be3557', tabindex='-1', value='')
                     .clear
                         input#mc-embedded-subscribe.button(type='submit', value='Subscribe', name='subscribe')
+
+mixin contact()
+    +mailchimp()
+    h3 Get Involved
+    p #[a(href='mailto:joelsimon6@gmail.com', target="_top") Contact]
+    p: a(href='https://github.com/joel-simon/Antimander') Github
+    P: a(href='https://discord.gg/UmgaE74') Discord
+    //- p: 
+    //- p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
+    //        .github_row.card
+    //            h3 Contribute:
+    //            .github
+    //                img(src='/imgs/github.png')
+    //                a(href='https://github.com/joel-simon/Antimander') Github
+    //            .github
+    //                img(src='/imgs/Discord-Logo-Color.png')
+    //                a(href='https://discord.gg/UmgaE74') Discord
+    //        .padding(style='height:40px;')     
+    
 
 mixin google_analytics()
     script(async='1', src='https://www.googletagmanager.com/gtag/js?id=UA-101632858-6')
