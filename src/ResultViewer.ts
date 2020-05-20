@@ -38,6 +38,9 @@ export default class {
     }
     
     setData(draw_cmd, rundata, hidden_axes=[]) {
+        if (rundata == this.rundata) {
+            return
+        }        
         this.draw_cmd = draw_cmd
         this.rundata = rundata
         this.hidden_axes = hidden_axes
@@ -84,16 +87,22 @@ export default class {
         this.ny_max = ny
         this.nx = this.nx_max
         this.ny = this.ny_max
-        if (this.brushed_indexes) {
-            this.current = sample(this.brushed_indexes, this.nx*this.ny)
-        } else {
-            this.current = sample(range(this.rundata.X.shape[0]), this.nx*this.ny)
+        if (this.rundata) {
+            if (this.brushed_indexes) {
+                this.setCurrent(sample(this.brushed_indexes, this.nx*this.ny))
+            } else {
+                this.setCurrent(sample(range(this.rundata.X.shape[0]), this.nx*this.ny))
+            }
         }
-        this.needsDraw()
     }
 
     setCurrent(current:number[]) {
         this.current = current
+        if (current.length == 1) {
+            this.parcoords.highlight([this.values[this.current[0]]])
+        } else {
+            this.parcoords.unhighlight()
+        }
         this.needsDraw()
     }
 
@@ -138,7 +147,9 @@ export default class {
         const { nx, ny, values, parcoords, current } = this
         const c_i = Math.floor(x * nx)
         const c_j = Math.floor(y * ny)
-        const hover_idx = (c_j*ny) + c_i
+        // const hover_idx = (c_j*ny) + c_i
+        // console.log(nx, ny, c_i, c_j);
+        const hover_idx = (c_i*ny) + c_j
         if (hover_idx != this.hover_idx && this.current.length) {
             this.hover_idx = hover_idx
             parcoords.highlight([values[current[hover_idx]]])
@@ -178,17 +189,25 @@ export default class {
     }
 
     onStep() {
-        const { needs_draw, draw_cmd, current, rundata, viewer_div, brushed_indexes } = this
+        const { needs_draw, draw_cmd, current, rundata, brushed_indexes } = this
         if (needs_draw) {
-            // console.log('drawing', this.current);
-            this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
-            this.ny = Math.min(this.nx, this.ny_max)
+            if (this.nx_max == this.ny_max) {
+                this.nx = Math.min(Math.ceil(Math.sqrt(current.length)), this.nx_max)
+                this.ny = Math.min(this.nx, this.ny_max)
+            } else { // Temporary hard code to deal with NC.                 
+                if (current.length <= 2) {
+                    this.nx = 1
+                    this.ny = 2
+                } else {
+                    this.nx = Math.min(this.nx_max, current.length)
+                    this.ny = Math.min(this.ny_max, current.length)
+                }
+            }
             draw_cmd(this.nx, this.ny, this.hover_idx, current.map(i => rundata.X.pick(i)))
-            const vc = viewer_div.querySelector('.view_count')
             if (brushed_indexes.length == this.rundata.X.shape[0]) {
-                vc.innerHTML = `Viewing ${current.length} random maps, click to resample`
+                this.view_count.innerHTML = `Viewing ${current.length} random maps, click to resample`
             } else {
-                vc.innerHTML = `Viewing ${current.length} / ${brushed_indexes.length} selected, click to resample`
+                this.view_count.innerHTML = `Viewing ${current.length} / ${brushed_indexes.length} selected, click to resample`
             }
             this.needs_draw = false
         }

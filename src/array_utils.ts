@@ -36,5 +36,15 @@ export function append(a: NdArray, b: number[]): NdArray {
     return c
 }
 
+export function ndappend(a: NdArray, b: NdArray): NdArray {
+    if (b.shape[0] != a.shape[1]) {
+        throw `Invalid array shapes. ${a.shape}, ${b.shape}`;
+    }
+    const c = ndarray(new arrtypes[a.dtype](a.size + b.size), [a.shape[0]+1, a.shape[1]])
+    c.data.set(a.data, 0)
+    c.data.set(b.data, a.data.length)
+    return c
+}
+
 // const a = ndarray(new Uint8Array([3,3,3,3]), [2,2])
 // console.log(array_append(a, [4, 4]))

@@ -7,8 +7,10 @@ declare var ParCoords: any;
 export default function(div:HTMLElement, data:any[], hidden_axes: string[], on_change:Function ) {
     const parcoords = (ParCoords()(div) as any)
         .data(data)
-        .alpha(.08)
+        .alpha(.05)
         .color("black")
+        // .color("#F2BA00")
+        // .color("#006200")
         // .brushedColor('black')
         // .shadows()
         // .alphaOnBrushed(.5)

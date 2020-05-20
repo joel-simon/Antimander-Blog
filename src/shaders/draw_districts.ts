@@ -17,11 +17,12 @@ export default function(regl: any): any {
         uniform float nx;
         uniform float ny;
         uniform float mix_p;
-        uniform float n_solutions;
+        uniform float n_districts;
         uniform float color_texture_size;
         uniform float voters_texture_size;
         uniform float n_tiles;
-        uniform float selected_id;
+        uniform int n_solutions;
+        uniform int selected_id;
 
         const vec3 BLACK = vec3(0.0, 0.0, 0.0);
         const vec3 YELLOW = vec3(243./255., 232./255., 65./255.);
@@ -55,7 +56,7 @@ export default function(regl: any): any {
             }
             vec2 colorPos = idx_to_xy(tile_index, cell);
             float color_value = texture2D(tile_district_colors, colorPos).x;
-            float dist_idx = float(roundp(texture2D(tile_district_values, colorPos).x * 8.0));
+            float dist_idx = float(roundp(texture2D(tile_district_values, colorPos).x * n_districts));
             vec3 color = texture2D(color_scale, vec2(color_value, 0.0)).rgb;
             return vec4(color, dist_idx);
         }
@@ -70,13 +71,15 @@ export default function(regl: any): any {
         }
 
         vec2 get_cell(vec2 _uv) {
-            return vec2(floor(_uv.y * ny), floor(_uv.x * nx));
+            return vec2(floor(_uv.x * nx), floor(_uv.y * ny));
         }
 
         void main() {
             // We are drawing a grid of states. First find the cell index.
             vec2 cell = get_cell(uv);
-            if (cell.x + cell.y*nx >= n_solutions) {
+            int cell_idx = int((cell.y*nx)+cell.x);
+            
+            if (cell_idx >= n_solutions) {
                 discard;
             }
             
@@ -112,8 +115,7 @@ export default function(regl: any): any {
             } else 
             */
             if (dist_border) {
-                bool is_selected = floor((cell.y*nx)+cell.x) == selected_id;
-                gl_FragColor = is_selected ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
+                gl_FragColor = cell_idx == selected_id ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
             } else if (tile_index == -1) {
                 discard;
             } else {                
@@ -134,6 +136,7 @@ export default function(regl: any): any {
         uniforms: {
             nx: regl.prop('ny'),
             ny: regl.prop('nx'),
+            n_districts: regl.prop('n_districts'),
             mix_p: regl.prop('mix'),
             voters: regl.prop('voters'),
             n_solutions: regl.prop('n_solutions'),

@@ -4,6 +4,7 @@ export interface RunData {
     state_image: NdArray;
     X: NdArray;
     F: NdArray;
+    colors?: object
 }
 
 export interface StateData {

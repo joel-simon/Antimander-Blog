@@ -1,0 +1,22 @@
+{
+    "state": "../optimize/data/NC.json",
+    "out": "../view/data/header_run2/_s1",
+    "seed": 1,
+    "feasinfeas": true,
+    "feasinfeas_2N": false,
+    "max_start_tiles": 400,
+    "n_districts": 13,
+    "n_gens": 5000,
+    "pop_size": 700,
+    "metrics": [
+        "polsby_popper",
+        "efficiency_gap",
+        "competitiveness"
+    ],
+    "equality_constraint": 0.05,
+    "novelty": "centers",
+    "NSGA3": false,
+    "dont_fix_seeds": false,
+    "pp_constraint": null,
+    "nov_params": {}
+}

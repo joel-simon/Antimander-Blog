@@ -5,8 +5,15 @@ import * as array_utils from './array_utils'
 import ResultViewer from './ResultViewer'
 import { DrawController } from './draw_controller'
 import { fetch_rundata } from './viewer_utils'
+import { fetch_NC } from './NC'
 
-type ScrollSection = HTMLElement & {turn_on: Function, turn_off: Function, is_on: Boolean }
+enum ScrollState { Above, Below, Current, None }
+type ScrollSection = HTMLElement & {
+    on_above?: Function,
+    on_below?: Function,
+    on_current?: Function,
+    state: ScrollState
+}
 type ViewerSlider = HTMLInputElement & {metric_index: number, sorted_idxs: number[] }
 
 function set_real_map(viewer, sliders:ViewerSlider[]) {
@@ -41,6 +48,7 @@ function bind_bias_tests(viewer:ResultViewer, draw_controller:DrawController) {
             rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
             const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
             viewer.setData(draw_cmd, rundata, ['rep advantage'])
+            viewer.setShape(3, 3)
         }
     })
 }
@@ -66,18 +74,16 @@ function bind_scrolling(scroll_blocks) {
     let lastScrollTop = window.pageYOffset
     
     scroll_blocks.forEach(block => {
-        block.is_on = false
+        block.state = ScrollState.None
         block.classList.add("defocused")
     })
-    // const event_blocks = scroll_blocks.filter(b => b.turn_on || b.turn_off)
+
     function onscroll() {
         // console.time('scroll')
         const last_active = active_block
-        const scroll_down = window.pageYOffset > lastScrollTop
-        lastScrollTop = window.pageYOffset
         active_block = null
 
-        // Process highlighting
+        // Process highlighting and set current.
         const highlight_y = (window.innerWidth < 768) ? window.innerHeight*.85 : 400
         scroll_blocks.forEach(block => {
             const { top, height } = block.getBoundingClientRect()
@@ -90,33 +96,43 @@ function bind_scrolling(scroll_blocks) {
                 active_block_d = dist        
             }
         })
-        // console.log(active_block);
-        scroll_blocks.forEach(block => {
-            const { top, height } = block.getBoundingClientRect()
-            const y = top + height/2
-            if (y > highlight_y && (block != active_block) && block.turn_off && block.is_on) {
-                block.turn_off()
-                block.is_on = false
-            } else if (y < highlight_y && block.turn_on && !block.is_on) {
-                block.turn_on()
-                block.is_on = true
-            } else if (block == active_block && active_block.turn_on && !active_block.is_on) {
-                block.turn_on()
-                block.is_on = true
-            }
-        })
-        if (last_active) {
-            last_active.classList.add("defocused")
-            last_active.classList.remove("focused")
-        }
-        if (active_block) {
-            active_block.classList.remove("defocused")
-            active_block.classList.add("focused")
+        // Handle events.
+        if (active_block != last_active) {
+            console.log('new active', active_block);
             
+            scroll_blocks.forEach(block => {
+                const { top, height } = block.getBoundingClientRect()
+                const y = top + height/2
+                if (block == active_block && block.state != ScrollState.Current) {
+                    if (block.on_current) {
+                        block.on_current()
+                    }
+                    block.state = ScrollState.Current
+                } else if (y > highlight_y && (block != active_block) && block.state != ScrollState.Below) {                    
+                    if (block.on_below && block.state != ScrollState.None) {
+                        block.on_below()
+                    }
+                    block.state = ScrollState.Below
+                } else if (y < highlight_y && (block != active_block) && block.state != ScrollState.Above) {
+                    if (block.on_above) {
+                        block.on_above()
+                    }
+                    block.state = ScrollState.Above
+                }
+            })
+            if (last_active) {
+                last_active.classList.add("defocused")
+                last_active.classList.remove("focused")
+            }
+            if (active_block) {
+                active_block.classList.remove("defocused")
+                active_block.classList.add("focused")
+            }
         }
         // console.timeEnd('scroll')
     }    
     window.addEventListener("scroll", onscroll)
+    // if window.scrollY
     onscroll()
 }
 
@@ -134,36 +150,43 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
     const sliders = queryAll('.slider', viewer.container) as ViewerSlider[]
     bind_sliders(viewer, sliders)
     set_real_map(viewer, sliders)
-            
-    { // The first block that switches from animation to showing real WI.                
-        let anim_interval = start_animate(viewer)
-        const sp = query('#set-WI') as ScrollSection
-        sp.turn_on  = () => {
-            // console.log('turn on #1');
-            clearInterval(anim_interval)
-            set_real_map(viewer, sliders)
-        }
-        sp.turn_off = () => {
-            // console.log('turn off #1');
+
+    {
+        let anim_interval
+        const sp = query('#cover section.snap') as ScrollSection
+        sp.on_current = () => {
+            console.log('cover active');
+            viewer.setShape(1,1)
+            viewer.setData(orig_drwcmd, orig_rundata)
             anim_interval = start_animate(viewer)
         }
+        sp.on_above = () => {
+            console.log('cover above');
+            clearInterval(anim_interval)
+        }
     }
-    {
-        const sp = query('#viewer-sliders') as ScrollSection
-        sp.turn_off = () => {
+    {  
+        // Switches from animation to showing real WI.                
+        const sp = query('#set-WI') as ScrollSection
+        sp.on_current  = () => {
+            console.log('turn on set-WI');
+            viewer.setShape(1, 1)
+            viewer.setData(orig_drwcmd, orig_rundata)
             set_real_map(viewer, sliders)
         }
     }
-    const pc = query('.parcoords', viewer.container)
-    const vc = query('.view_count', viewer.container)
-    const sp1 = document.getElementById('show_parcoords_pt1') as ScrollSection
-    const canvas = query('.main_canvas') as HTMLCanvasElement
-    if (window.innerWidth < 768 ) {
-        pc.style.display = 'none'
-    }
     {
-        sp1.turn_on  = () => {
-            // console.log('sp1.turn_on');        
+        // Show the parallel coordinates.
+        const pc = query('.parcoords', viewer.container)
+        const vc = query('.view_count', viewer.container)
+        const sp = document.getElementById('show_parcoords_pt1') as ScrollSection
+        // const canvas = query('.main_canvas') as HTMLCanvasElement
+        // if (window.innerWidth < 768 ) {
+        //     pc.style.display = 'none'
+        // }    
+        sp.on_current = sp.on_above = () => {
+            console.log('show PARRCOR');
+            
             pc.style.opacity = '1'
             if (window.innerWidth < 768 ) {
                 pc.style.display = 'block'
@@ -177,31 +200,40 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
             // query('canvas.main_canvas').classList.remove('hidden')
         }
 
-        sp1.turn_off = () => {
-            // console.log('sp1.turn_off');
+        sp.on_below = () => {
             pc.style.opacity = '0'
             vc.style.opacity = '0'
             viewer.setShape(1, 1)
-            viewer.setData(orig_drwcmd, orig_rundata, ['rep advantage']) // If a user scrolls back to the cover, make sure WI is showing
-            if (window.innerWidth < 768 ) {
-                pc.style.display = 'none'
-                // canvas.width = 1024
-                // canvas.height = 1024
-            }
-            // query('img.main_canvas').classList.remove('hidden')
-            // query('canvas.main_canvas').classList.add('hidden')
+            viewer.setData(orig_drwcmd, orig_rundata) // If a user scrolls back to the cover, make sure WI is showing
+        //     if (window.innerWidth < 768 ) {
+        //         pc.style.display = 'none'
+        //     }
+        //     // query('img.main_canvas').classList.remove('hidden')
+        //     // query('canvas.main_canvas').classList.add('hidden')
         }
     }
-    // const sp2 = document.getElementById('show_parcoords_pt2') as ScrollSection
+    {
+        // Show North Carolina
+        const sp = query('#NC') as ScrollSection
+        sp.on_current = async () => {
+            console.log('turn on NC')
+            let rundata = await fetch_NC()
+            // rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
+            const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
+            viewer.setData(draw_cmd, rundata)
+            viewer.setShape(2, 4)
+            const n = rundata.X.shape[0]
+            query('.nc-view-2011', sp).onclick = () => viewer.setCurrent([n-2])
+            query('.nc-view-2016', sp).onclick = () => viewer.setCurrent([n-1])
+        }
+        sp.on_below = () => {
+            viewer.setShape(3, 3)
+            viewer.setData(orig_drwcmd, orig_rundata)
+        }
+        
+    }
 
-    // sp2.turn_on = () => {
-    //     viewer.setShape(3, 3)
-    //     vc.style.opacity = '1'
-    // }
-    // sp2.turn_off = () => {
-    //     viewer.setData(orig_drwcmd, orig_rundata, ['rep advantage']) // If a user scrolls back to the cover, make sure WI is showing
-    //     viewer.setShape(1, 1)
-    //     vc.style.opacity = '0'
+
     bind_bias_tests(viewer, draw_controller)
     bind_scrolling(scroll_blocks)
 }

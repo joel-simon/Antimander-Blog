@@ -75,14 +75,15 @@ export class DrawController {
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
             // console.timeEnd('b')
+            
             this.draw_cmd({
-                nx, ny, selected_id, state, color_scale, mix, voters, n_tiles,
+                nx, ny, selected_id, state, color_scale, mix, voters, n_tiles, n_districts,
                 tile_district_values: this.t_district_values,
                 tile_district_colors: this.t_district_colors,
                 n_solutions: (window.innerWidth < 768) ? 4 : solutions.length, //BAd hack
                 color_texture_size: this.buffer_r,
                 voters_texture_size: 128,
-                border_radius: 1.5,
+                border_radius: 1,
             })
             if (this.debug) {
                 const data = regl.read().filter((x, idx) => idx%4 < 2)//.slice(0, 2044)

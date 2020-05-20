@@ -35,16 +35,14 @@ async function main() {
     rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
     const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
     const viewer = new ResultViewer(viewer_row, true)
-    viewer.setData(draw_cmd, rundata, ['rep advantage'])
     viewer.setShape(1, 1)
+    viewer.setData(draw_cmd, rundata, ['rep advantage'])
     viewers.push(viewer)
     viewer_update_loop(viewers)
     console.timeEnd('time_to_first_viewer')
     bind_scroll_blocks(viewer, draw_controller)
     window.viewer = viewer
    
-    setTimeout(() => viewer.needsDraw(), 50)
-
     for (const row of queryAll(`.viewer_row:not(#overview)`)) {
         let { datapath, stage } = row.dataset
         const rundata = await fetch_rundata(datapath, +stage)        

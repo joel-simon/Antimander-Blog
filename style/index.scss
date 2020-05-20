@@ -61,7 +61,9 @@ body {
 
 .main_canvas  {
     // width: min(50vw, 30vh);
-    max-height: 50vh;
+    // max-height: 50vh;
+    height: 40vw;
+    max-height: calc(90vh - 300px);
 }
 
 .compactness_tile_container {

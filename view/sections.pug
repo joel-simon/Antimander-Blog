@@ -80,6 +80,18 @@ mixin viewer()
         section.snap
             p Exploring the results allows us to build intuition about the tradeoffs.
 
+        section.snap#NC
+            h3 North Carolina
+            p North Carolina is another state with a history of gerrymandering. In 2016 the Supreme Court struck down the 2011 map as unconsitutional.
+            a.metadata.nc-view-2011(style='width: fit-content;') View 2011 Districts
+            a.metadata.nc-view-2016(style='width: fit-content;') View 2016 Districts
+        
+        section.snap
+            p The 2016 map is better across all metrics but still worse than most generated ones.
+
+        section.snap
+            p This is not a complete picture since there are additional metrics to consider (discussed below) but conveys hows generated map can highlight the weaknesses of others. 
+
         section.snap
             h3 Optimizing for bias
             p In these experiments Antimander optimizes for compactness as well as partisan bias for artificially constructed states. The cities are composed of one party and states have equal voters of each party.
@@ -245,7 +257,7 @@ mixin metrics()
 
     #metrics.section.viewer.viewer_row(
         data-datapath='all_compactness',
-        data-stage='5'
+        data-stage='5'    
     )
         .viewer-track
             .viewer-container
@@ -362,7 +374,7 @@ mixin conclusion()
         h2 Conclusion & Next Steps
         p How should compactness be prioritized over competitiveness? Or partisan gerrymandering vs racial gerrymandering?  Algorithms cannot make these tough trade-offs for us. However, they can empower us by bringing transparency to the tradeoffs and providing optimal sets of options. There is also promise that having optimal options will expose gerrymandered districts as statistical outliers. 
 
-        p Antimander is an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statisticians, designers and policy experts. If this is something you are interested in being art of or supporting please reach out. 
+        p Antimander is an open-source high-performance optimization library and interactive browser with the goal of achieving this dream and making districting more transparent and fair. It has presented and validated novel methods to achieve high quality districts; however, to be ultimately successful it needs more work and must incorporate further measures, including majority-minority districts, preserving areas of interest, and other metrics that vary in importance by state. To do this requires growing into a larger open source community that brings together a diverse group of researchers, mathematicians, statisticians, designers and policy experts. If this is something you are interested in being part of or supporting please reach out. 
 
 mixin appendix()
     .section#appendix

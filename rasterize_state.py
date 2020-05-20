@@ -8,7 +8,7 @@ import numpy as np
 import json
 
 def state2img(state, r, margin):
-    img = np.zeros((r, r, 3), dtype='uint8')
+    img = np.zeros((r//2, r, 3), dtype='uint8')
     r -= 2 * margin
     x0, y0, x1, y1 = state['bbox']
     scale = min(r/(x1-x0), r/(y1-y0))
