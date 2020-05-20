@@ -283,7 +283,7 @@ mixin methods()
         //- p Here we optimize districtings for three objectives Polspy-Popper (compactness), Equality-Gap (fairness) and competitiveness. As discussed above, many other measures beyond those exist, and Antimander tool can be used with measures most appropriate for a particular state.
         
         h3 Process
-        p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [2] is used here, which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed.
+        p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [2] is used here, which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed. Two additional modifications were required to achieve good results. First, the compactness metrics were modified to be the sum of each districts compactness squared rather than the arithmetic mean as used in other papers. Otherwise districtings would get a good overall score but have one of the many districts being totally unusable. Second, constraints were placed on the worst case compactness metrics.
         figure
             img(src='imgs/methods/nsgaii.png')
             figcaption
