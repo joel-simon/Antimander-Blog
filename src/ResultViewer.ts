@@ -75,8 +75,11 @@ export default class {
 
         for (const p of [-35, -15, 0, 15, 35]) {
             const x = w * ((p/100)+0.5)
-            this.dist_chart.appendChild(svg_line(x, 4, x, 24, 1))
-            
+            if (p == 0) {
+                this.dist_chart.appendChild(svg_line(x, 0, x, 30, 1))
+            } else {
+                this.dist_chart.appendChild(svg_line(x, 10, x, 20, 1))
+            }
             const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             text.setAttribute('x', (x-20).toString())
             text.setAttribute('y', '45');
@@ -127,7 +130,7 @@ export default class {
                 this.circles[di].setAttribute('fill', `rgb(${r},${g},${b})`)
                 if (p > 0.5) { n_d++ } else { n_r++ }
             })
-            this.view_count.innerHTML = `${n_r} Rep&nbsp;&nbsp;&nbsp;${n_d} Dem`
+            this.view_count.innerHTML = `${n_r} Rep &nbsp;&nbsp;- &nbsp;&nbsp;${n_d} Dem`
         }
     }
     
