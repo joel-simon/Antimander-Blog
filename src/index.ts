@@ -1,9 +1,9 @@
 declare let window: any
 import '../style/index.scss'
 import ResultViewer from './ResultViewer'
-import { query, queryAll } from './utils'
+import { query, queryAll, fetch_imagedata } from './utils'
 import { RunData, DrawCMD } from './datatypes'
-import { fetch_rundata, viewer_update_loop } from './viewer_utils'
+import { fetch_rundata, viewer_update_loop, calc_district_stats } from './viewer_utils'
 import { DrawController } from './draw_controller'
 // import './scroll_sections'
 import { X_real, F_real } from './real_data'
@@ -15,26 +15,25 @@ function add_real_data(rundata:RunData) {
     rundata.X = array_utils.append(rundata.X, X_real)
     const real_f = rundata.config.metrics.map(name => F_real[name])    
     rundata.F = array_utils.append(rundata.F, real_f)
+    rundata.district_stats = calc_district_stats(rundata)
 }
 
 async function main() {
     console.time('main')
     const viewers = []
     // Create the drawing interface.
-    const draw_controller = new DrawController('/imgs/scale_rdbu_1px.png')
+    const color_scale = await fetch_imagedata('/imgs/scale_rdbu_1px.png')
+    const draw_controller = new DrawController(color_scale, 0.3)
 
     // Load the first viewer and start draw loop before the others.
     console.time('time_to_first_viewer')
     const viewer_row = query('#overview.viewer_row')
     let { datapath, stage } = viewer_row.dataset    
-    const [ rundata ] = await Promise.all([ 
-        fetch_rundata(datapath, +stage), 
-        draw_controller.initialize()
-    ])
+    const rundata = await fetch_rundata(datapath, +stage)
     add_real_data(rundata)
     rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
-    const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
-    const viewer = new ResultViewer(viewer_row, true)
+    const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
+    const viewer = new ResultViewer(viewer_row, true, color_scale)
     viewer.setShape(1, 1)
     viewer.setData(draw_cmd, rundata, ['rep advantage'])
     viewers.push(viewer)
@@ -46,8 +45,8 @@ async function main() {
     for (const row of queryAll(`.viewer_row:not(#overview)`)) {
         let { datapath, stage } = row.dataset
         const rundata = await fetch_rundata(datapath, +stage)        
-        const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
-        const viewer = new ResultViewer(row, true)
+        const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
+        const viewer = new ResultViewer(row, true, color_scale)
         viewer.setData(draw_cmd, rundata, ['rep advantage'])
         viewers.push(viewer)
     }

@@ -4,7 +4,9 @@ export interface RunData {
     state_image: NdArray;
     X: NdArray;
     F: NdArray;
-    colors?: object
+    colors?: object;
+    district_stats: NdArray;
+    // total_voters: number;
 }
 
 export interface StateData {
@@ -19,7 +21,7 @@ export interface Config {
     pop_size: number;
 }
 
-export type DrawCMD = (x:number, y:number, id: number, solutions: NdArray[]) => void
+export type DrawCMD = (x:number, y:number, id: number, to_draw: number[]) => void
 
 export interface NdArray {
     data: Array<number> | Int8Array | Int16Array | Int32Array |

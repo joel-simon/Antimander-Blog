@@ -1,6 +1,6 @@
 
 import { RunData, DrawCMD, NdArray } from './datatypes'
-import { fetch_rundata } from './viewer_utils'
+import { fetch_rundata, calc_district_stats } from './viewer_utils'
 import { fetch_numpy } from './utils'
 import * as array_utils from './array_utils'
 
@@ -25,6 +25,7 @@ export async function fetch_NC(): Promise<RunData> {
     rundata.colors[rundata.X.shape[0] - 2] = 'red'
     rundata.colors[rundata.X.shape[0] - 2] = 'blue'
     rundata.config.metrics = ["compactness", "fairness", "competitiveness"]
+    rundata.district_stats = calc_district_stats(rundata)
     cached = rundata
     console.timeEnd('fetch_NC')
     return rundata

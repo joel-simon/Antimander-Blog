@@ -29,6 +29,7 @@ mixin district_viewer()
             p.zero_warning.metadata.hidden None selected, click to reset
         .row
             p.view_count.metadata Viewing N / K selected
+            svg.dist_chart(height="50", width="384px")
 
 mixin mailchimp()
     .mailchimp

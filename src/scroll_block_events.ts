@@ -46,7 +46,7 @@ function bind_bias_tests(viewer:ResultViewer, draw_controller:DrawController) {
         img.onclick = async () => {
             let rundata = await fetch_rundata(datapath, +stage)
             rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
-            const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
+            const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
             viewer.setData(draw_cmd, rundata, ['rep advantage'])
             viewer.setShape(3, 3)
         }
@@ -158,10 +158,12 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
             viewer.setShape(1,1)
             viewer.setData(orig_drwcmd, orig_rundata)
             anim_interval = start_animate(viewer)
+            
         }
         sp.on_above = () => {
-            console.log('cover above');
             clearInterval(anim_interval)
+            // viewer.dist_chart.classList.add('hidden')
+            // viewer.dist_chart.classList.remove('hidden')
         }
     }
     {  
@@ -175,9 +177,19 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
         }
     }
     {
+        const sp = query('#show_chart') as ScrollSection
+        sp.on_current = sp.on_above = () => {
+            viewer.view_count.style.opacity = '1'
+            viewer.dist_chart.style.opacity = '1'
+        }
+        sp.on_below = () => {
+            viewer.view_count.style.opacity = '0'
+            viewer.dist_chart.style.opacity = '0'
+        }
+    }
+    {
         // Show the parallel coordinates.
         const pc = query('.parcoords', viewer.container)
-        const vc = query('.view_count', viewer.container)
         const sp = document.getElementById('show_parcoords_pt1') as ScrollSection
         // const canvas = query('.main_canvas') as HTMLCanvasElement
         // if (window.innerWidth < 768 ) {
@@ -192,7 +204,6 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
                 viewer.setShape(4, 4)
             } else {
                 viewer.setShape(3, 3)
-                vc.style.opacity = '1'
             }
             // Remove the temporary image.
             // query('img.main_canvas').classList.add('hidden')
@@ -201,7 +212,6 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
 
         sp.on_below = () => {
             pc.style.opacity = '0'
-            vc.style.opacity = '0'
             viewer.setShape(1, 1)
             viewer.setData(orig_drwcmd, orig_rundata) // If a user scrolls back to the cover, make sure WI is showing
         //     if (window.innerWidth < 768 ) {
@@ -218,7 +228,7 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
             console.log('turn on NC')
             let rundata = await fetch_NC()
             // rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
-            const draw_cmd = draw_controller.createViewerDrawCmd(rundata, .5)
+            const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
             viewer.setData(draw_cmd, rundata)
             viewer.setShape(2, 4)
             const n = rundata.X.shape[0]

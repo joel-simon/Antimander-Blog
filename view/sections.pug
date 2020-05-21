@@ -21,12 +21,13 @@ mixin viewer()
                         canvas.main_canvas(width=1024, height=1024)
                         //- img.main_canvas(src='imgs/WI_dists.png', style='width:auto;')
                     p.view_count.metadata(style='opacity:0;') Viewing N / K
+                    svg.dist_chart(height="50", width="384px", style='opacity:0;')
                 
         section.snap#set-WI
             h2 Overview
             p Here are Wisonsin's current congressional districts. Wisonsin is used as a test case because it has been a battleground for gerrymandering.
 
-        section.snap
+        section.snap#show_chart
             p The color represents what party that district is leaning towards. 
             p(style='display:inline-flex;justify-content:space-between;')
                 span.metadata Republican

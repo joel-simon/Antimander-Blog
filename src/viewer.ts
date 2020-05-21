@@ -7,16 +7,16 @@ declare let window: any
 import '../style/index.scss'
 
 async function main(run, stage) {
-    const draw_controller = new DrawController('imgs/scale_rdbu_1px.png')
-    await draw_controller.initialize()
+    const color_scale = await fetch_imagedata('/imgs/scale_rdbu_1px.png')    
+    const draw_controller = new DrawController(color_scale, 0.3)
     const rundata: RunData = await fetch_rundata(run, stage)
     if (!rundata ) { 
         return console.log('Data not found.')
     }
     // const background = await fetch_imagedata('imgs/district.png')
     const container  = document.getElementById('viewer')
-    const draw_cmd:DrawCMD = draw_controller.createViewerDrawCmd(rundata, 0.7)
-    const viewer = new ResultViewer(container)
+    const draw_cmd:DrawCMD = draw_controller.createViewerDrawCmd(rundata)
+    const viewer = new ResultViewer(container, true, color_scale)
     viewer.setData(draw_cmd, rundata)
     viewer_update_loop([ viewer ])
 }

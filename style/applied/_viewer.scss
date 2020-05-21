@@ -87,6 +87,10 @@
 
     .canvas-container {
         position: relative;
+        
+    }
+    .district-viewer {
+        text-align: center;
     }
 
     .view_count {
@@ -98,6 +102,9 @@
         position: absolute;
         top: 0px;
         width: 100%;
+    }
+    svg.dist_chart {
+        overflow: visible;
     }
 }
 
