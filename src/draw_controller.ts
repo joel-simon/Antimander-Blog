@@ -70,7 +70,7 @@ export class DrawController {
                 data: this.tile_district_colors,
                 shape: [ this.buffer_r, this.buffer_r, 1 ]
             })
-            
+            // console.log('Drawing', {nx, ny, selected_id});
             this.draw_cmd({
                 nx, ny, selected_id, state, color_scale, voters, n_tiles, n_districts,
                 mix: this.mix,

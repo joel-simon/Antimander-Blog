@@ -205,9 +205,7 @@ export default class {
             this.needs_draw = true
             parcoords.unhighlight()
         } else { // Draw just one.
-            const c_i = Math.floor(x * nx)
-            const c_j = Math.floor(y * ny)
-            this.current = [ this.current[ (c_j*ny) + c_i ] ]
+            this.current = [this.current[this._getCellIdx(x, y)]]
             this.needs_draw = true
             parcoords.highlight([this.values[this.current[0]]])
         }
@@ -218,12 +216,8 @@ export default class {
         if (this.current.length == 1) {
             return
         }
-        const { nx, ny, values, parcoords, current } = this
-        const c_i = Math.floor(x * nx)
-        const c_j = Math.floor(y * ny)
-        // const hover_idx = (c_j*ny) + c_i
-        // console.log(nx, ny, c_i, c_j);
-        const hover_idx = (c_i*ny) + c_j
+        const { values, parcoords, current } = this
+        const hover_idx = this._getCellIdx(x, y)
         if (hover_idx != this.hover_idx && this.current.length) {
             this.hover_idx = hover_idx
             parcoords.highlight([values[current[hover_idx]]])
@@ -260,6 +254,13 @@ export default class {
             // https://github.com/BigFatDog/parcoords-es/issues/73
             this._createParcoords()
         }
+    }
+
+    _getCellIdx(x: number, y:number) {
+        const { nx, ny } = this
+        const c_i = Math.floor(x * nx)
+        const c_j = Math.floor(y * ny)
+        return (c_j*nx) + c_i
     }
 
     onStep() {

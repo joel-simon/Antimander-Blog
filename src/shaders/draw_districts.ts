@@ -44,8 +44,8 @@ export default function(regl: any): any {
             vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
             /*  cell_uv is the relative offset within the cell.  */
             vec2 cell_uv = vec2(mod(_uv.x, cell_shape.x) / cell_shape.x,
-                                mod(_uv.y, cell_shape.y) / cell_shape.y);
-            vec3 value = texture2D(state, cell_uv).xyz;
+                                mod(_uv.y, cell_shape.y) / cell_shape.y);            
+            vec3 value = texture2D(state, cell_uv.yx).xyz;
             int tile_index = roundp(value.g * 255.0) * 256 + roundp(value.b * 255.0) - 1;
             return tile_index;
         }
@@ -127,15 +127,16 @@ export default function(regl: any): any {
         attribute vec2 position;
         varying vec2 uv;
         void main () {
-          uv = vec2(position.y, 1.0 - position.x);
+          // uv = vec2(position.y, 1.0 - position.x);
+          uv = vec2(1.0 - position.x, position.y);
           gl_Position = vec4(1.0 - 2.0 * position, 0, 1);
         }`,
         attributes: {
             position: [-2, 0, 0, -2, 2, 2]
         },
         uniforms: {
-            nx: regl.prop('ny'),
-            ny: regl.prop('nx'),
+            nx: regl.prop('nx'),
+            ny: regl.prop('ny'),
             n_districts: regl.prop('n_districts'),
             mix_p: regl.prop('mix'),
             voters: regl.prop('voters'),
