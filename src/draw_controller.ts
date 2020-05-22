@@ -76,7 +76,7 @@ export class DrawController {
                 mix: this.mix,
                 tile_district_values: this.t_district_values,
                 tile_district_colors: this.t_district_colors,
-                n_solutions: (window.innerWidth < 768) ? 4 : to_draw.length, //BAd hack
+                n_solutions: (window.innerWidth < 768 && nx == 3) ? 3 : to_draw.length, // Tmp hack
                 color_texture_size: this.buffer_r,
                 voters_texture_size: 128,
                 border_radius: 1,

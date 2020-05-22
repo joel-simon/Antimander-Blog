@@ -17,8 +17,9 @@
             50vh + var(--snap-section-padding-top-mobile-offset)
         );
         &:nth-child(2){
-            margin-top: 50vh;
+            margin-top: calc(50vh + 256px);
         }
+        margin-bottom: 64px;
         @media screen and (min-width: $bp-single-col) {
             padding-top: var(--snap-section-padding-top);
             margin-bottom: 128px;
@@ -35,10 +36,11 @@
         }
         
         &.focused {
-            opacity: 1;
+            // opacity: 1;
         }
-        // &.defocused {
-        // }       
+        &.defocused {
+            opacity: .125;
+        }       
 
         @media screen and (min-width: $bp-single-col) {
             // &.defocused:not(:nth-child(2))/
@@ -195,7 +197,7 @@ Safari requires that scroll snapping be applied to <body>
             text-align: initial;
             width:100%;
             height:164px;
-            margin-top: 0px;
+            margin-top: 16px;
             @media screen and (min-width: $bp-single-col) {
                 margin-top: 0px;
                 margin-bottom: 10px;
@@ -220,11 +222,18 @@ Safari requires that scroll snapping be applied to <body>
     
 }
 
+@media screen and (min-width: $bp-single-col) {
+    .main_canvas  {
+        height: 40vw;
+        max-height: calc(90vh - 300px);
+    }
+}
 @media only screen and (max-width: 1400px) {
     .viewer_row {
         .district-viewer {
             canvas.main_canvas {
                 max-width: 96%;
+                max-height: 48vh;
             }
         }
     }

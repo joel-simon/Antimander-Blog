@@ -15,6 +15,7 @@ type ScrollSection = HTMLElement & {
     state: ScrollState
 }
 type ViewerSlider = HTMLInputElement & {metric_index: number, sorted_idxs: number[] }
+const is_mobile = () => window.innerWidth < 768
 
 function set_real_map(viewer, sliders:ViewerSlider[]) {
     const n = viewer.rundata.X.shape[0]
@@ -48,6 +49,11 @@ function bind_bias_tests(viewer:ResultViewer, draw_controller:DrawController) {
             rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
             const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
             viewer.setData(draw_cmd, rundata, ['rep advantage'])
+            // if (is_mobile()) {
+            //     viewer.setShape(4, 4)
+            // } else {
+            //     viewer.setShape(3, 3)
+            // }
             viewer.setShape(3, 3)
         }
     })
@@ -88,6 +94,13 @@ function bind_scrolling(scroll_blocks) {
         scroll_blocks.forEach(block => {
             const { top, height } = block.getBoundingClientRect()
             const y = top + height/2
+            if (y < 0 || y > window.innerHeight) {
+                return
+            }
+            // if (block.id == 'cover_snap') {
+            //     console.log(y, highlight_y);
+                
+            // }
             // const y_perc = (top+height/2) / window.innerHeight
             // const from_mid = clamp(Math.abs(y - highlight_y)*2, 0, 1)        
             const dist = Math.abs(y - highlight_y)
@@ -96,6 +109,8 @@ function bind_scrolling(scroll_blocks) {
                 active_block_d = dist        
             }
         })
+        // console.log('onscroll', active_block);
+        
         // Handle events.
         if (active_block != last_active) {
             // console.log('new active', active_block);
@@ -149,21 +164,24 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
     const sliders = queryAll('.slider', viewer.container) as ViewerSlider[]
     bind_sliders(viewer, sliders)
     set_real_map(viewer, sliders)
-
+    const pc = query('.parcoords', viewer.container)    
     {
         let anim_interval
-        const sp = query('#cover section.snap') as ScrollSection
+        const sp = query('#cover_snap') as ScrollSection
         sp.on_current = () => {
-            console.log('cover active');
+            console.log('cover active', window.innerWidth);
             viewer.setShape(1,1)
             viewer.setData(orig_drwcmd, orig_rundata)
+            clearInterval(anim_interval)
             anim_interval = start_animate(viewer)
-            
+            if (is_mobile()) {                
+                pc.classList.add('hidden')
+            }
         }
         sp.on_above = () => {
+            console.log('cover_snap above');
+            
             clearInterval(anim_interval)
-            // viewer.dist_chart.classList.add('hidden')
-            // viewer.dist_chart.classList.remove('hidden')
         }
     }
     {  
@@ -189,22 +207,25 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
     }
     {
         // Show the parallel coordinates.
-        const pc = query('.parcoords', viewer.container)
         const sp = document.getElementById('show_parcoords_pt1') as ScrollSection
         // const canvas = query('.main_canvas') as HTMLCanvasElement
-        // if (window.innerWidth < 768 ) {
+        // if (is_mobile()) {
         //     pc.style.display = 'none'
         // }    
         sp.on_current = sp.on_above = () => {
             console.log('show PARRCOR');
             
             pc.style.opacity = '1'
-            if (window.innerWidth < 768 ) {
-                pc.style.display = 'block'
-                viewer.setShape(4, 4)
-            } else {
-                viewer.setShape(3, 3)
+            if (is_mobile()) {                
+                pc.classList.remove('hidden')
             }
+            // if (is_mobile()) {
+                
+                // pc.style.display = 'block'
+                // viewer.setShape(4, 4)
+            // } else {
+            viewer.setShape(3, 3)
+            // }
             // Remove the temporary image.
             // query('img.main_canvas').classList.add('hidden')
             // query('canvas.main_canvas').classList.remove('hidden')
@@ -214,7 +235,10 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
             pc.style.opacity = '0'
             viewer.setShape(1, 1)
             viewer.setData(orig_drwcmd, orig_rundata) // If a user scrolls back to the cover, make sure WI is showing
-        //     if (window.innerWidth < 768 ) {
+            if (is_mobile()) {                
+                pc.classList.add('hidden')
+            }
+        //     if (is_mobile()) {
         //         pc.style.display = 'none'
         //     }
         //     // query('img.main_canvas').classList.remove('hidden')
@@ -236,6 +260,11 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
             query('.nc-view-2016', sp).onclick = () => viewer.setCurrent([n-1])
         }
         sp.on_below = () => {
+            // if (is_mobile()) {
+            //     viewer.setShape(4, 4)
+            // } else {
+            //     viewer.setShape(3, 3)
+            // }
             viewer.setShape(3, 3)
             viewer.setData(orig_drwcmd, orig_rundata)
         }

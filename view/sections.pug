@@ -5,7 +5,6 @@ mixin cover()
         h1 Antimander
         h2 Open source software to generate congressional districts. 
         //- The below section.snap is there just to help trigger a scroll event.
-        section.snap(style='display:none;')
         .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
         author
             p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman]#[br] and design by #[a(href='http://nioono.com/') Nio Ono].
@@ -23,9 +22,12 @@ mixin viewer()
                     p.view_count.metadata(style='opacity:0;') Viewing N / K
                     svg.dist_chart(height="50", width="384px", style='opacity:0;')
                 
+        section.snap#cover_snap
+        //- (style='display:none;')
+        
         section.snap#set-WI
             h2 Overview
-            p Here are Wisonsin's current congressional districts. Wisonsin is used as a test case because it has been a battleground for gerrymandering.
+            p Here are Wisconsin's current congressional districts. Wisconsin is used as a test case because it has been a battleground for gerrymandering.
 
         section.snap#show_chart
             p The color represents what party that district is leaning towards. 
@@ -37,7 +39,6 @@ mixin viewer()
 
         section.snap
             p In this plan, five of the eight districts are majority republican even though Wisconsin has roughly equal amounts of voters in each party.
-            
             //- An interactive browser of one run of Antimander for Wisconsin. 
         
         section.snap#viewer-sliders
@@ -91,7 +92,7 @@ mixin viewer()
             p The 2016 map is better across all metrics but still worse than most generated ones.
 
         section.snap
-            p This is not a complete picture since there are additional metrics to consider (discussed below) but conveys hows generated map can highlight the weaknesses of others. 
+            p This is not a complete picture since there are additional metrics to consider (discussed below) but conveys how generated maps can highlight the weaknesses of others. 
 
         section.snap
             h3 Optimizing for bias
