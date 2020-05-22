@@ -8,6 +8,7 @@ export default function(regl: any): any {
         uniform sampler2D tile_district_values;
         uniform sampler2D voters;
         uniform sampler2D color_scale;
+        uniform sampler2D shadow_texture;
         uniform vec2 u_size;
         varying vec2 uv;
 
@@ -105,19 +106,24 @@ export default function(regl: any): any {
                                (get_dist_data(ti_left, cell).a != dist_idx);
 
             /*
-            bool cell_border = !all(equal(cell, get_cell(uv_top))) || \
-                               !all(equal(cell, get_cell(uv_left))) ||
-                               !all(equal(cell, get_cell(uv_right))) || \
-                               !all(equal(cell, get_cell(uv_bottom)));
-            
-            if (cell_border && draw_cell_borders) {
-                gl_FragColor = vec4(BLACK, 1.0);
-            } else 
+            vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
+            vec2 cell_uv = vec2(mod(uv.x, cell_shape.x) / cell_shape.x,
+                               mod(uv.y, cell_shape.y) / cell_shape.y); 
+            gl_FragColor = texture2D(shadow_texture, vec2(cell_uv.y, 2.0 * cell_uv.x));
+            // gl_FragColor = vec4(cell_uv.y, 0.5*cell_uv.x, 0.0, 1.0);
             */
+            
             if (dist_border) {
-                gl_FragColor = cell_idx == selected_id ? vec4(YELLOW, 0.5) : vec4(BLACK, 1.0);
+                gl_FragColor = cell_idx == selected_id ? vec4(YELLOW, 0.4) : vec4(BLACK, 1.0);
             } else if (tile_index == -1) {
-                discard;
+                if (n_solutions == 1 || cell_idx == selected_id) {
+                    vec2 cell_shape = vec2(1.0/nx, 1.0/ny);
+                    vec2 cell_uv = vec2(mod(uv.x, cell_shape.x) / cell_shape.x,
+                                        mod(uv.y, cell_shape.y) / cell_shape.y); 
+                    gl_FragColor = texture2D(shadow_texture, vec2(cell_uv.y, cell_uv.x));
+                } else {
+                    discard;
+                }
             } else {                
                 gl_FragColor = vec4(mix(dist_color, voter_color, mix_p), 1.0);
             }
@@ -140,6 +146,7 @@ export default function(regl: any): any {
             n_districts: regl.prop('n_districts'),
             mix_p: regl.prop('mix'),
             voters: regl.prop('voters'),
+            shadow_texture: regl.prop('shadow_texture'),
             n_solutions: regl.prop('n_solutions'),
             selected_id: regl.prop('selected_id'),
             state: regl.prop('state'),
@@ -155,3 +162,14 @@ export default function(regl: any): any {
         count: 3
     })
 }
+
+/*
+bool cell_border = !all(equal(cell, get_cell(uv_top))) || \
+                    !all(equal(cell, get_cell(uv_left))) ||
+                    !all(equal(cell, get_cell(uv_right))) || \
+                    !all(equal(cell, get_cell(uv_bottom)));
+
+if (cell_border && draw_cell_borders) {
+    gl_FragColor = vec4(BLACK, 1.0);
+} else 
+*/

@@ -23,6 +23,7 @@ async function main() {
     const viewers = []
     // Create the drawing interface.
     const color_scale = await fetch_imagedata('/imgs/scale_rdbu_1px.png')
+    const shadow_img = await fetch_imagedata('/imgs/WI_shadow.png')
     const draw_controller = new DrawController(color_scale, 0.3)
 
     // Load the first viewer and start draw loop before the others.
@@ -32,7 +33,7 @@ async function main() {
     const rundata = await fetch_rundata(datapath, +stage)
     add_real_data(rundata)
     rundata.config.metrics = [ "compactness", "competitiveness", "fairness" ]
-    const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
+    const draw_cmd = draw_controller.createViewerDrawCmd(rundata, shadow_img)
     const viewer = new ResultViewer(viewer_row, true, color_scale)
     viewer.setShape(1, 1)
     viewer.setData(draw_cmd, rundata, ['rep advantage'])
@@ -45,7 +46,7 @@ async function main() {
     for (const row of queryAll(`.viewer_row:not(#overview)`)) {
         let { datapath, stage } = row.dataset
         const rundata = await fetch_rundata(datapath, +stage)        
-        const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
+        const draw_cmd = draw_controller.createViewerDrawCmd(rundata, shadow_img)
         const viewer = new ResultViewer(row, true, color_scale)
         viewer.setData(draw_cmd, rundata, ['rep advantage'])
         viewers.push(viewer)

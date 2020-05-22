@@ -1,4 +1,4 @@
-import { query, queryAll, range } from './utils'
+import { query, queryAll, range, fetch_imagedata } from './utils'
 import { RunData } from './datatypes'
 import { X_real, F_real } from './real_data'
 import * as array_utils from './array_utils'
@@ -251,8 +251,9 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
         sp.on_current = async () => {
             console.log('turn on NC')
             let rundata = await fetch_NC()
+            const shadow_img = null;//await fetch_imagedata('/imgs/NC_shadow2.png')            
             // rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
-            const draw_cmd = draw_controller.createViewerDrawCmd(rundata)
+            const draw_cmd = draw_controller.createViewerDrawCmd(rundata, shadow_img)
             viewer.setData(draw_cmd, rundata)
             viewer.setShape(2, 4)
             const n = rundata.X.shape[0]

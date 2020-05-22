@@ -38,7 +38,7 @@ export class DrawController {
         this.t_district_colors = this.regl.texture()
         this.draw_cmd = draw_map_shader(this.regl)
     }
-    createViewerDrawCmd(rundata: RunData): DrawCMD {
+    createViewerDrawCmd(rundata: RunData, shadow_img?: NdArray): DrawCMD {
         /* Returns a simple function that the viewers can call. Abstracts
            away any shader or texture business.
         */
@@ -47,6 +47,12 @@ export class DrawController {
         const { n_districts } = rundata.config
         const state = regl.texture({data: rundata.state_image, wrap: 'clamp'})
         const voters = regl.texture({data: this.voter_color_values(rundata.state_data), wrap: 'clamp'})
+        
+        if (shadow_img == null) {
+            shadow_img = ndarray(new Uint8Array(4), [1, 1, 4])
+        }
+        const shadow_texture = regl.texture(shadow_img)
+
         return (nx: number, ny: number, selected_id:number, to_draw: number[]) => {
             let idx = 0
             // console.time('draw')
@@ -74,6 +80,7 @@ export class DrawController {
             this.draw_cmd({
                 nx, ny, selected_id, state, color_scale, voters, n_tiles, n_districts,
                 mix: this.mix,
+                shadow_texture,
                 tile_district_values: this.t_district_values,
                 tile_district_colors: this.t_district_colors,
                 n_solutions: (window.innerWidth < 768 && nx == 3) ? 3 : to_draw.length, // Tmp hack

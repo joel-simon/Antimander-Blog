@@ -197,7 +197,10 @@ export default class {
 
     onClick(x: number, y:number) {
         /* x and y are both percents. */
-        const {  parcoords, nx, ny, nx_max, ny_max} = this        
+        const {  parcoords, nx, ny, nx_max, ny_max} = this
+        if (nx_max == 1 && this.ny_max == 1) {
+            return
+        } 
         if (this.current.length == 0) { // Zero selected, reset random.
             this.reset()
         } else if (this.current.length == 1) { // Reset.
