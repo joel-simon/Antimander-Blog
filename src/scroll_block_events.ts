@@ -166,7 +166,7 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
     set_real_map(viewer, sliders)
     const pc = query('.parcoords', viewer.container)    
     {
-        let anim_interval
+        let anim_interval = start_animate(viewer)
         const sp = query('#cover_snap') as ScrollSection
         sp.on_current = () => {
             console.log('cover active', window.innerWidth);
@@ -251,8 +251,7 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
         sp.on_current = async () => {
             console.log('turn on NC')
             let rundata = await fetch_NC()
-            const shadow_img = null;//await fetch_imagedata('/imgs/NC_shadow2.png')            
-            // rundata.config.metrics = ["compactness", "dem advantage", "rep advantage"]
+            const shadow_img = null;//await fetch_imagedata('/imgs/NC_shadow2.png')
             const draw_cmd = draw_controller.createViewerDrawCmd(rundata, shadow_img)
             viewer.setData(draw_cmd, rundata)
             viewer.setShape(2, 4)
