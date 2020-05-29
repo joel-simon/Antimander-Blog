@@ -2,11 +2,12 @@ include mixins
 
 mixin cover()
     .section#cover
-        h1 Antimander
-        h2 Open source software to generate congressional districts. 
-        //- The below section.snap is there just to help trigger a scroll event.
-        .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
-        author
+        .contents
+            h1.logotype Antimander
+            h2.tagline Open source software to generate congressional districts. 
+            //- The below section.snap is there just to help trigger a scroll event.
+            .button.github-button(onclick='window.open("https://github.com/joel-simon/Antimander", "_blank")', style='--icon-url: url(/icons/arrow-left-up.svg)') Github
+            author
             p.metadata By #[a(href='http://www.joelsimon.net') Joel Simon] with contributions from #[a(href='http://joellehman.com/') Joel Lehman]#[br] and design by #[a(href='http://nioono.com/') Nio Ono].
     
 mixin viewer()

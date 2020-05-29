@@ -18,7 +18,7 @@ article {
     }
 }
 .section#cover {
-    height: 100vh;
+    min-height: 100vh;
     @include grid;
     margin-top: 0;
     padding-bottom: 128px; // Prevent bottom of cover from being covered by nav
@@ -32,27 +32,26 @@ article {
         border-top: none;
     }
     
-    figure.canvas-container {
-        grid-column: var(--grid-column-left);
-        border: none;
-        display: block;
-        height: 100%;
-        
-        @media screen and (min-width: $bp-single-col) {
-            grid-row: 2 / 10;
-        }
-    }
-    
-    h1, h2, author {
+    .contents {
         grid-column: var(--grid-column-right);
+        display: block;
+        z-index:99999;
+        position: relative;
     }
     
-    h2 {
-        // padding-top: 160px;
+    .logotype {
+    }
+
+    .tagline {
+        padding-top: 32px;
     }
     
-    h1 {
-        // padding-top: 24px;
+    .button {
+        margin-top: 16px;
+    }
+    
+    .metadata {
+        margin-top: 16px;
     }
     
 }
