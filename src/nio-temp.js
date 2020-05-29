@@ -183,6 +183,8 @@ function setupNavMenuButton() {
             $menuInners = document.querySelectorAll(".menu-inner");
     
     $button.onclick = () => {
+        $button.classList.toggle("open")
+        
         $menuInners.forEach($menuInner =>
             $menuInner.classList.toggle("open")
         );
