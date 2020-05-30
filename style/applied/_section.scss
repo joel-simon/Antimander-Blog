@@ -87,11 +87,13 @@
 //         border-width: 4px;
 //         background-color: var(--gray-10);
 //         background-color: #fff; // rgba(252, 251, 247, .75);
+
         margin-left: calc(var(--grid-outer-gap-l) * -1);
-        margin-right: calc(var(--grid-outer-gap-r) * -1);
+//         margin-right: calc(var(--grid-outer-gap-r) * -1);
         
         @media screen and (min-width: $bp-single-col) {
             margin-top: 0;
+            margin-left: 0;
 //             margin-bottom: 32px;
             
             & + figure {
@@ -99,20 +101,33 @@
                 margin-bottom: 0;
             }
             
-            > img, > .image-set{ // Imgs are bottom aligned by default
-                bottom: 0;
+            > img, > .image-set{
                 position: absolute;
-/*                 background-color: var(--gray-10); */
-                
-/*                 border-bottom: var(--border); */
-                
+//                 background-color: var(--gray-10);
+//                 border: var(--border);
+//                 border-bottom: var(--border);
+
+                &.square {
+                    width: 100%;
+                    max-width: 420px; // If no img size set inline
+                    
+                    left: 25%;
+                    margin-left: -12.5%;
+                }
             }
+            
+            &.up {
+                bottom: 0;
+                top: auto;
+            }
+            
             &.down {
                 > img, > .image-set{
                     top: 0;
                     bottom: auto;
                 }
             }
+            
             &.mid {
                 > img, > .image-set{
                     bottom: -10vw;
@@ -122,51 +137,33 @@
         
         &.full-height {
             > img, .image-set {
+                margin: 0 auto;  // Center
                 position: static !important;
+                margin-bottom: var(--grid-column-gap);
             }
         }
         
         > img, .image-set {
             grid-column: var(--grid-column-left);
-            margin-left: var(--grid-outer-gap-l);
-            padding-right: var(--grid-column-gap);
-            
-            &.square {
-                width: 100%;
-                max-width: 420px; // If no img size set inline
-            }
-            
 /*
-            background-color: var(--gray-10);
-            border: var(--border);
+            padding-left: var(--grid-outer-gap-l);
+            padding-right: var(--grid-column-gap);
 */
             
-            
-            @media screen and (min-width: $bp-single-col) {
-//                 position: absolute;
-            }
 
             @media screen and (min-width: $bp-desktop) {
-
                 &.wide {
                     grid-column: 1/5;
-                    padding-right: 0;
+//                     padding-right: 0;
 
                 }
-
             }
             @media screen and (min-width: $bp-max) {
                 &.square {
-//                     grid-column: 1/3;
+//                     grid-column: 2/4;
                 }
 
             }
-            
-/*
-            @media screen and (min-width: $bp-max) {
-                grid-column: 2 / 4;
-            }
-*/
         }
         
 
