@@ -44,29 +44,59 @@ a {
 }
 
 @mixin font-h1 {
-    font-size: 72px;
-    line-height: 64px;
-}
-@mixin font-h2 {
     font-size: 48px;
     line-height: 48px;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 72px;
+        line-height: 64px;
+    }
 }
-@mixin font-h3 {
+@mixin font-h2 {
     font-size: 36px;
     line-height: 40px;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 48px;
+        line-height: 48px;
+    }
+}
+@mixin font-h3 {
+    font-size: 24px;
+    line-height: 32px;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 36px;
+        line-height: 40px;
+    }
 }
 @mixin font-h4 {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 18px;
+    line-height: 24px;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 24px;
+        line-height: 32px;
+    }
 }
 @mixin font-h5 {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 18px;
+    line-height: 24px;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 24px;
+        line-height: 32px;
+    }
 }
 
 @mixin font-p {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 18px;
+    line-height: 24px;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 24px;
+        line-height: 32px;
+    }
 }
 
 @mixin font-italic {
@@ -78,9 +108,14 @@ a {
 }
 
 @mixin font-caption {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 16px;
     font-style: italic;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 18px;
+        line-height: 24px;
+    }
 }
 
 h1,h2,h3,h4,h5,.button {
