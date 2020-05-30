@@ -176,7 +176,7 @@
     }
 
     h4 {
-        padding-top: 16px;
+        padding-top: 32px;
     }
     
     p, ol, ul {
@@ -262,12 +262,6 @@
                 padding: 1px;
                 // border: 1px solid var(--gray-100);
             }
-        }
-    }
-
-    &#references {
-        ol li {
-            padding: 0 16px;
         }
     }
 }

@@ -37,12 +37,6 @@ a {
     }
 }
 
-@mixin font-metadata {
-    font-size: 18px;
-    line-height: 24px;
-    font-family: vg5000;
-}
-
 @mixin font-h1 {
     font-size: 48px;
     line-height: 48px;
@@ -118,6 +112,19 @@ a {
     }
 }
 
+@mixin font-metadata {
+    font-size: 14px;
+    line-height: 16px;
+    font-family: vg5000;
+    
+    @media screen and (min-width: $bp-single-col) {
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
+
+
 h1,h2,h3,h4,h5,.button {
     font-style: italic;
     font-family: redaction-20; 
@@ -166,15 +173,23 @@ b, strong {
 ol li {
     counter-increment: customlistcounter;
     position: relative;
+    margin: 0;
+    padding: 0;
 
     &:before {
+        @include font-metadata;
+        font-style: normal;
+        line-height: 26px;
+        
         content: "0" counter(customlistcounter) " ";
         position: absolute;
-        left: -24px;        font-family: vg5000;
-        font-variant-caps: small-caps;
-        font-style: normal;
+        left: -24px;
         z-index: 10; // Ensures numeral is visible if text has background
         pointer-events: none; // Ensures links work if you click on numeral
+        
+        @media screen and (min-width: $bp-single-col) {
+            line-height: 36px;
+        }
     }
 
     &:nth-child(1n+10):before {
@@ -185,6 +200,11 @@ ol li {
         counter-reset: customlistcounter;
     }
 }
+
+figcaption ol li:before, nav ol li:before {
+    line-height: unset;
+}
+
 
 /*
 figcaption ol li {
