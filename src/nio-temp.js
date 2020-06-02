@@ -99,11 +99,17 @@ function isCoverOnScreen() {
     
 //  Has the user scrolled past the cover yet
     if ($overview.getBoundingClientRect().top <= 0) {
-    //  If overview section has not yet scrolled past top of window
+       //  If overview section has not yet scrolled past top of window
         document.querySelector("body").classList.add("cover-off-screen");
+        document.querySelector('#toggle-menu').classList.remove('hidden')
     } else {
+        document.querySelector('#toggle-menu').classList.add('hidden')
+        console.log('on cover');
+        
         document.querySelector("body").classList.remove("cover-off-screen");
-        document.querySelector(".menu-inner").classList.remove("open");
+        // document.querySelector(".menu-inner").classList.remove("open")
+        // document.querySelector("input#toggle-menu").classList.remove("open")
+        // hide_menu()
     }
 }
 
@@ -191,6 +197,18 @@ function setupNavMenuButton() {
     };
 }
 
+function hide_menu() {
+    const   $button     = document.querySelector("input#toggle-menu"),
+            $menuInners = document.querySelectorAll(".menu-inner");
+    
+    $button.onclick = () => {
+        $button.classList.remove("open")
+        
+        $menuInners.forEach($menuInner =>
+            $menuInner.classList.remove("open")
+        );
+    };
+}
 
 /*
 ————————————————————————————————————————————————————————————————————————————————

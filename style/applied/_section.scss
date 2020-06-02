@@ -47,12 +47,23 @@
     //     }
     // }
 
+
     &:nth-child(even):after {
         background: var(--blue-gradient);
     }
     &:nth-child(odd):after {
         background: var(--red-gradient);
     }
+    // Switch ordering on mobile.
+    @media screen and (max-width: $bp-single-col) {
+        &:nth-child(odd):after {
+            background: var(--blue-gradient);
+        }
+        &:nth-child(even):after {
+            background: var(--red-gradient);
+        }
+    }
+    
 
     h1, h2, h3, h4, p, ol, ul, .button, section {
         grid-column: var(--grid-column-right);

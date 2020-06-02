@@ -15,7 +15,7 @@ mixin nav()
                 for name, idx in sections
                     li.navlink.caption(id="nav-"+name)
                         a(href='#'+name)!=name
-    input#toggle-menu.cursor-pointer(type="button", value="Toggle Menu")
+    input#toggle-menu.cursor-pointer.hidden(type="button", value="Toggle Menu")
     
 mixin text-container(text)
     div.outer-text-container

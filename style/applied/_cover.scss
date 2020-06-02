@@ -6,7 +6,6 @@ article {
     &:before {
         content: "";
         top: 0;
-/*         left: calc(var(--grid-column-gap) * -1); */
         width: 100vw;
         height: 96px;
         position: absolute;
@@ -22,7 +21,9 @@ article {
     @include grid;
     margin-top: 0;
     padding-bottom: 128px; // Prevent bottom of cover from being covered by nav
-    
+    > *:first-child {
+        padding-top: calc(32px + var(--vertical-offset));
+    }
     &:before {
         display: none;
     }
@@ -33,7 +34,7 @@ article {
     }
     
     .contents {
-        grid-column: var(--grid-column-right);
+          grid-column: var(--grid-column-right);
         display: block;
         z-index:99999;
         position: relative;
