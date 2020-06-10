@@ -173,6 +173,18 @@ Safari requires that scroll snapping be applied to <body>
     z-index: 2;
     pointer-events: none;
     
+    @media screen and (min-width: $bp-single-col) {
+        top: 0;
+        left: 0;
+        right: 0;
+        pointer-events: auto;
+    }
+    
+    @media screen and (min-width: $bp-max) {
+        width: 50vw;
+        left: calc(var(--full-bleed-offset) - var(--grid-outer-gap-l));
+    }
+    
     .viewer-container {
         height: 50vh; // Temporary, to keep text visible
         width: 100%;
@@ -212,12 +224,6 @@ Safari requires that scroll snapping be applied to <body>
         .view_count {
             text-align: center;
         }
-    }
-    @media screen and (min-width: $bp-single-col) {
-        top: 0;
-        left: 0;
-        right: 0;
-        pointer-events: auto;
     }
     
 }
