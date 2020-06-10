@@ -57,12 +57,23 @@
     //     }
     // }
 
+
     &:nth-child(even):after {
         background: var(--blue-gradient);
     }
     &:nth-child(odd):after {
         background: var(--red-gradient);
     }
+    // Switch ordering on mobile.
+    @media screen and (max-width: $bp-single-col) {
+        &:nth-child(odd):after {
+            background: var(--blue-gradient);
+        }
+        &:nth-child(even):after {
+            background: var(--red-gradient);
+        }
+    }
+    
 
     h1, h2, h3, h4, p, ol, ul, .button, section {
         grid-column: var(--grid-column-right);
@@ -94,19 +105,52 @@
         grid-column: var(--grid-column-all);
         position: relative;
         margin-top: 64px;
+/*         border-top: var(--border); */
+//         border-color: var(--gray-40);
+//         border-width: 4px;
+//         background-color: var(--gray-10);
+//         background-color: #fff; // rgba(252, 251, 247, .75);
+
+        margin-left: calc(var(--grid-outer-gap-l) * -1);
+//         margin-right: calc(var(--grid-outer-gap-r) * -1);
         
         @media screen and (min-width: $bp-single-col) {
             margin-top: 0;
+            margin-left: 0;
+//             margin-bottom: 32px;
             
-            > img, > .image-set{ // Imgs are bottom aligned by default
-                bottom: 0;
+            & + figure {
+                margin-top: 0;
+                margin-bottom: 0;
             }
+            
+            > img, > .image-set{
+                position: absolute;
+//                 background-color: var(--gray-10);
+//                 border: var(--border);
+//                 border-bottom: var(--border);
+
+                &.square {
+                    width: 100%;
+                    max-width: 420px; // If no img size set inline
+                    
+                    left: 25%;
+                    margin-left: -12.5%;
+                }
+            }
+            
+            &.up {
+                bottom: 0;
+                top: auto;
+            }
+            
             &.down {
                 > img, > .image-set{
                     top: 0;
                     bottom: auto;
                 }
             }
+            
             &.mid {
                 > img, > .image-set{
                     bottom: -10vw;
@@ -116,24 +160,32 @@
         
         &.full-height {
             > img, .image-set {
+                margin: 0 auto;  // Center
                 position: static !important;
+                margin-bottom: var(--grid-column-gap);
             }
         }
         
         > img, .image-set {
             grid-column: var(--grid-column-left);
+/*
+            padding-left: var(--grid-outer-gap-l);
+            padding-right: var(--grid-column-gap);
+*/
             
-            
-            @media screen and (min-width: $bp-single-col) {
-                position: absolute;
-            }
 
             @media screen and (min-width: $bp-desktop) {
-                grid-column: 2 / 5;
+                &.wide {
+                    grid-column: 1/5;
+//                     padding-right: 0;
+
+                }
             }
-            
             @media screen and (min-width: $bp-max) {
-                grid-column: 2 / 4;
+                &.square {
+//                     grid-column: 2/4;
+                }
+
             }
         }
         
@@ -163,7 +215,12 @@
         }
         
         figcaption {
+            p {
+//                 @include font-p;
+                font-style: italic;
+            }
             grid-column: var(--grid-column-right);
+            margin-right: var(--grid-outer-gap-r);
         }
         
     }
@@ -174,7 +231,7 @@
     }
     
     >*:first-child { // This should always be an H2
-        padding-top:calc(72px + var(--vertical-offset));
+        padding-top:calc(0px + var(--vertical-offset));
     }
     
     h2 {
@@ -196,8 +253,10 @@
     figcaption {
         position: relative;
         margin-bottom: 16px;;
+        margin-left: var(--grid-outer-gap-l);
         
         @media screen and (min-width: $bp-single-col) {
+            margin-left: 0;
             // Arrow
             &:not(.no-arrow):before {
                 content: " ";
@@ -216,35 +275,30 @@
                         mask-size: 100% 100%;
                 -webkit-mask-position: left bottom;
                         mask-position: left bottom;
-                background-color: var(--gray-100);
-                
+                background-color: var(--gray-100);                
             }
         }
-/*
-        
-        .text-arrow {
-            width:24px;
-            height:24px;
-            position: absolute;
-            left: -24px;
-            top: 3px;
-        }
-*/
-//         margin-bottom: 32px;
     }
-
+    
     img.input {
         grid-column: span 1;
         margin-top: 16px;
         border-radius: 2px;
+        
         &:hover {
             box-shadow: 0 0 0 1px var(--gray-100)
         }
     }
-
+    
     &#cover {
     }
     
+    &#metrics {
+        >*:first-child {
+            padding-top:calc(64px + var(--vertical-offset));
+        }
+    }
+
     &#background {
         margin-top: calc(var(--vertical-offset) * -1);
     }
