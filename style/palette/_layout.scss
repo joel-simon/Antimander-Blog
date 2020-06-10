@@ -4,6 +4,7 @@ $bp-desktop: 1280px;
 $bp-wide: 1024px;           //  Above this, adjust layout for wider views
 $bp-single-col: 768px;      //  Everything below this is single column,
                             //  everything above is double column.
+$grid-column-gap: 32px;
 
 :root {
     --grid-template-columns: repeat(4, 1fr) 0px repeat(4, 1fr);
@@ -14,6 +15,8 @@ $bp-single-col: 768px;      //  Everything below this is single column,
     --grid-column-all: 1 / 10;
     --grid-outer-gap-l: 32px;
     --grid-outer-gap-r: 16px;
+    
+    --full-bleed-offset: calc((-50vw + 720px));
     
     @media screen and (min-width: $bp-single-col) {      
         --grid-column-left: 1 / 5;
@@ -34,4 +37,9 @@ $bp-single-col: 768px;      //  Everything below this is single column,
 @mixin grid-outer-margins {
     margin-left: var(--grid-outer-gap-l);
     margin-right: var(--grid-outer-gap-r);
+}
+
+body {
+    max-width: $bp-max;
+    margin: 0 auto;
 }

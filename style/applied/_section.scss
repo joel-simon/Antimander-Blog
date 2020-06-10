@@ -19,6 +19,11 @@
         margin-top: var(--vertical-offset);
         top: 0;
         background-color: var(--gray-100);
+        
+        @media screen and (min-width: $bp-max) {
+            width: 50vw;
+        }
+        
     }
     
     // Gradient
@@ -37,6 +42,11 @@
             height: 100%; 
             border-top: var(--border);
         }
+        
+        @media screen and (min-width: $bp-max) {
+            left: var(--full-bleed-offset);
+        }
+        
     }
     // &#cover:after {
     //     width: 0px;

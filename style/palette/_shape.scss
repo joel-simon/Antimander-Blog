@@ -4,14 +4,13 @@
 
 // Vertical divider
 body:after {
-//     width: var(--grid-outer-gap-l);
-
     @media screen and (min-width: $bp-single-col) {
         width: 50vw;
         content: " ";
         height: 100vh;
         border-right: var(--border);
         position: fixed;
+        left: 0;
         top: 0;
         bottom: 0;
         z-index: 1000;

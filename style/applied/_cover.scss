@@ -15,6 +15,11 @@ article {
         @media screen and (min-width: $bp-single-col) {
             width: 50vw;
         }
+        
+        @media screen and (min-width: $bp-max) {
+            left: 0;
+        }
+
     }
 }
 .section#cover {
