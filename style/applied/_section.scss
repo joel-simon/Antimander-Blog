@@ -140,20 +140,23 @@
             }
             
             &.up {
-                bottom: 0;
-                top: auto;
+                > img, > .image-set{
+                    bottom: 0px;
+                    top: auto;
+                }
             }
             
             &.down {
                 > img, > .image-set{
-                    top: 0;
+                    top: 0px;
                     bottom: auto;
                 }
             }
             
             &.mid {
                 > img, > .image-set{
-                    bottom: -10vw;
+                    // bottom: 10vw;
+                    transform: translateY(-50%);
                 }
             }
         }

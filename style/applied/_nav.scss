@@ -9,32 +9,20 @@ body.cover-off-screen {
     header, nav {
         @media screen and (max-width: $bp-single-col) {
             --menu-hide-offset: -320px;
-            top: var(--menu-hide-offset); // Hide on scroll
-            
+            top: var(--menu-hide-offset); // Hide on scroll            
             .menu-inner {
                 transition: transform var(--motion-duration-med) var(--motion-easing);
-                
                 &.open {
                     transform: translateY(calc(var(--menu-hide-offset) * -1));
                 }
             }
-            
-/*
-            &.not-sticky {
-                .menu-inner.open {
-                    transform: translateY(0);
-                }
-            }
-*/
         }
-
     }
 }
 
 header, nav {
     @media screen and (min-width: $bp-single-col) {
         top: -1px;
-        
         .menu-inner, .menu-inner.open {
             transform: translateY(0);
         }
@@ -71,13 +59,22 @@ nav {
     
     &.sticky {
         --box-shadow-size: 4px;
+        // Some hacks to fix the nav on mobile. 
+        @media screen and (max-width: $bp-single-col) {
+            ol {
+                top: 0px;
+            }
+            .menu-inner {
+                &:after {
+                    border-bottom: 0px;
+                }
+            }
+        }
     }
     
     .menu-inner {
         overflow: hidden;
         padding-bottom: 64px;
-//         min-height: 128px;
-//         background: blue;
         &:after {
             content: "";
             position: absolute;
@@ -98,7 +95,6 @@ nav {
         }
         
     }
-        
     ol {
         padding-right:  var(--grid-outer-gap-l); // Simulates gutters on outside of grid
         
@@ -114,6 +110,7 @@ nav {
         
         top: calc((var(--header-height) * 2) + 0px);
         
+
         @media screen and (min-width: $bp-single-col) {
             column-count: 2;
             top: calc(var(--header-height) + 1px);
@@ -151,13 +148,11 @@ nav {
                 padding: 0 var(--grid-column-gap);
                 margin-right: calc(-1 * var(--grid-column-gap));
                 white-space: nowrap;
-                
+            
                 @media screen and (min-width: $bp-single-col) {
                     margin-right: unset;
-                }
-                
+                }                
                 &:hover {
-//                     border-top-color: var(--gray-100);
                     border-bottom-color: var(--gray-100);
                 }
             }

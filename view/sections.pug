@@ -278,7 +278,7 @@ mixin methods()
     .section#methods
         h2 Methods
         p Optimization is typically a process aimed towards achieving a particular goal; however, many real world problems are complex with multiple competing goals. Some domains handle this by creating a weighted average 'composite' goal. This requires picking a precise and often arbitrary weighting a priori. Consider choosing an airplane flight, usually some balance of speed and affordability is desired but that tradeoff is subjective and it's hard to weight them before seeing the options. Multi-objective optimization is the process of finding the optimal set of solutions across all possible tradeoffs among objectives.
-        figure
+        figure.mid
             img.wide(src='https://docs.google.com/drawings/d/e/2PACX-1vRj4GulRK3RKGTO3X4cMyKh7bh3M0b9WeOZjhRHOFBDk0XGtK-kQfOGGr9iXaWzAuvsXN614tleJlfn/pub?w=577&h=295')
             figcaption
                 p #[b Left]: Minimizing the error rate of a single-objective over time. #[br] #[b Right]: In multi-objective optimization there is a "pareto-front" or n-dimensional surface of solutions where every solution in the front has no other solution that is better in every regard (dominates). These are called  "pareto-optimal."
@@ -288,7 +288,7 @@ mixin methods()
         
         h3 Process
         p The Non-Dominated-Sorting-Genetic-Algorithm (NSGA-II) [2] is used here, which is an evolutionary multi-objective algorithm (MOEA). To improve upon NSGA-II (which when applied naively failed to generate any feasible solutions), we explore a series of extensions: multi-phase optimization, novelty search (NS), and feasible-infeasible (FIF) search. Crossover is not employed. Two additional modifications were required to achieve good results. First, the compactness metrics were modified to be the sum of each districts compactness squared rather than the arithmetic mean as used in other papers. Otherwise districtings would get a good overall score but have one of the many districts being totally unusable. Second, constraints were placed on the worst case compactness metrics.
-        figure
+        figure.mid
             img.wide(src='imgs/methods/nsgaii.png')
             figcaption
                 p Overview of the NSGA-II process.
@@ -298,7 +298,7 @@ mixin methods()
         
         h3 Mutation Operator
         p The mutation operator simply takes a node bordering another district and swaps the district it belongs to. To make exploring the search space practical, the mutation operator only allows mutations that preserve the contiguity of the district. Calculating graph connectedness after every mutation would be computationally prohibitive and so a local adjacency graph is created for each node for fast checks.
-        figure
+        figure.mid
             img.square(src='imgs/methods/mutation.svg')
             figcaption
                 p Mutation process: A node (orange outline) is random selected to swap districts. The circles are the immediate adjacency graph, a simple DFS is done on nodes in the same district (black-circles). Here we see that removing the orange node would break the district and is therefore prohibited. A full graph traversal is not needed because of assumptions about the structure of districts (such that one district will never fully enclosed another district) that are preserved by the objectives.
@@ -308,29 +308,29 @@ mixin methods()
 
          //- Not sure how to explain this clearly.
          //- p One of the challenges was that the method should be invariance to swapping district id's since those are functionally equivalent.
-        figure.full-height
+        figure.full-height.mid
             img.square(src='imgs/novelty_metrics/center_histograms.svg')
             figcaption
                 p Method #1: Tile-Histograms. A histogram of the distances between nodes within the same district. Inspired by shape features used to characterize 3D meshes [10] for object databases in ways invariant to scale and rotation. It was used as a novelty metric for #[a(href='http://www.joelsimon.net/corals.html', target='_blank') Evolving Alien Corals.] #[img(src='imgs/coral.lol.png', style='height:18px;width:auto;')]
-        figure.full-height
+        figure.full-height.mid
             img.square(src='imgs/novelty_metrics/centers.svg')
             figcaption
                 p Method #2: Sorted-Centers. The Simplest method whereby the centroid of each district is sorted by 'x+y' and concatenated.
-        figure.full-height
+        figure.full-height.mid
             img.square(src='imgs/novelty_metrics/mutual_tiles.svg')
             figcaption
                 p Method #3: Mutual-Tiles. Pairs of tiles are selected at the start of each run (dashed lines). Then, a binary array is constructed such that Vi is 1 if the ith pair is in the same district and 0 otherwise. The k top principal components of this binary array are the features. It captures the most information at the expense of the most meta-parameters.
     
         h3 Feasible-Infeasible Search               
         p The double constraints of contiguity and equality propose a challenge for the optimization process since the mast majority of the possibilities are inviable. Often, finding a good solution requires exploring some bad ones first. Some genetic algorithms simply throw out invalid solutions while others keep them in the same population but with a penalty to their fitness. A more elegant solution is to keep two populations of solutions, one for feasible individuals (those that satisfy all constraints) and one for infeasible (FIF). The feasible population optimizes for all the objectives while the infeasible one optimizes to satisfy the objectives. [4, 11] propose combining novelty search with FIF.
-        figure
+        figure.up
             img.square(src='imgs/methods/feas_infeas_drawing.svg')
             figcaption
                 p Re-creation of figure 1-C in Liapis et all [11] showing the total solution space with disjoint spaces of feasible solutions. Infeasible solutions (orange) also have a pressure to explore, making them more likely to discover novel solutions.
     
         h3 Multi-Phase Search
         p Because optimizing a large number of nodes directly is challenging, districts are optimized through a multi-phase evolutionary algorithm, where each successive phase divides districts more granularly (similarly to Swarmy et al. [7]). To create a series of coarsening graphs, the graph is iteratively contracted using star contraction [12] until the state has reached 500 nodes. An additional bias is added to preserve compact shapes across graph resolutions. 
-        figure
+        figure.mid
             img.square(src='imgs/methods/contractions2x2.png')
             figcaption
                 p Multiple graph contractions with compactness bias.
@@ -344,7 +344,7 @@ mixin results()
     .section#results
         h2 Results
         p Three novelty methods were compared using NSGA-II as well as with and without feasible-infeasible search (FIF). Novelty was added as an additional objective. Each run had a total population of 700, and consisted of 15000 generations across five phases. Each run was replicated five times.
-        figure.full-height
+        figure.up
             img.square(src='imgs/results/optimization_comp.svg')
             figcaption
                 p All three novelty metrics outperformed the baseline with 'Centers' metric doing the best. Hypervolume is a measure of how well the search finds districtings that cover all possible tradeoffs. Surprisingly, novelty search without FIF did the worst, and seemed to struggle with the complexity of later phases. This validates that novelty search combined with Feas-Infeas is an effective combination. 
@@ -354,10 +354,12 @@ mixin results()
             figcaption
                 p Comparing actual and optimized Wisconsin districts. Shown optimized solutions are hand-chosen from those that dominate the actual districting (i.e. strictly lower score on all measures) (a) Wisconsin's 2011 districts have scores: fairness=0.788, competitiveness=%53.16, equality=%8.46. (b) An optimized compact district from a FIF-NOV run: fairness=0.647, competitiveness=%17.98, equality=%0.76. The solution is quantitatively and qualitatively more compact than the actual districting. (c) An optimized district with maximum fairness and competitiveness from a FIF-NOV run: fairness=0.762, competitiveness=%13.12, equality=%0.0 Remarkably this districting had exactly 726419 lost votes for each party.        
         p For a final analysis the diversity of generated solutions was evaluated. As discussed previously, a comparison of a potentially gerrymandered districting to other options that are potentially better than it on all desired properties is most meaningful when done against a diverse set of alternatives. The 'Centers' metric is used as the basis of exploring diversity since it created the most optimal solutions. Multiple runs of four different methods were combined and the features of final solutions were projected into 2D with PCA. 
-        figure.full-height
+        figure.up
             img(src='imgs/results/novelty.png')
+            br
             figcaption
                 p The clusters of solutions from four methods. The "Baseline" (regular NSGA-II) has four general clusters of solutions, the least of any. Congruent with expectations, the pure novelty search (top-right) has the most diversity. FIF with and without novelty seem to have comparable diversity, although the clusters in plain-FIF overlap highly with the baseline.     
+                
 
 mixin conclusion()
     .section#conclusion
