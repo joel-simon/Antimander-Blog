@@ -61,9 +61,10 @@ mixin mailchimp()
 mixin contact()
     +mailchimp()
     h3 Get Involved
-    p #[a(href='mailto:joelsimon6@gmail.com', target="_top") Contact]
-    p: a(href='https://github.com/joel-simon/Antimander') Github
-    P: a(href='https://discord.gg/UmgaE74') Discord
+    .contact_options
+        p.no-arrow #[a(href='mailto:joelsimon6@gmail.com', target="_top") Contact]
+        p: a(href='https://github.com/joel-simon/Antimander') Github
+        P: a(href='https://discord.gg/UmgaE74') Discord
     //- p: 
     //- p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
     //        .github_row.card

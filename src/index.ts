@@ -9,6 +9,7 @@ import { DrawController } from './draw_controller'
 import { X_real, F_real } from './real_data'
 import * as array_utils from './array_utils'
 import bind_scroll_blocks from './scroll_block_events'
+// import * as inlineSVG from './lib/inlineSVG.js'
 
 function add_real_data(rundata:RunData) {
     // Add Wisconsin's real districts to the rundata.
@@ -51,6 +52,14 @@ async function main() {
         viewer.setData(draw_cmd, rundata, ['rep advantage'])
         viewers.push(viewer)
     }
+
+    // inlineSVG.init({
+    //     svgSelector: 'img.inline-svg',
+    //     // initClass: 'js-inlinesvg', // class added to <html>
+    // }, function () {
+    // console.log('All SVGs inlined');
+    // });
+
     console.timeEnd('main')
 }
 main()

@@ -79,7 +79,9 @@
                             
                 transition: var(--motion-duration-med) var(--motion-easing);
                 transition-property: opacity;
-                
+            }
+            p.no-arrow:first-of-type:before {
+                content: none;
             }
         }
     }
