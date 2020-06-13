@@ -146,7 +146,13 @@ export default class {
     
     _createParcoords() {
         // Delete any that already exist.
+        if (this.container.querySelector('.parcoords').clientHeight == 0) {
+            return 
+        }
+        // console.log(;
         this.container.querySelector('.parcoords').innerHTML = ''
+        // console.log(this.container.querySelector('.parcoords').clientHeight);
+        
         delete this.parcoords
         this.parcoords = bind_parcoords(
             this.container.querySelector('.parcoords'),

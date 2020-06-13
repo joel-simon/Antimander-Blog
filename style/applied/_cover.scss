@@ -39,7 +39,7 @@ article {
     }
     
     .contents {
-          grid-column: var(--grid-column-right);
+        grid-column: var(--grid-column-right);
         display: block;
         z-index:99999;
         position: relative;
@@ -57,7 +57,7 @@ article {
     }
     
     .metadata {
-        margin-top: 16px;
+        // margin-top: 16px;
     }
     
 }

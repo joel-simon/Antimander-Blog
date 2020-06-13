@@ -174,14 +174,19 @@ export default function(viewer:ResultViewer, draw_controller:DrawController) {
             viewer.setData(orig_drwcmd, orig_rundata)
             clearInterval(anim_interval)
             anim_interval = start_animate(viewer)
-            if (is_mobile()) {                
-                pc.classList.add('hidden')
+            if (is_mobile()) {         
+                sp.on_current()
             }
         }
         sp.on_above = () => {
             console.log('cover_snap above');
-            
             clearInterval(anim_interval)
+        }
+        if (window.scrollY < window.innerHeight) {
+            if (is_mobile()) {         
+                console.log('in derp');
+                pc.classList.add('hidden')
+            }
         }
     }
     {  

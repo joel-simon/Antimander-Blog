@@ -2,7 +2,7 @@
     --symbol-width: calc(var(--grid-column-gap) * 2);
     --header-height: var(--grid-column-gap);
     
-    --menu-button-size: 64px;
+    --menu-button-size: 48px;
 }
 
 body.cover-off-screen {
@@ -30,7 +30,7 @@ header, nav {
 }
 
 nav {
-    --nav-margin-top: calc(var(--overview-offset-top) - 8px);
+    --nav-margin-top: calc(var(--overview-offset-top) - 4px);
     position: -webkit-sticky;
     position: sticky;
     height: 0;
@@ -58,7 +58,7 @@ nav {
     
     
     &.sticky {
-        --box-shadow-size: 4px;
+        --box-shadow-size: 2px;
         // Some hacks to fix the nav on mobile. 
         @media screen and (max-width: $bp-single-col) {
             ol {

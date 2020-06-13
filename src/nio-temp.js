@@ -96,16 +96,13 @@ Toggle class on body when cover is on screen
 */
 function isCoverOnScreen() {   
     const $overview = document.querySelector("#overview");
-    
 //  Has the user scrolled past the cover yet
     if ($overview.getBoundingClientRect().top <= 0) {
        //  If overview section has not yet scrolled past top of window
         document.querySelector("body").classList.add("cover-off-screen");
         document.querySelector('#toggle-menu').classList.remove('hidden')
     } else {
-        document.querySelector('#toggle-menu').classList.add('hidden')
-        console.log('on cover');
-        
+        document.querySelector('#toggle-menu').classList.add('hidden')        
         document.querySelector("body").classList.remove("cover-off-screen");
         // document.querySelector(".menu-inner").classList.remove("open")
         // document.querySelector("input#toggle-menu").classList.remove("open")
