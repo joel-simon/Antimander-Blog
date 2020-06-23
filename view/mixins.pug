@@ -5,7 +5,7 @@ mixin header()
                 .symbol
                 h1.cursor-pointer Antimander
             .links
-                a(href="https://github.com/joel-simon/antimander/") Github
+                a(href="https://github.com/joel-simon/antimander/") GitHub
 
 mixin nav()
     - var sections = ['overview', 'background', 'metrics', 'methods', 'results', 'conclusion', 'references']
@@ -16,7 +16,7 @@ mixin nav()
                     li.navlink.caption(id="nav-"+name)
                         a(href='#'+name)!=name
     input#toggle-menu.cursor-pointer.hidden(type="button", value="Toggle Menu")
-    
+
 mixin text-container(text)
     div.outer-text-container
         div.inner-text-container
@@ -63,20 +63,20 @@ mixin contact()
     h3 Get Involved
     .contact_options
         p.no-arrow #[a(href='mailto:joelsimon6@gmail.com', target="_top") Contact]
-        p: a(href='https://github.com/joel-simon/Antimander') Github
+        p: a(href='https://github.com/joel-simon/Antimander') GitHub
         P: a(href='https://discord.gg/UmgaE74') Discord
-    //- p: 
+    //- p:
     //- p: a(href='mailto:joel@morphogen.io', target="_top") joel@morphogen.io
     //        .github_row.card
     //            h3 Contribute:
     //            .github
     //                img(src='/imgs/github.png')
-    //                a(href='https://github.com/joel-simon/Antimander') Github
+    //                a(href='https://github.com/joel-simon/Antimander') GitHub
     //            .github
     //                img(src='/imgs/Discord-Logo-Color.png')
     //                a(href='https://discord.gg/UmgaE74') Discord
-    //        .padding(style='height:40px;')     
-    
+    //        .padding(style='height:40px;')
+
 
 mixin google_analytics()
     script(async='1', src='https://www.googletagmanager.com/gtag/js?id=UA-101632858-6')
