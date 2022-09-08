@@ -24,7 +24,7 @@
   "dependencies": {
     "css-loader": "^3.4.2",
     "image-promise": "^7.0.0",
-    "jszip": "^3.4.0",
+    "jszip": "^3.7.0",
     "jzip": "^1.0.0",
     "mapbox-gl": "^1.8.0",
     "ndarray": "^1.0.19",
